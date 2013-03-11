@@ -14,7 +14,7 @@
 
 @property (nonatomic, copy) NSString *language;
 @property (nonatomic, copy) NSString *key;
-@property (nonatomic, copy) NSString *comment;
+@property (nonatomic, copy) NSString *stringValue;
 
 + (id)localizationItem;
 

@@ -111,7 +111,7 @@
         LocalizationItem *newLocalizationItem = [LocalizationItem localizationItem];
         newLocalizationItem.language = localizationItem.language;
         newLocalizationItem.key = localizationItem.key;
-        newLocalizationItem.comment = localizationItem.comment;
+        newLocalizationItem.stringValue = localizationItem.stringValue;
         
         switch(editedColumn) {
             case 0:
@@ -121,7 +121,7 @@
                 newLocalizationItem.key = textView.textStorage.string;
                 break;
             case 2:
-                newLocalizationItem.comment = textView.textStorage.string;
+                newLocalizationItem.stringValue = textView.textStorage.string;
                 break;
             default:
                 break;
@@ -151,8 +151,8 @@
     else if([identifier isEqualToString:@"key"]) {
         return localizationItem.key;
     }
-    else if([identifier isEqualToString:@"comment"]) {
-        return localizationItem.comment;
+    else if([identifier isEqualToString:@"stringValue"]) {
+        return localizationItem.stringValue;
     }
     
     return nil;

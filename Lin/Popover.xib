@@ -66,7 +66,7 @@
 										<string key="NSFrameSize">{499, 183}</string>
 										<reference key="NSSuperview" ref="892715789"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="234652952"/>
+										<reference key="NSNextKeyView" ref="778530037"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -185,14 +185,14 @@
 												</object>
 											</object>
 											<object class="NSTableColumn" id="105417681">
-												<string key="NSIdentifier">comment</string>
+												<string key="NSIdentifier">stringValue</string>
 												<double key="NSWidth">290</double>
 												<double key="NSMinWidth">40</double>
 												<double key="NSMaxWidth">1000</double>
 												<object class="NSTableHeaderCell" key="NSHeaderCell">
 													<int key="NSCellFlags">75497536</int>
 													<int key="NSCellFlags2">2048</int>
-													<string key="NSContents">Comment</string>
+													<string key="NSContents">stringValue</string>
 													<reference key="NSSupport" ref="26"/>
 													<object class="NSColor" key="NSBackgroundColor">
 														<int key="NSColorSpace">3</int>
@@ -214,7 +214,7 @@
 												<bool key="NSIsEditable">YES</bool>
 												<reference key="NSTableView" ref="83148845"/>
 												<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
-													<string key="NSKey">comment</string>
+													<string key="NSKey">stringValue</string>
 													<bool key="NSAscending">YES</bool>
 													<string key="NSSelector">compare:</string>
 												</object>
@@ -275,6 +275,7 @@
 								<string key="NSFrame">{{1, 184}, {499, 16}}</string>
 								<reference key="NSSuperview" ref="544304549"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:60</string>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<int key="NSsFlags">1</int>
@@ -300,7 +301,7 @@
 						<string key="NSFrameSize">{501, 201}</string>
 						<reference key="NSSuperview" ref="893267449"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="892715789"/>
+						<reference key="NSNextKeyView" ref="234652952"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">133682</int>
 						<reference key="NSVScroller" ref="778530037"/>

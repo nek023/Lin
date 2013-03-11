@@ -19,14 +19,14 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: language = %@; key = %@; comment = %@>", NSStringFromClass([self class]), self.language, self.key, self.comment];
+    return [NSString stringWithFormat:@"<%@: language = %@; key = %@; stringValue = %@>", NSStringFromClass([self class]), self.language, self.key, self.stringValue];
 }
 
 - (void)dealloc
 {
     [_language release];
     [_key release];
-    [_comment release];
+    [_stringValue release];
     
     [super dealloc];
 }

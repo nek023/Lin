@@ -469,13 +469,13 @@ static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
             
             __block NSRange entityRangeInLine;
             __block NSRange keyRangeInLine;
-            __block NSRange commentRangeInLine;
+            __block NSRange stringValueRangeInLine;
             
             [regularExpression enumerateMatchesInString:line options:0 range:NSMakeRange(0, line.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
                 if(result.numberOfRanges == 3) {
                     entityRangeInLine = [result rangeAtIndex:0];
                     keyRangeInLine = [result rangeAtIndex:1];
-                    commentRangeInLine = [result rangeAtIndex:2];
+                    stringValueRangeInLine = [result rangeAtIndex:2];
                     
                     NSString *key = [line substringWithRange:keyRangeInLine];
                     matched = [key isEqualToString:localizationItem.key];
@@ -487,10 +487,10 @@ static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
             if(matched) {
                 NSRange lineRange = [text rangeOfString:line];
                 NSRange keyRange = NSMakeRange(lineRange.location + keyRangeInLine.location, keyRangeInLine.length);
-                NSRange commentRange = NSMakeRange(lineRange.location + commentRangeInLine.location, commentRangeInLine.length);
+                NSRange stringValueRange = NSMakeRange(lineRange.location + stringValueRangeInLine.location, stringValueRangeInLine.length);
                 
                 NSString *newText = [text stringByReplacingCharactersInRange:keyRange withString:newLocalizationItem.key];
-                newText = [newText stringByReplacingCharactersInRange:NSMakeRange(commentRange.location - (keyRange.length - newLocalizationItem.key.length), commentRange.length) withString:newLocalizationItem.comment];
+                newText = [newText stringByReplacingCharactersInRange:NSMakeRange(stringValueRange.location - (keyRange.length - newLocalizationItem.key.length), stringValueRange.length) withString:newLocalizationItem.stringValue];
                 
                 // Save
                 NSError *error = nil;

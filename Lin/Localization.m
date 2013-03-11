@@ -60,12 +60,12 @@
         [regularExpression enumerateMatchesInString:line options:0 range:NSMakeRange(0, line.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
             if(result.numberOfRanges == 3) {
                 NSRange keyRange = [result rangeAtIndex:1];
-                NSRange commentRange = [result rangeAtIndex:2];
+                NSRange stringValueRange = [result rangeAtIndex:2];
                 
                 NSString *key = [line substringWithRange:keyRange];
-                NSString *comment = [line substringWithRange:commentRange];
+                NSString *stringValue = [line substringWithRange:stringValueRange];
                 
-                [localizationPairs setObject:comment forKey:key];
+                [localizationPairs setObject:stringValue forKey:key];
             }
             
             *stop = YES;
@@ -90,12 +90,12 @@
         
         NSArray *keys = [localizationPairs allKeys];
         for(NSString *key in keys) {
-            NSString *comment = [localizationPairs objectForKey:key];
+            NSString *stringValue = [localizationPairs objectForKey:key];
             
             LocalizationItem *localizationItem = [LocalizationItem localizationItem];
             localizationItem.language = language;
             localizationItem.key = key;
-            localizationItem.comment = comment;
+            localizationItem.stringValue = stringValue;
             
             [localizationItems addObject:localizationItem];
         }
