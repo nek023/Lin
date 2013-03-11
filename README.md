@@ -8,7 +8,7 @@ Relaunch Xcode and Lin will make your life easier.
 
 
 ## Usage
-After installation, `Enable Lin` appears in Edit menu.  
+After installation `Enable Lin` will appear in Edit menu.  
 ![lin_ss01.png](http://adotout.sakura.ne.jp/github/Lin/lin_ss01.png)
 
 `NSLocalizedString` will show completion.  
@@ -17,7 +17,7 @@ After installation, `Enable Lin` appears in Edit menu.
 Narrowing down the lists by key.  
 ![lin_ss03.png](http://adotout.sakura.ne.jp/github/Lin/lin_ss03.png)
 
-You can modify `Localizable.string` directry from the popover window.  
+You can modify `Localizable.strings` directry from the popover window.  
 ![lin_ss04.png](http://adotout.sakura.ne.jp/github/Lin/lin_ss04.png)
 
 
