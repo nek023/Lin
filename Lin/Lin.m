@@ -56,7 +56,7 @@ static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
         
         // Register defaults
         NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  [NSNumber numberWithBool:NO], kLinUserDefaultsEnableKey,
+                                  [NSNumber numberWithBool:YES], kLinUserDefaultsEnableKey,
                                   nil];
         [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
         
