@@ -326,13 +326,12 @@ static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
         NSString *lineText = [text substringWithRange:lineRange];
         
         // Regular expression
-        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"NSLocalizedString\\(@\"(.*)\".*,.*@\"(.*)\"\\)" options:0 error:NULL];
+        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"NSLocalizedString\\(@\"(.*)\".*,.*(@\".*\"|nil)\\)" options:0 error:NULL];
         
         __block BOOL matched = NO;
         
         __block NSRange entityRangeInLine;
         __block NSRange keyRangeInLine;
-        __block NSRange commentRangeInLine;
         
         [regularExpression enumerateMatchesInString:lineText options:0 range:NSMakeRange(0, lineText.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
             if(result.numberOfRanges == 3) {
@@ -340,7 +339,6 @@ static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
                 
                 entityRangeInLine = [result rangeAtIndex:0];
                 keyRangeInLine = [result rangeAtIndex:1];
-                commentRangeInLine = [result rangeAtIndex:2];
             }
             
             *stop = YES;
@@ -407,13 +405,12 @@ static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
         NSString *lineText = [text substringWithRange:lineRange];
         
         // Regular expression
-        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"NSLocalizedString\\(@\"(.*)\".*,.*@\"(.*)\"\\)" options:0 error:NULL];
+        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"NSLocalizedString\\(@\"(.*)\".*,.*(@\".*\"|nil)\\)" options:0 error:NULL];
         
         __block BOOL matched = NO;
         
         __block NSRange entityRangeInLine;
         __block NSRange keyRangeInLine;
-        __block NSRange commentRangeInLine;
         
         [regularExpression enumerateMatchesInString:lineText options:0 range:NSMakeRange(0, lineText.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
             if(result.numberOfRanges == 3) {
@@ -421,7 +418,6 @@ static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
                 
                 entityRangeInLine = [result rangeAtIndex:0];
                 keyRangeInLine = [result rangeAtIndex:1];
-                commentRangeInLine = [result rangeAtIndex:2];
             }
             
             *stop = YES;
