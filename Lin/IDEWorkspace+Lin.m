@@ -17,12 +17,12 @@
 
 + (void)load
 {
-    MethodSwizzle(self, @selector(_updateIndexableFiles:), @selector(swizzle_updateIndexableFiles:));
+    MethodSwizzle(self, @selector(_updateIndexableFiles:), @selector(lin_swizzle_updateIndexableFiles:));
 }
 
-- (void)swizzle_updateIndexableFiles:(id)arg1
+- (void)lin_swizzle_updateIndexableFiles:(id)arg1
 {
-    [self swizzle_updateIndexableFiles:arg1];
+    [self lin_swizzle_updateIndexableFiles:arg1];
     
     [[Lin sharedPlugin] indexNeedsUpdate:self.index];
 }

@@ -17,14 +17,14 @@
 
 + (void)load
 {
-    MethodSwizzle(self, @selector(close), @selector(swizzle_close));
+    MethodSwizzle(self, @selector(close), @selector(lin_swizzle_close));
 }
 
-- (void)swizzle_close
+- (void)lin_swizzle_close
 {
     [[Lin sharedPlugin] removeFilesForIndex:self];
     
-    [self swizzle_close];
+    [self lin_swizzle_close];
 }
 
 @end
