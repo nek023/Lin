@@ -25,6 +25,7 @@
 
 static Lin *sharedPlugin = nil;
 static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
+static NSString *kLinLocalizedStringPattern = @"NSLocalizedString\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(@\".*\"|nil)\\s*\\)";
 
 + (instancetype)sharedPlugin
 {
@@ -326,7 +327,7 @@ static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
         NSString *lineText = [text substringWithRange:lineRange];
         
         // Regular expression
-        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"NSLocalizedString\\(@\"(.*)\".*,.*(@\".*\"|nil)\\)" options:0 error:NULL];
+        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:kLinLocalizedStringPattern options:0 error:NULL];
         
         __block BOOL matched = NO;
         
@@ -405,7 +406,7 @@ static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
         NSString *lineText = [text substringWithRange:lineRange];
         
         // Regular expression
-        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"NSLocalizedString\\(@\"(.*)\".*,.*(@\".*\"|nil)\\)" options:0 error:NULL];
+        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:kLinLocalizedStringPattern options:0 error:NULL];
         
         __block BOOL matched = NO;
         
