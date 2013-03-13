@@ -55,7 +55,7 @@
     
     [contents enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
         // Regular expression
-        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"\"(.*)\".*=.*\"(.*)\"" options:0 error:NULL];
+        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"\"(.*)\".*=.*\"(.*)\";$" options:0 error:NULL];
         
         [regularExpression enumerateMatchesInString:line options:0 range:NSMakeRange(0, line.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
             if(result.numberOfRanges == 3) {
