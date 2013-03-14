@@ -21,11 +21,38 @@
 #import "Localization.h"
 #import "LocalizationItem.h"
 
+@interface RegEx : NSObject
+
+@property (nonatomic, retain) NSString *expression;
+@property NSUInteger numberOfRanges;
+@property NSUInteger entityRangeInLineIndex;
+@property NSUInteger keyRangeInLineIndex;
+
+@end
+
+@implementation RegEx
+
+-(id) initWithExpression: ( NSString *) expression numberOfRanges: ( NSUInteger ) numberOfRanges entityRangeInLineIndex: ( NSUInteger ) entityRangeInLineIndex keyRangeInLineIndex: ( NSUInteger ) keyRangeInLineIndex
+{
+	if (self = [super init]) {
+		_expression = [NSString stringWithString: expression];
+		_numberOfRanges = numberOfRanges;
+		_entityRangeInLineIndex = entityRangeInLineIndex;
+		_keyRangeInLineIndex = keyRangeInLineIndex;
+	}
+	return self;
+}
+
+@end
+
 @implementation Lin
 
 static Lin *sharedPlugin = nil;
 static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
-static NSString *kLinLocalizedStringPattern = @"NSLocalizedString\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(@\".*\"|nil)\\s*\\)";
+static NSString *regexs[] = { @"NSLocalizedString\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(@\".*\"|nil)\\s*\\)", @"localizedStringForKey:\\s*@\"(.*)\"\\s*value:\\s*@\"(.*)\"\\s*table:\\s*@\"(.*)\"" };
+static NSUInteger numberOfRanges[] = { 3, 4 };
+static NSUInteger entityRangeInLineIndices[] = { 0, 0 };
+static NSUInteger keyRangeInLineIndices[] = { 1, 1 };
 
 + (instancetype)sharedPlugin
 {
@@ -77,6 +104,19 @@ static NSString *kLinLocalizedStringPattern = @"NSLocalizedString\\s*\\(\\s*@\"(
         
         // Register observer
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:nil];
+
+		// Create regexs array
+		NSAssert( sizeof(numberOfRanges)/sizeof(NSUInteger) == sizeof(regexs)/sizeof(NSString *), @"Regexs definitions arrays should all have same size" );
+		NSAssert( sizeof(entityRangeInLineIndices)/sizeof(NSUInteger) == sizeof(regexs)/sizeof(NSString *), @"Regexs definitions arrays should all have same size" );
+		NSAssert( sizeof(keyRangeInLineIndices)/sizeof(NSUInteger) == sizeof(regexs)/sizeof(NSString *), @"Regexs definitions arrays should all have same size" );
+
+		NSMutableArray *pTempRegexs = [NSMutableArray array];
+
+		for(NSUInteger i=0;i<sizeof(regexs)/sizeof(NSString *);i++) {
+			[pTempRegexs addObject: [[RegEx alloc] initWithExpression: regexs[i] numberOfRanges:numberOfRanges[i] entityRangeInLineIndex:entityRangeInLineIndices[i] keyRangeInLineIndex:keyRangeInLineIndices[i]]];
+		}
+		_regexs = [NSArray arrayWithArray: pTempRegexs];
+		[pTempRegexs release];
     }
     
     return self;
@@ -159,8 +199,8 @@ static NSString *kLinLocalizedStringPattern = @"NSLocalizedString\\s*\\(\\s*@\"(
         // Remove previous localization
         [self.localizations removeObjectForKey:workspaceFilePath];
         
-        // Find Localizable.strings files
-        IDEIndexCollection *indexCollection = [index filesContaining:@"Localizable.strings" anchorStart:NO anchorEnd:NO subsequence:NO ignoreCase:YES cancelWhen:nil];
+        // Find .strings files
+        IDEIndexCollection *indexCollection = [index filesContaining:@".strings" anchorStart:NO anchorEnd:NO subsequence:NO ignoreCase:YES cancelWhen:nil];
         
         NSMutableSet *localizationFileSet = [NSMutableSet set];
         
@@ -271,7 +311,7 @@ static NSString *kLinLocalizedStringPattern = @"NSLocalizedString\\s*\\(\\s*@\"(
     DVTFilePath *filePath = editorDocument.filePath;
     NSString *pathString = filePath.pathString;
     
-    // Check whether there are any changes to Localizable.strings
+    // Check whether there are any changes to .strings
     NSMutableSet *localizationFileSet = [self.localizationFileSets objectForKey:self.currentWorkspacePath];
     
     for(NSString *localizationFilePath in localizationFileSet) {
@@ -325,26 +365,31 @@ static NSString *kLinLocalizedStringPattern = @"NSLocalizedString\\s*\\(\\s*@\"(
         NSString *text = textView.textStorage.string;
         NSRange lineRange = [text lineRangeForRange:selectedRange];
         NSString *lineText = [text substringWithRange:lineRange];
-        
-        // Regular expression
-        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:kLinLocalizedStringPattern options:0 error:NULL];
-        
-        __block BOOL matched = NO;
-        
+
+		__block BOOL matched = NO;
+
         __block NSRange entityRangeInLine;
         __block NSRange keyRangeInLine;
-        
-        [regularExpression enumerateMatchesInString:lineText options:0 range:NSMakeRange(0, lineText.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-            if(result.numberOfRanges == 3) {
-                matched = YES;
-                
-                entityRangeInLine = [result rangeAtIndex:0];
-                keyRangeInLine = [result rangeAtIndex:1];
-            }
-            
-            *stop = YES;
-        }];
-        
+
+		for( RegEx *regEx in _regexs) {
+			// Regular expression
+			NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:regEx.expression options:0 error:NULL];
+
+			[regularExpression enumerateMatchesInString:lineText options:0 range:NSMakeRange(0, lineText.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+				if(result.numberOfRanges == regEx.numberOfRanges) {
+					matched = YES;
+
+					entityRangeInLine = [result rangeAtIndex:regEx.entityRangeInLineIndex];
+					keyRangeInLine = [result rangeAtIndex:regEx.keyRangeInLineIndex];
+				}
+
+				*stop = YES;
+			}];
+
+			if(matched)
+				break;
+		}
+
         if(matched) {
             NSRange entityRange = NSMakeRange(lineRange.location + entityRangeInLine.location, entityRangeInLine.length);
             
@@ -404,26 +449,31 @@ static NSString *kLinLocalizedStringPattern = @"NSLocalizedString\\s*\\(\\s*@\"(
         NSString *text = self.textView.textStorage.string;
         NSRange lineRange = [text lineRangeForRange:selectedRange];
         NSString *lineText = [text substringWithRange:lineRange];
-        
-        // Regular expression
-        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:kLinLocalizedStringPattern options:0 error:NULL];
-        
-        __block BOOL matched = NO;
-        
+
+		__block BOOL matched = NO;
+
         __block NSRange entityRangeInLine;
         __block NSRange keyRangeInLine;
-        
-        [regularExpression enumerateMatchesInString:lineText options:0 range:NSMakeRange(0, lineText.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-            if(result.numberOfRanges == 3) {
-                matched = YES;
-                
-                entityRangeInLine = [result rangeAtIndex:0];
-                keyRangeInLine = [result rangeAtIndex:1];
-            }
-            
-            *stop = YES;
-        }];
-        
+
+		for( RegEx *regEx in _regexs) {
+			// Regular expression
+			NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:regEx.expression options:0 error:NULL];
+
+			[regularExpression enumerateMatchesInString:lineText options:0 range:NSMakeRange(0, lineText.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+				if(result.numberOfRanges == regEx.numberOfRanges) {
+					matched = YES;
+
+					entityRangeInLine = [result rangeAtIndex:regEx.entityRangeInLineIndex];
+					keyRangeInLine = [result rangeAtIndex:regEx.keyRangeInLineIndex];
+				}
+
+				*stop = YES;
+			}];
+
+			if(matched)
+				break;
+		}
+
         if(matched) {
             // Make a new entity
             NSRange keyRangeInEntity = NSMakeRange(keyRangeInLine.location - entityRangeInLine.location, keyRangeInLine.length);
@@ -440,7 +490,9 @@ static NSString *kLinLocalizedStringPattern = @"NSLocalizedString\\s*\\(\\s*@\"(
 - (void)popoverContentView:(PopoverContentView *)popoverContentView didChangeLocalizationItem:(LocalizationItem *)localizationItem newLocalizationItem:(LocalizationItem *)newLocalizationItem
 {
     NSMutableSet *localizationFileSet = [self.localizationFileSets objectForKey:self.currentWorkspacePath];
-    NSString *query = [NSString stringWithFormat:@"%@.lproj/Localizable.strings", localizationItem.language];
+	NSString *stringsFilename = [localizationItem.stringsFilename lastPathComponent];
+	stringsFilename = [stringsFilename substringToIndex:stringsFilename.length - ([stringsFilename pathExtension].length == 0 ? 0 : [stringsFilename pathExtension].length + 1)];
+    NSString *query = [NSString stringWithFormat:@"%@.lproj/%@.strings", localizationItem.language, stringsFilename];
     
     NSString *filePath = nil;
     

@@ -42,6 +42,14 @@
 
 - (void)addLocalizationFromContentsOfFile:(NSString *)filePath encoding:(NSStringEncoding)encoding
 {
+	NSMutableDictionary *filePathDictionary	=	[self.localizations objectForKey:filePath];
+
+	if (!filePathDictionary)
+	{
+		filePathDictionary = [NSMutableDictionary dictionary];
+		[self.localizations setObject:filePathDictionary forKey:filePath];
+	}
+	
     // Detect language
     NSArray *pathComponents = [filePath pathComponents];
     NSString *directory = [pathComponents objectAtIndex:pathComponents.count - 2];
@@ -72,35 +80,51 @@
         }];
     }];
     
-    [self.localizations setObject:[NSDictionary dictionaryWithDictionary:localizationPairs] forKey:language];
+    [filePathDictionary setObject:[NSDictionary dictionaryWithDictionary:localizationPairs] forKey:language];
 }
 
 - (NSArray *)languages
 {
-    return [self.localizations allKeys];
+	NSMutableDictionary *languageItems = [NSMutableDictionary dictionary];
+    NSArray *filePaths = [self.localizations allKeys];
+
+    for(NSString *filePath in filePaths) {
+        NSDictionary *languages = [self.localizations objectForKey:filePath];
+        NSArray* pLanguageKeys = [languages allKeys];
+		
+        for(NSString *key in pLanguageKeys) {
+			if (![languageItems objectForKey:key])
+				[languageItems setObject:[NSNull null] forKey:key];
+        }
+    }
+
+    return [languageItems allKeys];
 }
 
 - (NSArray *)localizationItems
 {
     NSMutableArray *localizationItems = [NSMutableArray array];
-    
-    NSArray *languages = [self.localizations allKeys];
-    for(NSString *language in languages) {
-        NSDictionary *localizationPairs = [self.localizations objectForKey:language];
-        
-        NSArray *keys = [localizationPairs allKeys];
-        for(NSString *key in keys) {
-            NSString *stringValue = [localizationPairs objectForKey:key];
-            
-            LocalizationItem *localizationItem = [LocalizationItem localizationItem];
-            localizationItem.language = language;
-            localizationItem.key = key;
-            localizationItem.stringValue = stringValue;
-            
-            [localizationItems addObject:localizationItem];
-        }
-    }
-    
+
+    [self.localizations enumerateKeysAndObjectsUsingBlock:^(id keyFilePath, id obj, BOOL *stop) {
+		NSArray *languages = [obj allKeys];
+		for(NSString *language in languages) {
+			NSDictionary *localizationPairs = [[self.localizations objectForKey:keyFilePath] objectForKey:language];
+
+			NSArray *keys = [localizationPairs allKeys];
+			for(NSString *key in keys) {
+				NSString *stringValue = [localizationPairs objectForKey:key];
+
+				LocalizationItem *localizationItem = [LocalizationItem localizationItem];
+				localizationItem.stringsFilename = keyFilePath;
+				localizationItem.language = language;
+				localizationItem.key = key;
+				localizationItem.stringValue = stringValue;
+
+				[localizationItems addObject:localizationItem];
+			}
+		}
+	}];
+	
     return [NSArray arrayWithArray:localizationItems];
 }
 
