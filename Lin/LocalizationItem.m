@@ -19,11 +19,12 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: language = %@; key = %@; stringValue = %@>", NSStringFromClass([self class]), self.language, self.key, self.stringValue];
+    return [NSString stringWithFormat:@"<%@: .strings = %@; language = %@; key = %@; stringValue = %@>", NSStringFromClass([self class]), self.stringsFilename, self.language, self.key, self.stringValue];
 }
 
 - (void)dealloc
 {
+    [_stringsFilename release];
     [_language release];
     [_key release];
     [_stringValue release];

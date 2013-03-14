@@ -12,6 +12,7 @@
 
 @interface LocalizationItem : NSObject
 
+@property (nonatomic, copy) NSString *stringsFilename;
 @property (nonatomic, copy) NSString *language;
 @property (nonatomic, copy) NSString *key;
 @property (nonatomic, copy) NSString *stringValue;
