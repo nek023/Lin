@@ -110,7 +110,11 @@
 		for(NSString *language in languages) {
 			NSDictionary *localizationPairs = [[self.localizations objectForKey:keyFilePath] objectForKey:language];
 
-			NSArray *keys = [localizationPairs allKeys];
+			NSMutableArray *keys = [NSMutableArray arrayWithArray:[localizationPairs allKeys]];
+			[keys sortUsingComparator:^NSComparisonResult(NSString *key1, NSString *key2) {
+            			return (NSComparisonResult)[key1 compare:key2];
+       			}];
+       			
 			for(NSString *key in keys) {
 				NSString *stringValue = [localizationPairs objectForKey:key];
 
