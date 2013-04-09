@@ -516,7 +516,7 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1 };
         }
 
         [text enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
-            NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"\"?(.*)\"?\\s*=\\s*\"(.*)\"" options:0 error:NULL];
+            NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"(\"(.*)\"|(.*))\\s*=\\s*\"(.*)\";$" options:0 error:NULL];
 
             __block BOOL matched = NO;
 
@@ -525,10 +525,13 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1 };
             __block NSRange stringValueRangeInLine;
 
             [regularExpression enumerateMatchesInString:line options:0 range:NSMakeRange(0, line.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-                if(result.numberOfRanges == 3) {
+                if(result.numberOfRanges == 5) {
                     entityRangeInLine = [result rangeAtIndex:0];
-                    keyRangeInLine = [result rangeAtIndex:1];
-                    stringValueRangeInLine = [result rangeAtIndex:2];
+                    
+                    keyRangeInLine = [result rangeAtIndex:2];
+                    if(keyRangeInLine.location == NSNotFound) keyRangeInLine = [result rangeAtIndex:3];
+                    
+                    stringValueRangeInLine = [result rangeAtIndex:4];
 
                     NSString *key = [line substringWithRange:keyRangeInLine];
                     matched = [key isEqualToString:localizationItem.key];

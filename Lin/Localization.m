@@ -63,12 +63,14 @@
 
     [contents enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
         // Regular expression
-        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"\"?(.*)\"?\\s*=\\s*\"(.*)\";$" options:0 error:NULL];
+        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"(\"(.*)\"|(.*))\\s*=\\s*\"(.*)\";$" options:0 error:NULL];
 
         [regularExpression enumerateMatchesInString:line options:0 range:NSMakeRange(0, line.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-            if(result.numberOfRanges == 3) {
-                NSRange keyRange = [result rangeAtIndex:1];
-                NSRange stringValueRange = [result rangeAtIndex:2];
+            if(result.numberOfRanges == 5) {
+                NSRange keyRange = [result rangeAtIndex:2];
+                if(keyRange.location == NSNotFound) keyRange = [result rangeAtIndex:3];
+                
+                NSRange stringValueRange = [result rangeAtIndex:4];
 
                 NSString *key = [line substringWithRange:keyRange];
                 NSString *stringValue = [line substringWithRange:stringValueRange];
