@@ -27,7 +27,7 @@ You can modify value directly from the popover window. (`.strings` file containi
 
 ## Warnings
 
-.strings files must be UTF8
+.strings files must be **UTF8**
 
 Completion popup **won't show** with **empty .strings** files
 
