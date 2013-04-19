@@ -402,15 +402,13 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1 };
                 Localization *localization = [self.localizations objectForKey:self.currentWorkspacePath];
                 NSArray *localizationItems = [localization localizationItems];
 
-                if(localizationItems.count > 0) {
-                    PopoverContentView *contentView = (PopoverContentView *)self.popover.contentViewController.view;
-                    contentView.localizationItems = localizationItems;
-                    contentView.keyFilter = [lineText substringWithRange:keyRangeInLine];
+				PopoverContentView *contentView = (PopoverContentView *)self.popover.contentViewController.view;
+				contentView.localizationItems = localizationItems;
+				contentView.keyFilter = [lineText substringWithRange:keyRangeInLine];
 
-                    [self.popover showRelativeToRect:selectionRectInView ofView:textView preferredEdge:NSMinYEdge];
+				[self.popover showRelativeToRect:selectionRectInView ofView:textView preferredEdge:NSMinYEdge];
 
-                    return;
-                }
+				return;
             }
         }
     }

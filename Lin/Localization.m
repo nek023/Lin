@@ -56,7 +56,14 @@
     NSString *language = [directory stringByDeletingPathExtension];
 
     // Load
-    NSString *contents = [NSString stringWithContentsOfFile:filePath encoding:encoding error:NULL];
+	NSError *error = nil;
+    NSString *contents = [NSString stringWithContentsOfFile:filePath encoding:encoding error:&error];
+	if (error)
+	{
+		NSAlert *alert = [NSAlert alertWithError:error];
+
+		[alert runModal];
+	}
 
     // Parse
     NSMutableDictionary *localizationPairs = [NSMutableDictionary dictionary];
