@@ -60,9 +60,15 @@
     NSString *contents = [NSString stringWithContentsOfFile:filePath encoding:encoding error:&error];
 	if (error)
 	{
-		NSAlert *alert = [NSAlert alertWithError:error];
+		error	=	nil;
+		contents = [NSString stringWithContentsOfFile:filePath encoding:NSUTF16StringEncoding error:&error];
 
-		[alert runModal];
+		if ( error )
+		{
+			NSAlert *alert = [NSAlert alertWithError:error];
+
+			[alert runModal];
+		}
 	}
 
     // Parse
