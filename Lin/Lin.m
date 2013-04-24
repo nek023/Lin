@@ -487,30 +487,22 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1 };
 
 - (void)popoverContentView:(PopoverContentView *)popoverContentView didChangeLocalizationItem:(LocalizationItem *)localizationItem newLocalizationItem:(LocalizationItem *)newLocalizationItem
 {
-    NSMutableSet *localizationFileSet = [self.localizationFileSets objectForKey:self.currentWorkspacePath];
-	NSString *stringsFilename = [localizationItem.stringsFilename lastPathComponent];
-	stringsFilename = [stringsFilename substringToIndex:stringsFilename.length - ([stringsFilename pathExtension].length == 0 ? 0 : [stringsFilename pathExtension].length + 1)];
-    NSString *query = [NSString stringWithFormat:@"%@.lproj/%@.strings", localizationItem.language, stringsFilename];
-
-    NSString *filePath = nil;
-
-    for(NSString *localizationFile in localizationFileSet) {
-        NSRange range = [localizationFile rangeOfString:query];
-
-        if(range.location != NSNotFound) {
-            filePath = localizationFile;
-
-            break;
-        }
-    }
-
+	NSString* filePath = [ NSString stringWithString: localizationItem.stringsFilename ];
+	NSStringEncoding encoding = NSUTF8StringEncoding;
+	
     if(filePath) {
         NSError *error = nil;
-        NSString *text = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+        NSString *text = [NSString stringWithContentsOfFile:filePath encoding:encoding error:&error];
 
         if(error) {
-            NSLog(@"Error: %@", [error localizedDescription]);
-            return;
+			error = nil;
+			encoding = NSUTF16StringEncoding;
+			text = [NSString stringWithContentsOfFile:filePath encoding:encoding error:&error];
+
+			if(error) {
+				NSLog(@"Error: %@", [error localizedDescription]);
+				return;
+			}
         }
 
         [text enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
@@ -548,7 +540,7 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1 };
 
                 // Save
                 NSError *error = nil;
-                [newText writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+                [newText writeToFile:filePath atomically:YES encoding:encoding error:&error];
 
                 if(error) {
                     NSLog(@"Error: %@", [error localizedDescription]);
