@@ -49,6 +49,7 @@
 
 static Lin *sharedPlugin = nil;
 static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
+static NSString *kLinUserDefaultsParseStringsOutsideProjectKey = @"LINParseStringsOutsideProject";
 static NSString *regexs[] = {
 	@"NSLocalizedString\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*\\)",
 	@"localizedStringForKey:\\s*@\"(.*)\"\\s*value:\\s*(.*)\\s*table:\\s*(.*)",
@@ -90,6 +91,7 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
         // Register defaults
         NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
                                   [NSNumber numberWithBool:YES], kLinUserDefaultsEnableKey,
+                                  [NSNumber numberWithBool:NO], kLinUserDefaultsParseStringsOutsideProjectKey,
                                   nil];
         [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 
@@ -137,6 +139,18 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
 - (BOOL)enabled
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kLinUserDefaultsEnableKey];
+}
+
+- (void)setParseStringsOutsideProject:(BOOL)value
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:value forKey:kLinUserDefaultsParseStringsOutsideProjectKey];
+    [userDefaults synchronize];
+}
+
+- (BOOL)parseStringsOutsideProject
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kLinUserDefaultsParseStringsOutsideProjectKey];
 }
 
 - (void)dealloc
@@ -209,10 +223,19 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
 
         NSMutableSet *localizationFileSet = [NSMutableSet set];
 
+		NSArray *pathComponents = [workspaceFilePath pathComponents];
+		NSMutableString *projectRoot = [NSMutableString new];
+		for (int i=0; i<pathComponents.count - 2; i++)
+			[projectRoot appendFormat:@"%@%@", [pathComponents objectAtIndex:i], i == 0 ? @"" : @"/"];
+
         for(DVTFilePath *filePath in indexCollection) {
             NSString *pathString = filePath.pathString;
 
-            [localizationFileSet addObject:pathString];
+			if(self.parseStringsOutsideProject ||  (!self.parseStringsOutsideProject  &&  [pathString rangeOfString:projectRoot].location != NSNotFound))
+			{
+				NSLog(@"Adding %@ to localization file set", pathString);
+            	[localizationFileSet addObject:pathString];
+			}
         }
 
         [self.localizationFileSets setObject:localizationFileSet forKey:workspaceFilePath];
@@ -244,6 +267,7 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
         // Load defaults
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         BOOL enabled = [userDefaults boolForKey:kLinUserDefaultsEnableKey];
+        BOOL parseStringsOutsideProject = [userDefaults boolForKey:kLinUserDefaultsParseStringsOutsideProjectKey];
 
         // Separator
 		[[editMenuItem submenu] addItem:[NSMenuItem separatorItem]];
@@ -252,6 +276,14 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
 		NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Enable Lin" action:@selector(toggle:) keyEquivalent:@""];
         menuItem.target = self;
         menuItem.state = enabled ? NSOnState : NSOffState;
+
+		[[editMenuItem submenu] addItem:menuItem];
+        [menuItem release];
+
+        // Parse .strings outside project's path
+		menuItem = [[NSMenuItem alloc] initWithTitle:@"Parse .strings outside project's path" action:@selector(toggleParse:) keyEquivalent:@""];
+        menuItem.target = self;
+        menuItem.state = parseStringsOutsideProject ? NSOnState : NSOffState;
 
 		[[editMenuItem submenu] addItem:menuItem];
         [menuItem release];
@@ -272,6 +304,16 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
     } else {
         [self deactivate];
     }
+}
+
+- (void)toggleParse:(id)sender
+{
+    // Save defaults
+    self.parseStringsOutsideProject = !self.parseStringsOutsideProject;
+
+    // Update menu item
+    NSMenuItem *menuItem = (NSMenuItem *)sender;
+    menuItem.state = self.parseStringsOutsideProject ? NSOnState : NSOffState;
 }
 
 
