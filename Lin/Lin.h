@@ -26,6 +26,7 @@
 @property (nonatomic, retain) NSMutableDictionary *localizationFileSets;
 @property (nonatomic, retain) NSMutableDictionary *localizations;
 @property (nonatomic, readonly) BOOL enabled;
+@property (nonatomic, readonly) BOOL parseStringsOutsideProject;
 @property (nonatomic, retain) NSArray *regexs;
 
 + (instancetype)sharedPlugin;
