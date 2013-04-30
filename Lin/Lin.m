@@ -49,10 +49,15 @@
 
 static Lin *sharedPlugin = nil;
 static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
-static NSString *regexs[] = { @"NSLocalizedString\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(@\".*\"|nil)\\s*\\)", @"localizedStringForKey:\\s*@\"(.*)\"\\s*value:\\s*@\"(.*)\"\\s*table:\\s*@\"(.*)\"" };
-static NSUInteger numberOfRanges[] = { 3, 4 };
-static NSUInteger entityRangeInLineIndices[] = { 0, 0 };
-static NSUInteger keyRangeInLineIndices[] = { 1, 1 };
+static NSString *regexs[] = {
+	@"NSLocalizedString\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*\\)",
+	@"localizedStringForKey:\\s*@\"(.*)\"\\s*value:\\s*(.*)\\s*table:\\s*(.*)",
+	@"NSLocalizedStringFromTable\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*\\)",
+	@"NSLocalizedStringFromTableInBundle\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*\\)",
+	@"NSLocalizedStringWithDefaultValue\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*\\)" };
+static NSUInteger numberOfRanges[] = { 3, 4, 4, 5, 6 };
+static NSUInteger entityRangeInLineIndices[] = { 0, 0, 0, 0, 0 };
+static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
 
 + (instancetype)sharedPlugin
 {
