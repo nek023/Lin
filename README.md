@@ -12,7 +12,15 @@ After installation `Enable Lin` will appear in Edit menu.
 
 ![lin_ss01.png](http://adotout.sakura.ne.jp/github/Lin/lin_ss01.png)
 
-Selecting a line with `NSLocalizedString` or `localizedStringForKey:value:table:` will show completion (see **Warnings** section no popup shows).
+Selecting a line with either:
+
+- NSLocalizedString( @"", )
+- localizedStringForKey: @"" value: table:
+- NSLocalizedStringFromTable( @"", , )
+- NSLocalizedStringFromTableInBundle( @"", , , )
+- NSLocalizedStringWithDefaultValue( @"", , , , )
+
+will show completion (see **Warnings** section no popup shows).
 
 ![lin_ss02.png](http://adotout.sakura.ne.jp/github/Lin/lin_ss02.png)
 
