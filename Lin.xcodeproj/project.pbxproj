@@ -11,7 +11,6 @@
 		9A668A7417300E9900EE3C8E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A668A7317300E9900EE3C8E /* Cocoa.framework */; };
 		9A668A7E17300E9900EE3C8E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A668A7C17300E9900EE3C8E /* InfoPlist.strings */; };
 		9A668A8117300E9900EE3C8E /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A668A8017300E9900EE3C8E /* Tests.m */; };
-		9A668A8717300F9B00EE3C8E /* Tests.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A668A8617300F9B00EE3C8E /* Tests.strings */; };
 		9A668A8A1730109400EE3C8E /* Localization.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE9881016ECE84500E61B53 /* Localization.m */; };
 		9A668A8B173010CA00EE3C8E /* LocalizationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AA10659A16ECF48600443AC5 /* LocalizationItem.m */; };
 		AA0ABDEA16EC850000DC3697 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA0ABDE816EC850000DC3697 /* DVTFoundation.framework */; };
@@ -43,7 +42,6 @@
 		9A668A7F17300E9900EE3C8E /* Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tests.h; sourceTree = "<group>"; };
 		9A668A8017300E9900EE3C8E /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		9A668A8217300E9900EE3C8E /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
-		9A668A8617300F9B00EE3C8E /* Tests.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Tests.strings; sourceTree = "<group>"; };
 		AA0ABDE816EC850000DC3697 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTFoundation.framework; path = /Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework; sourceTree = "<absolute>"; };
 		AA0ABDE916EC850000DC3697 /* DVTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTKit.framework; path = /Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework; sourceTree = "<absolute>"; };
 		AA10659916ECF48600443AC5 /* LocalizationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationItem.h; sourceTree = "<group>"; };
@@ -118,7 +116,6 @@
 				9A668A7F17300E9900EE3C8E /* Tests.h */,
 				9A668A8017300E9900EE3C8E /* Tests.m */,
 				9A668A7A17300E9900EE3C8E /* Supporting Files */,
-				9A668A8617300F9B00EE3C8E /* Tests.strings */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -309,7 +306,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A668A7E17300E9900EE3C8E /* InfoPlist.strings in Resources */,
-				9A668A8717300F9B00EE3C8E /* Tests.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +522,7 @@
 				9A668A8417300E9900EE3C8E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AAEBEB6E16E90ACE00A01E48 /* Build configuration list for PBXProject "Lin" */ = {
 			isa = XCConfigurationList;
