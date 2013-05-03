@@ -12,6 +12,8 @@
 
 #import "LocalizationItem.h"
 
+NSString *parseKeyValueRegex = @"(\"(\\S+.*\\S+)\"|(\\S+.*\\S+))\\s*=\\s*\"(.*)\";$";
+
 @implementation Localization
 
 + (id)localization
@@ -39,6 +41,27 @@
 
 
 #pragma mark - Localization Management
+
++ (BOOL)searchKeyValueWithRegex:(NSRegularExpression *)regularExpression inLine:(NSString *)line key:(NSString **)key value:(NSString **)value
+{
+	__block BOOL found = NO;
+
+	[regularExpression enumerateMatchesInString:line options:0 range:NSMakeRange(0, line.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+		if(result.numberOfRanges == 5) {
+			NSRange keyRange = [result rangeAtIndex:2];
+			if(keyRange.location == NSNotFound) keyRange = [result rangeAtIndex:3];
+
+			NSRange stringValueRange = [result rangeAtIndex:4];
+
+			*key = [line substringWithRange:keyRange];
+			*value = [line substringWithRange:stringValueRange];
+			found = YES;
+		}
+
+		*stop = YES;
+	}];
+	return found;
+}
 
 - (void)addLocalizationFromContentsOfFile:(NSString *)filePath encoding:(NSStringEncoding)encoding
 {
@@ -76,23 +99,13 @@
 
     [contents enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
         // Regular expression
-        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"(\"(\\w*)\"|(\\w*))\\s*=\\s*\"(.*)\";$" options:0 error:NULL];
+        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:parseKeyValueRegex options:0 error:NULL];
 
-        [regularExpression enumerateMatchesInString:line options:0 range:NSMakeRange(0, line.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-            if(result.numberOfRanges == 5) {
-                NSRange keyRange = [result rangeAtIndex:2];
-                if(keyRange.location == NSNotFound) keyRange = [result rangeAtIndex:3];
-                
-                NSRange stringValueRange = [result rangeAtIndex:4];
+		NSString *key = nil;
+		NSString *value = nil;
 
-                NSString *key = [line substringWithRange:keyRange];
-                NSString *stringValue = [line substringWithRange:stringValueRange];
-
-                [localizationPairs setObject:stringValue forKey:key];
-            }
-
-            *stop = YES;
-        }];
+		if([Localization searchKeyValueWithRegex:regularExpression inLine:line key:&key value:&value])
+			[localizationPairs setObject:value forKey:key];
     }];
 
     [filePathDictionary setObject:[NSDictionary dictionaryWithDictionary:localizationPairs] forKey:language];

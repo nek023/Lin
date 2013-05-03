@@ -10,6 +10,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *parseKeyValueRegex;
+
 @interface Localization : NSObject
 
 @property (nonatomic, retain) NSMutableDictionary *localizations;
