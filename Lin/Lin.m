@@ -224,7 +224,7 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
         NSMutableSet *localizationFileSet = [NSMutableSet set];
 
 		NSArray *pathComponents = [workspaceFilePath pathComponents];
-		NSMutableString *projectRoot = [NSMutableString new];
+		NSMutableString *projectRoot = [NSMutableString string];
 		for (int i=0; i<pathComponents.count - 2; i++)
 			[projectRoot appendFormat:@"%@%@", [pathComponents objectAtIndex:i], i == 0 ? @"" : @"/"];
 
