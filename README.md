@@ -1,6 +1,8 @@
 # Lin
 Xcode4 plugin showing completion for NSLocalizedString and localizedStringForKey:value:table:
 
+[![Build Status](https://travis-ci.org/questbeat/Lin.png?branch=master)](https://travis-ci.org/questbeat/Lin)
+
 
 ## Installation
 Build the Lin, then the plugin will automatically be installed in `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`.  
