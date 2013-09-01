@@ -4,6 +4,11 @@ Xcode4 plugin showing completion for NSLocalizedString and localizedStringForKey
 [![Build Status](https://travis-ci.org/questbeat/Lin.png?branch=master)](https://travis-ci.org/questbeat/Lin)
 
 
+## Notice
+I'm remaking Lin to support Xcode5 with several new features.  
+Please wait for the future updates ;)
+
+
 ## Installation
 Build the Lin, then the plugin will automatically be installed in `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`.  
 Relaunch Xcode and Lin will make your life easier.
