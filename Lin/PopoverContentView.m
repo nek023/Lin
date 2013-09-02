@@ -109,7 +109,7 @@
         
         // Create a new localization item
         LocalizationItem *newLocalizationItem = [LocalizationItem localizationItem];
-		newLocalizationItem.stringsFilename = localizationItem.stringsFilename;
+        newLocalizationItem.stringsFilename = localizationItem.stringsFilename;
         newLocalizationItem.language = localizationItem.language;
         newLocalizationItem.key = localizationItem.key;
         newLocalizationItem.stringValue = localizationItem.stringValue;

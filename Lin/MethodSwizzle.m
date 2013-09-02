@@ -15,11 +15,11 @@
 void MethodSwizzle(Class aClass, SEL orig_sel, SEL alt_sel)
 {
     Method orig_method = nil, alt_method = nil;
-	
+    
     orig_method = class_getInstanceMethod(aClass, orig_sel);
     alt_method = class_getInstanceMethod(aClass, alt_sel);
-	
+    
     if(orig_method != nil && alt_method != nil) {
         method_exchangeImplementations(orig_method, alt_method);
-	}
+    }
 }

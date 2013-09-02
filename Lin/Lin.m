@@ -34,13 +34,13 @@
 
 -(id) initWithExpression: ( NSString *) expression numberOfRanges: ( NSUInteger ) numberOfRanges entityRangeInLineIndex: ( NSUInteger ) entityRangeInLineIndex keyRangeInLineIndex: ( NSUInteger ) keyRangeInLineIndex
 {
-	if (self = [super init]) {
-		_expression = [NSString stringWithString: expression];
-		_numberOfRanges = numberOfRanges;
-		_entityRangeInLineIndex = entityRangeInLineIndex;
-		_keyRangeInLineIndex = keyRangeInLineIndex;
-	}
-	return self;
+    if (self = [super init]) {
+        _expression = [NSString stringWithString: expression];
+        _numberOfRanges = numberOfRanges;
+        _entityRangeInLineIndex = entityRangeInLineIndex;
+        _keyRangeInLineIndex = keyRangeInLineIndex;
+    }
+    return self;
 }
 
 @end
@@ -51,11 +51,11 @@ static Lin *sharedPlugin = nil;
 static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
 static NSString *kLinUserDefaultsParseStringsOutsideProjectKey = @"LINParseStringsOutsideProject";
 static NSString *regexs[] = {
-	@"NSLocalizedString\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*\\)",
-	@"localizedStringForKey:\\s*@\"(.*)\"\\s*value:\\s*(.*)\\s*table:\\s*(.*)",
-	@"NSLocalizedStringFromTable\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*\\)",
-	@"NSLocalizedStringFromTableInBundle\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*\\)",
-	@"NSLocalizedStringWithDefaultValue\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*\\)" };
+    @"NSLocalizedString\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*\\)",
+    @"localizedStringForKey:\\s*@\"(.*)\"\\s*value:\\s*(.*)\\s*table:\\s*(.*)",
+    @"NSLocalizedStringFromTable\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*\\)",
+    @"NSLocalizedStringFromTableInBundle\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*\\)",
+    @"NSLocalizedStringWithDefaultValue\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*\\)" };
 static NSUInteger numberOfRanges[] = { 3, 4, 4, 5, 6 };
 static NSUInteger entityRangeInLineIndices[] = { 0, 0, 0, 0, 0 };
 static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
@@ -67,11 +67,11 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
 
 + (void)pluginDidLoad:(NSBundle *)plugin
 {
-	static dispatch_once_t onceToken;
+    static dispatch_once_t onceToken;
 
-	dispatch_once(&onceToken, ^{
-		sharedPlugin = [[self alloc] initWithBundle:plugin];
-	});
+    dispatch_once(&onceToken, ^{
+        sharedPlugin = [[self alloc] initWithBundle:plugin];
+    });
 }
 
 - (id)init
@@ -110,20 +110,20 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
         popoverContentView.delegate = self;
 
         // Register observer
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:nil];
 
-		// Create regexs array
-		NSAssert( sizeof(numberOfRanges)/sizeof(NSUInteger) == sizeof(regexs)/sizeof(NSString *), @"Regexs definitions arrays should all have same size" );
-		NSAssert( sizeof(entityRangeInLineIndices)/sizeof(NSUInteger) == sizeof(regexs)/sizeof(NSString *), @"Regexs definitions arrays should all have same size" );
-		NSAssert( sizeof(keyRangeInLineIndices)/sizeof(NSUInteger) == sizeof(regexs)/sizeof(NSString *), @"Regexs definitions arrays should all have same size" );
+        // Create regexs array
+        NSAssert( sizeof(numberOfRanges)/sizeof(NSUInteger) == sizeof(regexs)/sizeof(NSString *), @"Regexs definitions arrays should all have same size" );
+        NSAssert( sizeof(entityRangeInLineIndices)/sizeof(NSUInteger) == sizeof(regexs)/sizeof(NSString *), @"Regexs definitions arrays should all have same size" );
+        NSAssert( sizeof(keyRangeInLineIndices)/sizeof(NSUInteger) == sizeof(regexs)/sizeof(NSString *), @"Regexs definitions arrays should all have same size" );
 
-		NSMutableArray *pTempRegexs = [NSMutableArray array];
+        NSMutableArray *pTempRegexs = [NSMutableArray array];
 
-		for(NSUInteger i=0;i<sizeof(regexs)/sizeof(NSString *);i++) {
-			[pTempRegexs addObject: [[RegEx alloc] initWithExpression: regexs[i] numberOfRanges:numberOfRanges[i] entityRangeInLineIndex:entityRangeInLineIndices[i] keyRangeInLineIndex:keyRangeInLineIndices[i]]];
-		}
-		_regexs = [NSArray arrayWithArray: pTempRegexs];
-		[pTempRegexs release];
+        for(NSUInteger i=0;i<sizeof(regexs)/sizeof(NSString *);i++) {
+            [pTempRegexs addObject: [[RegEx alloc] initWithExpression: regexs[i] numberOfRanges:numberOfRanges[i] entityRangeInLineIndex:entityRangeInLineIndices[i] keyRangeInLineIndex:keyRangeInLineIndices[i]]];
+        }
+        _regexs = [NSArray arrayWithArray: pTempRegexs];
+        [pTempRegexs release];
     }
 
     return self;
@@ -223,19 +223,19 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
 
         NSMutableSet *localizationFileSet = [NSMutableSet set];
 
-		NSArray *pathComponents = [workspaceFilePath pathComponents];
-		NSMutableString *projectRoot = [NSMutableString string];
-		for (int i=0; i<pathComponents.count - 2; i++)
-			[projectRoot appendFormat:@"%@%@", [pathComponents objectAtIndex:i], i == 0 ? @"" : @"/"];
+        NSArray *pathComponents = [workspaceFilePath pathComponents];
+        NSMutableString *projectRoot = [NSMutableString string];
+        for (int i=0; i<pathComponents.count - 2; i++)
+            [projectRoot appendFormat:@"%@%@", [pathComponents objectAtIndex:i], i == 0 ? @"" : @"/"];
 
         for(DVTFilePath *filePath in indexCollection) {
             NSString *pathString = filePath.pathString;
 
-			if(self.parseStringsOutsideProject ||  (!self.parseStringsOutsideProject  &&  [pathString rangeOfString:projectRoot].location != NSNotFound))
-			{
-				NSLog(@"Adding %@ to localization file set", pathString);
-            	[localizationFileSet addObject:pathString];
-			}
+            if(self.parseStringsOutsideProject ||  (!self.parseStringsOutsideProject  &&  [pathString rangeOfString:projectRoot].location != NSNotFound))
+            {
+                NSLog(@"Adding %@ to localization file set", pathString);
+                [localizationFileSet addObject:pathString];
+            }
         }
 
         [self.localizationFileSets setObject:localizationFileSet forKey:workspaceFilePath];
@@ -261,7 +261,7 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
 
 - (void)createMenuItem
 {
-	NSMenuItem *editMenuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"];
+    NSMenuItem *editMenuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"];
 
     if(editMenuItem) {
         // Load defaults
@@ -270,22 +270,22 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
         BOOL parseStringsOutsideProject = [userDefaults boolForKey:kLinUserDefaultsParseStringsOutsideProjectKey];
 
         // Separator
-		[[editMenuItem submenu] addItem:[NSMenuItem separatorItem]];
+        [[editMenuItem submenu] addItem:[NSMenuItem separatorItem]];
 
         // Enable Lin
-		NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Enable Lin" action:@selector(toggle:) keyEquivalent:@""];
+        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Enable Lin" action:@selector(toggle:) keyEquivalent:@""];
         menuItem.target = self;
         menuItem.state = enabled ? NSOnState : NSOffState;
 
-		[[editMenuItem submenu] addItem:menuItem];
+        [[editMenuItem submenu] addItem:menuItem];
         [menuItem release];
 
         // Parse .strings outside project's path
-		menuItem = [[NSMenuItem alloc] initWithTitle:@"Parse .strings outside project's path" action:@selector(toggleParse:) keyEquivalent:@""];
+        menuItem = [[NSMenuItem alloc] initWithTitle:@"Parse .strings outside project's path" action:@selector(toggleParse:) keyEquivalent:@""];
         menuItem.target = self;
         menuItem.state = parseStringsOutsideProject ? NSOnState : NSOffState;
 
-		[[editMenuItem submenu] addItem:menuItem];
+        [[editMenuItem submenu] addItem:menuItem];
         [menuItem release];
     }
 }
@@ -322,7 +322,7 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
 - (void)activate
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(workspaceWindowDidBecomeMain:) name:NSWindowDidBecomeMainNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeSelection:) name:NSTextViewDidChangeSelectionNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeSelection:) name:NSTextViewDidChangeSelectionNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editorDocumentDidSave:) name:@"IDEEditorDocumentDidSaveNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(indexDidChange:) name:@"IDEIndexDidChangeNotification" object:nil];
@@ -331,7 +331,7 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
 - (void)deactivate
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSWindowDidBecomeMainNotification object:nil];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSTextViewDidChangeSelectionNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSTextViewDidChangeSelectionNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSTextDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"IDEEditorDocumentDidSaveNotification" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"IDEIndexDidChangeNotification" object:nil];
@@ -382,22 +382,22 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
 
 - (void)textDidChange:(NSNotification *)notification
 {
-	if([[notification object] isKindOfClass:NSClassFromString(@"DVTSourceTextView")]) {
+    if([[notification object] isKindOfClass:NSClassFromString(@"DVTSourceTextView")]) {
         NSTextView *textView = (NSTextView *)[notification object];
         self.textView = textView;
 
         [self showPopoverWithTextView:textView];
-	}
+    }
 }
 
 - (void)textViewDidChangeSelection:(NSNotification *)notification
 {
-	if([[notification object] isKindOfClass:NSClassFromString(@"DVTSourceTextView")]) {
+    if([[notification object] isKindOfClass:NSClassFromString(@"DVTSourceTextView")]) {
         NSTextView *textView = (NSTextView *)[notification object];
         self.textView = textView;
 
         [self showPopoverWithTextView:textView];
-	}
+    }
 }
 
 - (void)showPopoverWithTextView:(NSTextView *)textView;
@@ -413,29 +413,29 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
         NSRange lineRange = [text lineRangeForRange:selectedRange];
         NSString *lineText = [text substringWithRange:lineRange];
 
-		__block BOOL matched = NO;
+        __block BOOL matched = NO;
 
         __block NSRange entityRangeInLine;
         __block NSRange keyRangeInLine;
 
-		for( RegEx *regEx in _regexs) {
-			// Regular expression
-			NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:regEx.expression options:0 error:NULL];
+        for( RegEx *regEx in _regexs) {
+            // Regular expression
+            NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:regEx.expression options:0 error:NULL];
 
-			[regularExpression enumerateMatchesInString:lineText options:0 range:NSMakeRange(0, lineText.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-				if(result.numberOfRanges == regEx.numberOfRanges) {
-					matched = YES;
+            [regularExpression enumerateMatchesInString:lineText options:0 range:NSMakeRange(0, lineText.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+                if(result.numberOfRanges == regEx.numberOfRanges) {
+                    matched = YES;
 
-					entityRangeInLine = [result rangeAtIndex:regEx.entityRangeInLineIndex];
-					keyRangeInLine = [result rangeAtIndex:regEx.keyRangeInLineIndex];
-				}
+                    entityRangeInLine = [result rangeAtIndex:regEx.entityRangeInLineIndex];
+                    keyRangeInLine = [result rangeAtIndex:regEx.keyRangeInLineIndex];
+                }
 
-				*stop = YES;
-			}];
+                *stop = YES;
+            }];
 
-			if(matched)
-				break;
-		}
+            if(matched)
+                break;
+        }
 
         if(matched) {
             NSRange entityRange = NSMakeRange(lineRange.location + entityRangeInLine.location, entityRangeInLine.length);
@@ -450,13 +450,13 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
                 Localization *localization = [self.localizations objectForKey:self.currentWorkspacePath];
                 NSArray *localizationItems = [localization localizationItems];
 
-				PopoverContentView *contentView = (PopoverContentView *)self.popover.contentViewController.view;
-				contentView.localizationItems = localizationItems;
-				contentView.keyFilter = [lineText substringWithRange:keyRangeInLine];
+                PopoverContentView *contentView = (PopoverContentView *)self.popover.contentViewController.view;
+                contentView.localizationItems = localizationItems;
+                contentView.keyFilter = [lineText substringWithRange:keyRangeInLine];
 
-				[self.popover showRelativeToRect:selectionRectInView ofView:textView preferredEdge:NSMinYEdge];
+                [self.popover showRelativeToRect:selectionRectInView ofView:textView preferredEdge:NSMinYEdge];
 
-				return;
+                return;
             }
         }
     }
@@ -496,29 +496,29 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
         NSRange lineRange = [text lineRangeForRange:selectedRange];
         NSString *lineText = [text substringWithRange:lineRange];
 
-		__block BOOL matched = NO;
+        __block BOOL matched = NO;
 
         __block NSRange entityRangeInLine;
         __block NSRange keyRangeInLine;
 
-		for( RegEx *regEx in _regexs) {
-			// Regular expression
-			NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:regEx.expression options:0 error:NULL];
+        for( RegEx *regEx in _regexs) {
+            // Regular expression
+            NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:regEx.expression options:0 error:NULL];
 
-			[regularExpression enumerateMatchesInString:lineText options:0 range:NSMakeRange(0, lineText.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-				if(result.numberOfRanges == regEx.numberOfRanges) {
-					matched = YES;
+            [regularExpression enumerateMatchesInString:lineText options:0 range:NSMakeRange(0, lineText.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+                if(result.numberOfRanges == regEx.numberOfRanges) {
+                    matched = YES;
 
-					entityRangeInLine = [result rangeAtIndex:regEx.entityRangeInLineIndex];
-					keyRangeInLine = [result rangeAtIndex:regEx.keyRangeInLineIndex];
-				}
+                    entityRangeInLine = [result rangeAtIndex:regEx.entityRangeInLineIndex];
+                    keyRangeInLine = [result rangeAtIndex:regEx.keyRangeInLineIndex];
+                }
 
-				*stop = YES;
-			}];
+                *stop = YES;
+            }];
 
-			if(matched)
-				break;
-		}
+            if(matched)
+                break;
+        }
 
         if(matched) {
             // Make a new entity
@@ -535,22 +535,22 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
 
 - (void)popoverContentView:(PopoverContentView *)popoverContentView didChangeLocalizationItem:(LocalizationItem *)localizationItem newLocalizationItem:(LocalizationItem *)newLocalizationItem
 {
-	NSString* filePath = [ NSString stringWithString: localizationItem.stringsFilename ];
-	NSStringEncoding encoding = NSUTF8StringEncoding;
-	
+    NSString* filePath = [ NSString stringWithString: localizationItem.stringsFilename ];
+    NSStringEncoding encoding = NSUTF8StringEncoding;
+
     if(filePath) {
         NSError *error = nil;
         NSString *text = [NSString stringWithContentsOfFile:filePath encoding:encoding error:&error];
 
         if(error) {
-			error = nil;
-			encoding = NSUTF16StringEncoding;
-			text = [NSString stringWithContentsOfFile:filePath encoding:encoding error:&error];
+            error = nil;
+            encoding = NSUTF16StringEncoding;
+            text = [NSString stringWithContentsOfFile:filePath encoding:encoding error:&error];
 
-			if(error) {
-				NSLog(@"Error: %@", [error localizedDescription]);
-				return;
-			}
+            if(error) {
+                NSLog(@"Error: %@", [error localizedDescription]);
+                return;
+            }
         }
 
         [text enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {

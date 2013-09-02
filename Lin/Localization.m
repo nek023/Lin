@@ -44,34 +44,34 @@ NSString *parseKeyValueRegex = @"(\"(\\S+.*\\S+)\"|(\\S+.*\\S+))\\s*=\\s*\"(.*)\
 
 + (BOOL)searchKeyValueWithRegex:(NSRegularExpression *)regularExpression inLine:(NSString *)line key:(NSString **)key value:(NSString **)value
 {
-	__block BOOL found = NO;
+    __block BOOL found = NO;
 
-	[regularExpression enumerateMatchesInString:line options:0 range:NSMakeRange(0, line.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-		if(result.numberOfRanges == 5) {
-			NSRange keyRange = [result rangeAtIndex:2];
-			if(keyRange.location == NSNotFound) keyRange = [result rangeAtIndex:3];
+    [regularExpression enumerateMatchesInString:line options:0 range:NSMakeRange(0, line.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+        if(result.numberOfRanges == 5) {
+            NSRange keyRange = [result rangeAtIndex:2];
+            if(keyRange.location == NSNotFound) keyRange = [result rangeAtIndex:3];
 
-			NSRange stringValueRange = [result rangeAtIndex:4];
+            NSRange stringValueRange = [result rangeAtIndex:4];
 
-			*key = [line substringWithRange:keyRange];
-			*value = [line substringWithRange:stringValueRange];
-			found = YES;
-		}
+            *key = [line substringWithRange:keyRange];
+            *value = [line substringWithRange:stringValueRange];
+            found = YES;
+        }
 
-		*stop = YES;
-	}];
-	return found;
+        *stop = YES;
+    }];
+    return found;
 }
 
 - (void)addLocalizationFromContentsOfFile:(NSString *)filePath encoding:(NSStringEncoding)encoding
 {
-	NSMutableDictionary *filePathDictionary	=	[self.localizations objectForKey:filePath];
+    NSMutableDictionary *filePathDictionary    =    [self.localizations objectForKey:filePath];
 
-	if (!filePathDictionary)
-	{
-		filePathDictionary = [NSMutableDictionary dictionary];
-		[self.localizations setObject:filePathDictionary forKey:filePath];
-	}
+    if (!filePathDictionary)
+    {
+        filePathDictionary = [NSMutableDictionary dictionary];
+        [self.localizations setObject:filePathDictionary forKey:filePath];
+    }
 
     // Detect language
     NSArray *pathComponents = [filePath pathComponents];
@@ -79,20 +79,20 @@ NSString *parseKeyValueRegex = @"(\"(\\S+.*\\S+)\"|(\\S+.*\\S+))\\s*=\\s*\"(.*)\
     NSString *language = [directory stringByDeletingPathExtension];
 
     // Load
-	NSError *error = nil;
+    NSError *error = nil;
     NSString *contents = [NSString stringWithContentsOfFile:filePath encoding:encoding error:&error];
-	if (error)
-	{
-		error	=	nil;
-		contents = [NSString stringWithContentsOfFile:filePath encoding:NSUTF16StringEncoding error:&error];
+    if (error)
+    {
+        error    =    nil;
+        contents = [NSString stringWithContentsOfFile:filePath encoding:NSUTF16StringEncoding error:&error];
 
-		if ( error )
-		{
-			NSAlert *alert = [NSAlert alertWithError:error];
+        if ( error )
+        {
+            NSAlert *alert = [NSAlert alertWithError:error];
 
-			[alert runModal];
-		}
-	}
+            [alert runModal];
+        }
+    }
 
     // Parse
     NSMutableDictionary *localizationPairs = [NSMutableDictionary dictionary];
@@ -101,11 +101,11 @@ NSString *parseKeyValueRegex = @"(\"(\\S+.*\\S+)\"|(\\S+.*\\S+))\\s*=\\s*\"(.*)\
         // Regular expression
         NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:parseKeyValueRegex options:0 error:NULL];
 
-		NSString *key = nil;
-		NSString *value = nil;
+        NSString *key = nil;
+        NSString *value = nil;
 
-		if([Localization searchKeyValueWithRegex:regularExpression inLine:line key:&key value:&value])
-			[localizationPairs setObject:value forKey:key];
+        if([Localization searchKeyValueWithRegex:regularExpression inLine:line key:&key value:&value])
+            [localizationPairs setObject:value forKey:key];
     }];
 
     [filePathDictionary setObject:[NSDictionary dictionaryWithDictionary:localizationPairs] forKey:language];
@@ -113,7 +113,7 @@ NSString *parseKeyValueRegex = @"(\"(\\S+.*\\S+)\"|(\\S+.*\\S+))\\s*=\\s*\"(.*)\
 
 - (NSArray *)languages
 {
-	NSMutableDictionary *languageItems = [NSMutableDictionary dictionary];
+    NSMutableDictionary *languageItems = [NSMutableDictionary dictionary];
     NSArray *filePaths = [self.localizations allKeys];
 
     for(NSString *filePath in filePaths) {
@@ -121,8 +121,8 @@ NSString *parseKeyValueRegex = @"(\"(\\S+.*\\S+)\"|(\\S+.*\\S+))\\s*=\\s*\"(.*)\
         NSArray* pLanguageKeys = [languages allKeys];
 
         for(NSString *key in pLanguageKeys) {
-			if (![languageItems objectForKey:key])
-				[languageItems setObject:[NSNull null] forKey:key];
+            if (![languageItems objectForKey:key])
+                [languageItems setObject:[NSNull null] forKey:key];
         }
     }
 
@@ -134,28 +134,28 @@ NSString *parseKeyValueRegex = @"(\"(\\S+.*\\S+)\"|(\\S+.*\\S+))\\s*=\\s*\"(.*)\
     NSMutableArray *localizationItems = [NSMutableArray array];
 
     [self.localizations enumerateKeysAndObjectsUsingBlock:^(id keyFilePath, id obj, BOOL *stop) {
-		NSArray *languages = [obj allKeys];
-		for(NSString *language in languages) {
-			NSDictionary *localizationPairs = [[self.localizations objectForKey:keyFilePath] objectForKey:language];
+        NSArray *languages = [obj allKeys];
+        for(NSString *language in languages) {
+            NSDictionary *localizationPairs = [[self.localizations objectForKey:keyFilePath] objectForKey:language];
 
-			NSMutableArray *keys = [NSMutableArray arrayWithArray:[localizationPairs allKeys]];
-			[keys sortUsingComparator:^NSComparisonResult(NSString *key1, NSString *key2) {
-            			return (NSComparisonResult)[key1 compare:key2];
-       			}];
+            NSMutableArray *keys = [NSMutableArray arrayWithArray:[localizationPairs allKeys]];
+            [keys sortUsingComparator:^NSComparisonResult(NSString *key1, NSString *key2) {
+                        return (NSComparisonResult)[key1 compare:key2];
+                   }];
 
-			for(NSString *key in keys) {
-				NSString *stringValue = [localizationPairs objectForKey:key];
+            for(NSString *key in keys) {
+                NSString *stringValue = [localizationPairs objectForKey:key];
 
-				LocalizationItem *localizationItem = [LocalizationItem localizationItem];
-				localizationItem.stringsFilename = keyFilePath;
-				localizationItem.language = language;
-				localizationItem.key = key;
-				localizationItem.stringValue = stringValue;
+                LocalizationItem *localizationItem = [LocalizationItem localizationItem];
+                localizationItem.stringsFilename = keyFilePath;
+                localizationItem.language = language;
+                localizationItem.key = key;
+                localizationItem.stringValue = stringValue;
 
-				[localizationItems addObject:localizationItem];
-			}
-		}
-	}];
+                [localizationItems addObject:localizationItem];
+            }
+        }
+    }];
 
     return [NSArray arrayWithArray:localizationItems];
 }
