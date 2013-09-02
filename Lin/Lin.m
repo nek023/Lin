@@ -439,9 +439,10 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
 
         if(matched) {
             NSRange entityRange = NSMakeRange(lineRange.location + entityRangeInLine.location, entityRangeInLine.length);
+            NSRange keyRange = NSMakeRange(lineRange.location + keyRangeInLine.location, keyRangeInLine.length);
 
             if(entityRange.location <= selectedRange.location && selectedRange.location <= (entityRange.location + entityRange.length)) {
-                NSRect selectionRectOnScreen = [textView firstRectForCharacterRange:entityRange];
+                NSRect selectionRectOnScreen = [textView firstRectForCharacterRange:NSMakeRange(keyRange.location, 1)];
                 NSRect selectionRectInWindow = [textView.window convertRectFromScreen:selectionRectOnScreen];
                 NSRect selectionRectInView = [textView convertRect:selectionRectInWindow fromView:nil];
 
