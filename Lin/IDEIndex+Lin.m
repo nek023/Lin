@@ -23,7 +23,7 @@
 - (void)lin_swizzle_close
 {
     [[Lin sharedPlugin] removeFilesForIndex:self];
-    
+
     [self lin_swizzle_close];
 }
 

@@ -23,7 +23,7 @@
 - (void)lin_swizzle_updateIndexableFiles:(id)arg1
 {
     [self lin_swizzle_updateIndexableFiles:arg1];
-    
+
     [[Lin sharedPlugin] indexNeedsUpdate:self.index];
 }
 
