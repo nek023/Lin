@@ -17,11 +17,11 @@
 - (void)setTableView:(NSTableView *)tableView
 {
     _tableView = tableView;
-    
+
     // Set double click action
     [_tableView setTarget:self];
     [_tableView setDoubleAction:@selector(doubleClicked:)];
-    
+
     // Register observer
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidEndEditing:) name:NSControlTextDidEndEditingNotification object:nil];
 }
@@ -29,10 +29,10 @@
 - (void)setLocalizationItems:(NSArray *)localizationItems
 {
     _localizationItems = [localizationItems copy];
-    
+
     // Update filtered items
     [self updateFilteredItems];
-    
+
     // Reload table view
     [self.tableView reloadData];
 }
@@ -40,10 +40,10 @@
 - (void)setKeyFilter:(NSString *)keyFilter
 {
     _keyFilter = [keyFilter copy];
-    
+
     // Update filtered items
     [self updateFilteredItems];
-    
+
     // Reload table view
     [self.tableView reloadData];
 }
@@ -52,9 +52,9 @@
 {
     [_localizationItems release];
     [_filteredLocalizationItems release];
-    
+
     [_keyFilter release];
-    
+
     [super dealloc];
 }
 
@@ -65,15 +65,15 @@
 {
     if(self.keyFilter.length > 0) {
         NSMutableArray *filteredLocalizationItems = [NSMutableArray array];
-        
+
         for(LocalizationItem *localizationItem in self.localizationItems) {
             NSRange range = [localizationItem.key rangeOfString:self.keyFilter];
-            
+
             if(range.location == 0) {
                 [filteredLocalizationItems addObject:localizationItem];
             }
         }
-        
+
         self.filteredLocalizationItems = [NSArray arrayWithArray:filteredLocalizationItems];
     } else {
         self.filteredLocalizationItems = self.localizationItems;
@@ -86,10 +86,10 @@
 - (void)doubleClicked:(id)sender
 {
     NSInteger clickedRow = [self.tableView clickedRow];
-    
+
     if(clickedRow >= 0 && [self.delegate respondsToSelector:@selector(popoverContentView:didSelectLocalizationItem:)]) {
         LocalizationItem *localizationItem = [self.filteredLocalizationItems objectAtIndex:clickedRow];
-        
+
         [self.delegate popoverContentView:self didSelectLocalizationItem:localizationItem];
     }
 }
@@ -101,19 +101,19 @@
 {
     NSInteger editedRow = [self.tableView editedRow];
     NSInteger editedColumn = [self.tableView editedColumn];
-    
+
     if(editedRow >= 0 && editedColumn >= 0 && [self.delegate respondsToSelector:@selector(popoverContentView:didChangeLocalizationItem:newLocalizationItem:)]) {
         NSTextView *textView = (NSTextView *)[notification.userInfo objectForKey:@"NSFieldEditor"];
-        
+
         LocalizationItem *localizationItem = [self.filteredLocalizationItems objectAtIndex:editedRow];
-        
+
         // Create a new localization item
         LocalizationItem *newLocalizationItem = [LocalizationItem localizationItem];
         newLocalizationItem.stringsFilename = localizationItem.stringsFilename;
         newLocalizationItem.language = localizationItem.language;
         newLocalizationItem.key = localizationItem.key;
         newLocalizationItem.stringValue = localizationItem.stringValue;
-        
+
         switch(editedColumn) {
             case 0:
                 newLocalizationItem.language = textView.textStorage.string;
@@ -127,7 +127,7 @@
             default:
                 break;
         }
-        
+
         [self.delegate popoverContentView:self didChangeLocalizationItem:localizationItem newLocalizationItem:newLocalizationItem];
     }
 }
@@ -143,9 +143,9 @@
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     LocalizationItem *localizationItem = [self.filteredLocalizationItems objectAtIndex:row];
-    
+
     NSString *identifier = tableColumn.identifier;
-    
+
     if([identifier isEqualToString:@"language"]) {
         return localizationItem.language;
     }
@@ -155,7 +155,7 @@
     else if([identifier isEqualToString:@"stringValue"]) {
         return localizationItem.stringValue;
     }
-    
+
     return nil;
 }
 
@@ -163,7 +163,7 @@
 {
     // Sort array
     self.filteredLocalizationItems = [self.filteredLocalizationItems sortedArrayUsingDescriptors:tableView.sortDescriptors];
-    
+
     // Reload table view
     [self.tableView reloadData];
 }

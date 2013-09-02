@@ -565,10 +565,10 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
             [regularExpression enumerateMatchesInString:line options:0 range:NSMakeRange(0, line.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
                 if(result.numberOfRanges == 5) {
                     entityRangeInLine = [result rangeAtIndex:0];
-                    
+
                     keyRangeInLine = [result rangeAtIndex:2];
                     if(keyRangeInLine.location == NSNotFound) keyRangeInLine = [result rangeAtIndex:3];
-                    
+
                     stringValueRangeInLine = [result rangeAtIndex:4];
 
                     NSString *key = [line substringWithRange:keyRangeInLine];

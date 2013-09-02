@@ -28,7 +28,7 @@
     [_language release];
     [_key release];
     [_stringValue release];
-    
+
     [super dealloc];
 }
 
