@@ -7,7 +7,7 @@ Xcode4 plugin showing completion for NSLocalizedString and localizedStringForKey
 ## Lin for Xcode5
 **A new version with Xcode5 support is now available!**
 
-[questbeat/Lin](https://github.com/questbeat/Lin-Xcode5)
+[questbeat/Lin-Xcode5](https://github.com/questbeat/Lin-Xcode5)
 
 
 ## Installation
