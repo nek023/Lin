@@ -18,7 +18,7 @@ NSString *parseKeyValueRegex = @"(\"(\\S+.*\\S+)\"|(\\S+.*\\S+))\\s*=\\s*\"(.*)\
 
 + (id)localization
 {
-    return [[[self alloc] init] autorelease];
+    return [[self alloc] init];
 }
 
 - (id)init
@@ -32,12 +32,6 @@ NSString *parseKeyValueRegex = @"(\"(\\S+.*\\S+)\"|(\\S+.*\\S+))\\s*=\\s*\"(.*)\
     return self;
 }
 
-- (void)dealloc
-{
-    [_localizations release];
-
-    [super dealloc];
-}
 
 
 #pragma mark - Localization Management

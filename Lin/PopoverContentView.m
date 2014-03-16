@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2013 Katsuma Tanaka
+ Copyright (c) 2014 Katsuma Tanaka
  
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
  
@@ -14,13 +14,15 @@
 
 @implementation PopoverContentView
 
-- (void)setTableView:(NSTableView *)tableView
+@synthesize tableView;
+
+- (void)setTableView:(NSTableView *)aTableView
 {
-    _tableView = tableView;
+    tableView = aTableView;
 
     // Set double click action
-    [_tableView setTarget:self];
-    [_tableView setDoubleAction:@selector(doubleClicked:)];
+    [tableView setTarget:self];
+    [tableView setDoubleAction:@selector(doubleClicked:)];
 
     // Register observer
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidEndEditing:) name:NSControlTextDidEndEditingNotification object:nil];
@@ -48,15 +50,6 @@
     [self.tableView reloadData];
 }
 
-- (void)dealloc
-{
-    [_localizationItems release];
-    [_filteredLocalizationItems release];
-
-    [_keyFilter release];
-
-    [super dealloc];
-}
 
 
 #pragma mark - Filtering
@@ -159,13 +152,13 @@
     return nil;
 }
 
-- (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors
+- (void)tableView:(NSTableView *)aTableView sortDescriptorsDidChange:(NSArray *)oldDescriptors
 {
     // Sort array
-    self.filteredLocalizationItems = [self.filteredLocalizationItems sortedArrayUsingDescriptors:tableView.sortDescriptors];
+    self.filteredLocalizationItems = [self.filteredLocalizationItems sortedArrayUsingDescriptors:aTableView.sortDescriptors];
 
     // Reload table view
-    [self.tableView reloadData];
+    [tableView reloadData];
 }
 
 

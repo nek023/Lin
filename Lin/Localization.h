@@ -14,7 +14,7 @@ extern NSString *parseKeyValueRegex;
 
 @interface Localization : NSObject
 
-@property (nonatomic, retain) NSMutableDictionary *localizations;
+@property (nonatomic, strong) NSMutableDictionary *localizations;
 
 + (id)localization;
 
