@@ -14,7 +14,7 @@
 
 + (id)localizationItem
 {
-    return [[[self alloc] init] autorelease];
+    return [[self alloc] init];
 }
 
 - (NSString *)description
@@ -22,14 +22,5 @@
     return [NSString stringWithFormat:@"<%@: .strings = %@; language = %@; key = %@; stringValue = %@>", NSStringFromClass([self class]), self.stringsFilename, self.language, self.key, self.stringValue];
 }
 
-- (void)dealloc
-{
-    [_stringsFilename release];
-    [_language release];
-    [_key release];
-    [_stringValue release];
-
-    [super dealloc];
-}
 
 @end

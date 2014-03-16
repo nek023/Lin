@@ -23,7 +23,7 @@
 
 @interface RegEx : NSObject
 
-@property (nonatomic, retain) NSString *expression;
+@property (nonatomic, strong) NSString *expression;
 @property NSUInteger numberOfRanges;
 @property NSUInteger entityRangeInLineIndex;
 @property NSUInteger keyRangeInLineIndex;
@@ -98,7 +98,6 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
         // Load Nib
         NSNib *nib = [[NSNib alloc] initWithNibNamed:@"Popover" bundle:bundle];
         [nib instantiateNibWithOwner:self topLevelObjects:nil];
-        [nib release];
 
         // Popover settings
         self.popover.delegate = self;
@@ -123,7 +122,6 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
             [pTempRegexs addObject: [[RegEx alloc] initWithExpression: regexs[i] numberOfRanges:numberOfRanges[i] entityRangeInLineIndex:entityRangeInLineIndices[i] keyRangeInLineIndex:keyRangeInLineIndices[i]]];
         }
         _regexs = [NSArray arrayWithArray: pTempRegexs];
-        [pTempRegexs release];
     }
 
     return self;
@@ -153,16 +151,6 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
     return [[NSUserDefaults standardUserDefaults] boolForKey:kLinUserDefaultsParseStringsOutsideProjectKey];
 }
 
-- (void)dealloc
-{
-    [_textView release];
-
-    [_currentWorkspacePath release];
-    [_localizationFileSets release];
-    [_localizations release];
-
-    [super dealloc];
-}
 
 
 #pragma mark - Setup
@@ -278,7 +266,6 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
         menuItem.state = enabled ? NSOnState : NSOffState;
 
         [[editMenuItem submenu] addItem:menuItem];
-        [menuItem release];
 
         // Parse .strings outside project's path
         menuItem = [[NSMenuItem alloc] initWithTitle:@"Parse .strings outside project's path" action:@selector(toggleParse:) keyEquivalent:@""];
@@ -286,7 +273,6 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
         menuItem.state = parseStringsOutsideProject ? NSOnState : NSOffState;
 
         [[editMenuItem submenu] addItem:menuItem];
-        [menuItem release];
     }
 }
 

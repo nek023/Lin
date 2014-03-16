@@ -17,17 +17,17 @@
 
 @interface Lin : NSObject <NSPopoverDelegate, PopoverContentViewDelegate>
 
-@property (assign) IBOutlet NSPopover *popover;
+@property (strong) IBOutlet NSPopover *popover;
 
-@property (nonatomic, assign) NSResponder *previousFirstResponder;
-@property (nonatomic, retain) NSTextView *textView;
+@property (nonatomic, strong) NSResponder *previousFirstResponder;
+@property (nonatomic, strong) NSTextView *textView;
 
 @property (nonatomic, copy) NSString *currentWorkspacePath;
-@property (nonatomic, retain) NSMutableDictionary *localizationFileSets;
-@property (nonatomic, retain) NSMutableDictionary *localizations;
+@property (nonatomic, strong) NSMutableDictionary *localizationFileSets;
+@property (nonatomic, strong) NSMutableDictionary *localizations;
 @property (nonatomic, readonly) BOOL enabled;
 @property (nonatomic, readonly) BOOL parseStringsOutsideProject;
-@property (nonatomic, retain) NSArray *regexs;
+@property (nonatomic, strong) NSArray *regexs;
 
 + (instancetype)sharedPlugin;
 + (void)pluginDidLoad:(NSBundle *)plugin;
