@@ -2,8 +2,8 @@
 //  IDEWorkspace.h
 //  Lin
 //
-//  Created by Tanaka Katsuma on 2013/08/21.
-//  Copyright (c) 2013年 Tanaka Katsuma. All rights reserved.
+//  Created by Katsuma Tanaka on 2015/02/05.
+//  Copyright (c) 2015年 Katsuma Tanaka. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

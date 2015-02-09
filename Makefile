@@ -1,12 +1,15 @@
+PROJECT=Lin.xcodeproj
+SCHEME=LinTests
+
 clean:
 	xcodebuild \
-		-project Lin.xcodeproj \
+		-project ${PROJECT} \
 		clean
 
 test:
 	xcodebuild \
-		-project Lin.xcodeproj \
-		-scheme LinTests \
+		-project ${PROJECT} \
+		-scheme ${SCHEME} \
 		-configuration Debug \
 		test
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>LINFunctionName</key>
+		<string>NSLocalizedString</string>
+		<key>LINCompletionPatterns</key>
+		<array>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedString\s*\(\s*\w*</string>
+				<key>Swift</key>
+				<string>NSLocalizedString\s*\(\s*\w*</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>LINFunctionName</key>
+		<string>NSLocalizedStringFromTable</string>
+		<key>LINCompletionPatterns</key>
+		<array>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedStringFromTable\s*\(\s*\w*</string>
+				<key>Swift</key>
+				<string>NSLocalizedStringFromTable\s*\(\s*\w*</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>LINFunctionName</key>
+		<string>NSLocalizedStringFromTableInBundle</string>
+		<key>LINCompletionPatterns</key>
+		<array>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedStringFromTableInBundle\s*\(\s*\w*</string>
+				<key>Swift</key>
+				<string>NSLocalizedStringFromTableInBundle\s*\(\s*\w*</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>LINFunctionName</key>
+		<string>NSLocalizedStringWithDefaultValue</string>
+		<key>LINCompletionPatterns</key>
+		<array>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedStringWithDefaultValue\s*\(\s*\w*</string>
+				<key>Swift</key>
+				<string>NSLocalizedStringWithDefaultValue\s*\(\s*\w*</string>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>

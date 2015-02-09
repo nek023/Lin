@@ -7,435 +7,275 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA02CE8B17EE08240041C2BD /* LNAlertAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA02CE8A17EE08240041C2BD /* LNAlertAccessoryView.xib */; };
-		AA02CE8E17EE083A0041C2BD /* LNAlertAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA02CE8D17EE083A0041C2BD /* LNAlertAccessoryView.m */; };
-		AA1B7DA717C3C1EC00A3A6D7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1B7DA617C3C1EC00A3A6D7 /* Cocoa.framework */; };
-		AA1B7DB117C3C1EC00A3A6D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA1B7DAF17C3C1EC00A3A6D7 /* InfoPlist.strings */; };
-		AA1B7DBA17C3C20F00A3A6D7 /* Lin.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1B7DB917C3C20F00A3A6D7 /* Lin.m */; };
-		AA20D87F17ECB12A006B7CA2 /* NSPopoverFrame+Lin.m in Sources */ = {isa = PBXBuildFile; fileRef = AA20D87E17ECB12A006B7CA2 /* NSPopoverFrame+Lin.m */; };
-		AA2980B417EE2C5300CF46E3 /* LNUserDefaultsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2980B317EE2C5300CF46E3 /* LNUserDefaultsManager.m */; };
-		AA36376617D9EF9E003C5E55 /* LNPopoverContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA36376517D9EF9E003C5E55 /* LNPopoverContentView.m */; };
-		AA3EC36F17EB2A290003A180 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3EC36D17EB2A290003A180 /* DVTFoundation.framework */; };
-		AA3EC37017EB2A290003A180 /* DVTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3EC36E17EB2A290003A180 /* DVTKit.framework */; };
-		AA3EC37317EB2A380003A180 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3EC37117EB2A380003A180 /* IDEFoundation.framework */; };
-		AA3EC37417EB2A380003A180 /* IDEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3EC37217EB2A380003A180 /* IDEKit.framework */; };
-		AA470D5B17C3CFEC005CBB7F /* LNDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = AA470D5A17C3CFEC005CBB7F /* LNDetector.m */; };
-		AA470D5E17C3D05D005CBB7F /* LNEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = AA470D5D17C3D05D005CBB7F /* LNEntity.m */; };
-		AA470D6517C3D380005CBB7F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA470D6417C3D380005CBB7F /* XCTest.framework */; };
-		AA470D6B17C3D380005CBB7F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA470D6917C3D380005CBB7F /* InfoPlist.strings */; };
-		AA470D7D17C3DE31005CBB7F /* LNDetectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA470D7C17C3DE31005CBB7F /* LNDetectorTests.m */; };
-		AA6377CE18C5CCFC005EADC7 /* LNImageButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6377CD18C5CCFC005EADC7 /* LNImageButtonCell.m */; };
-		AA63897918C6019A0061C2C4 /* icon_plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA63897118C6019A0061C2C4 /* icon_plus@2x.png */; };
-		AA63897A18C6019A0061C2C4 /* icon_minus.png in Resources */ = {isa = PBXBuildFile; fileRef = AA63897218C6019A0061C2C4 /* icon_minus.png */; };
-		AA63897B18C6019A0061C2C4 /* icon_minus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA63897318C6019A0061C2C4 /* icon_minus@2x.png */; };
-		AA63897C18C6019A0061C2C4 /* icon120.png in Resources */ = {isa = PBXBuildFile; fileRef = AA63897418C6019A0061C2C4 /* icon120.png */; };
-		AA63897D18C6019A0061C2C4 /* icon_plus.png in Resources */ = {isa = PBXBuildFile; fileRef = AA63897518C6019A0061C2C4 /* icon_plus.png */; };
-		AA63897E18C6019A0061C2C4 /* icon_detach@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA63897618C6019A0061C2C4 /* icon_detach@2x.png */; };
-		AA63897F18C6019A0061C2C4 /* icon120@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA63897718C6019A0061C2C4 /* icon120@2x.png */; };
-		AA63898018C6019A0061C2C4 /* icon_detach.png in Resources */ = {isa = PBXBuildFile; fileRef = AA63897818C6019A0061C2C4 /* icon_detach.png */; };
-		AA7D4DB117C74CFE0092DF8A /* LNLocalizationCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7D4DB017C74CFE0092DF8A /* LNLocalizationCollection.m */; };
-		AA7D4DB417C74D0A0092DF8A /* LNLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7D4DB317C74D0A0092DF8A /* LNLocalization.m */; };
-		AA8F8EF017EDFC68004964FB /* NSTableView+editedColumnIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8F8EEF17EDFC68004964FB /* NSTableView+editedColumnIdentifier.m */; };
-		AA95FDEC17EB48A9007D33D4 /* LNPopoverContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA95FDEB17EB48A9007D33D4 /* LNPopoverContentView.xib */; };
-		AA95FDEF17EB4E77007D33D4 /* LNPopoverWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA95FDEE17EB4E77007D33D4 /* LNPopoverWindowController.m */; };
-		AAAC873317ED9D4F00BF251D /* LNHorizontalLine.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAC873217ED9D4F00BF251D /* LNHorizontalLine.m */; };
-		AAAC873B17EDA9CF00BF251D /* LNPopoverWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAC873A17EDA9CF00BF251D /* LNPopoverWindow.m */; };
-		AAB0CD3117C4382D0085E913 /* LNRegularExpressionPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB0CD3017C4382D0085E913 /* LNRegularExpressionPattern.m */; };
-		AAB0CD3417C448200085E913 /* LNRegularExpressionPattern+type.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB0CD3317C448200085E913 /* LNRegularExpressionPattern+type.m */; };
-		AAB0CD3617C46A730085E913 /* LNDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = AA470D5A17C3CFEC005CBB7F /* LNDetector.m */; };
-		AAB0CD3717C46B070085E913 /* LNEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = AA470D5D17C3D05D005CBB7F /* LNEntity.m */; };
-		AAB0CD3817C46B070085E913 /* LNRegularExpressionPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB0CD3017C4382D0085E913 /* LNRegularExpressionPattern.m */; };
-		AAB0CD3917C46B070085E913 /* LNRegularExpressionPattern+type.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB0CD3317C448200085E913 /* LNRegularExpressionPattern+type.m */; };
-		AAB0CD3C17C477030085E913 /* LNDetectorTestSet.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB0CD3B17C477030085E913 /* LNDetectorTestSet.m */; };
-		AADDDA9417C49D4800BBA67C /* NSBundle+versions.m in Sources */ = {isa = PBXBuildFile; fileRef = AADDDA9317C49D4800BBA67C /* NSBundle+versions.m */; };
-		AADEADB317C7B6D3001E0C65 /* LNLocalizationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AADEADB217C7B6D3001E0C65 /* LNLocalizationTests.m */; };
-		AADEADB417C7B838001E0C65 /* LNLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7D4DB317C74D0A0092DF8A /* LNLocalization.m */; };
-		AADEADB717C87298001E0C65 /* IDEIndex+Lin.m in Sources */ = {isa = PBXBuildFile; fileRef = AADEADB617C87298001E0C65 /* IDEIndex+Lin.m */; };
-		AADEADC017C87392001E0C65 /* MethodSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = AADEADBF17C87392001E0C65 /* MethodSwizzle.m */; };
-		AAF0D6AB17ECB87100B4318B /* LNTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF0D6AA17ECB87100B4318B /* LNTableView.m */; };
-		AAF0D6AE17ECB89800B4318B /* LNTableHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF0D6AD17ECB89800B4318B /* LNTableHeaderCell.m */; };
-		AAF0D6B117ECC4AF00B4318B /* LNTableCornerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF0D6B017ECC4AF00B4318B /* LNTableCornerView.m */; };
-		AAF0D6B417ECD8EC00B4318B /* LNButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF0D6B317ECD8EC00B4318B /* LNButtonCell.m */; };
-		AAFE3C3F17EECF4A0018E478 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AAFE3C3E17EECF4A0018E478 /* Localizable.strings */; };
-		AAFE3C4117EED36C0018E478 /* LNLocalizationCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7D4DB017C74CFE0092DF8A /* LNLocalizationCollection.m */; };
-		F5859DBD18CABC2A009AF108 /* LNLocalizedStringCollectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = F5859DBC18CABC2A009AF108 /* LNLocalizedStringCollectionOperation.m */; };
+		AA1313A31A82884B0080D488 /* MethodSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1313A21A82884B0080D488 /* MethodSwizzle.m */; };
+		AA1313AA1A8289360080D488 /* DVTSourceTextView+Lin.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1313A91A8289360080D488 /* DVTSourceTextView+Lin.m */; };
+		AA1313AD1A8289D50080D488 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1313AB1A8289D50080D488 /* IDEFoundation.framework */; };
+		AA1313AE1A8289D50080D488 /* IDEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1313AC1A8289D50080D488 /* IDEKit.framework */; };
+		AA1313B11A8289E00080D488 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1313AF1A8289E00080D488 /* DVTFoundation.framework */; };
+		AA1313B21A8289E00080D488 /* DVTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1313B01A8289E00080D488 /* DVTKit.framework */; };
+		AA1313B41A8289E80080D488 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1313B31A8289E80080D488 /* Cocoa.framework */; };
+		AA1DB1181A828CD500856B10 /* DVTTextCompletionController+Lin.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1DB1171A828CD500856B10 /* DVTTextCompletionController+Lin.m */; };
+		AA1DB1221A828FBF00856B10 /* LINTextCompletionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1DB1211A828FBF00856B10 /* LINTextCompletionItem.m */; };
+		AA49B1961A8295F6003EA1A3 /* IDEWorkspace+Lin.m in Sources */ = {isa = PBXBuildFile; fileRef = AA49B1951A8295F6003EA1A3 /* IDEWorkspace+Lin.m */; };
+		AA49B19C1A829B02003EA1A3 /* Completions.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA49B19B1A829B02003EA1A3 /* Completions.plist */; };
+		AA4A0AA81A874D20005109B0 /* DVTSourceCodeLanguage+Lin.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4A0AA71A874D20005109B0 /* DVTSourceCodeLanguage+Lin.m */; };
+		AA80F3471A82805B007687A3 /* Lin.m in Sources */ = {isa = PBXBuildFile; fileRef = AA80F3461A82805B007687A3 /* Lin.m */; };
+		AA89B4FD1A872ED600E8CCD6 /* DVTTextCompletionDataSource+Lin.m in Sources */ = {isa = PBXBuildFile; fileRef = AA89B4FC1A872ED600E8CCD6 /* DVTTextCompletionDataSource+Lin.m */; };
+		AAB604931A83933F00C0E59B /* Localizations.strings in Resources */ = {isa = PBXBuildFile; fileRef = AAB604921A83933F00C0E59B /* Localizations.strings */; };
+		AAB604951A8393B800C0E59B /* LINLocalizationParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB604941A8393B800C0E59B /* LINLocalizationParserTests.m */; };
+		AAB604981A8393F700C0E59B /* LINLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB604971A8393F700C0E59B /* LINLocalization.m */; };
+		AAB6049D1A839A0C00C0E59B /* LINLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB604971A8393F700C0E59B /* LINLocalization.m */; };
+		AAB604A51A83C3B900C0E59B /* LINLocalizationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB604A41A83C3B900C0E59B /* LINLocalizationParser.m */; };
+		AAB604AB1A83CBD400C0E59B /* LINLocalizationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB604A41A83C3B900C0E59B /* LINLocalizationParser.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		AA470D6F17C3D380005CBB7F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AA1B7D9B17C3C1EC00A3A6D7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = AA1B7DA217C3C1EC00A3A6D7;
-			remoteInfo = Lin;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		AA02CE8A17EE08240041C2BD /* LNAlertAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LNAlertAccessoryView.xib; sourceTree = "<group>"; };
-		AA02CE8C17EE083A0041C2BD /* LNAlertAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNAlertAccessoryView.h; sourceTree = "<group>"; };
-		AA02CE8D17EE083A0041C2BD /* LNAlertAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNAlertAccessoryView.m; sourceTree = "<group>"; };
-		AA11AC4017C66F0200889DFB /* DVTFilePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTFilePath.h; sourceTree = "<group>"; };
-		AA11AC4317C6746800889DFB /* IDEIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDEIndex.h; sourceTree = "<group>"; };
-		AA11AC4617C6755400889DFB /* IDEIndexCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDEIndexCollection.h; sourceTree = "<group>"; };
-		AA1B7DA317C3C1EC00A3A6D7 /* Lin.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Lin.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA1B7DA617C3C1EC00A3A6D7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		AA1B7DA917C3C1EC00A3A6D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		AA1B7DAA17C3C1EC00A3A6D7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		AA1B7DAB17C3C1EC00A3A6D7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		AA1B7DAE17C3C1EC00A3A6D7 /* Lin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Lin-Info.plist"; sourceTree = "<group>"; };
-		AA1B7DB017C3C1EC00A3A6D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		AA1B7DB217C3C1EC00A3A6D7 /* Lin-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lin-Prefix.pch"; sourceTree = "<group>"; };
-		AA1B7DB817C3C20F00A3A6D7 /* Lin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lin.h; sourceTree = "<group>"; };
-		AA1B7DB917C3C20F00A3A6D7 /* Lin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lin.m; sourceTree = "<group>"; };
-		AA20D87D17ECB12A006B7CA2 /* NSPopoverFrame+Lin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPopoverFrame+Lin.h"; sourceTree = "<group>"; };
-		AA20D87E17ECB12A006B7CA2 /* NSPopoverFrame+Lin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPopoverFrame+Lin.m"; sourceTree = "<group>"; };
-		AA20D88017ECB1AD006B7CA2 /* NSPopoverFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSPopoverFrame.h; sourceTree = "<group>"; };
-		AA2980B217EE2C5300CF46E3 /* LNUserDefaultsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNUserDefaultsManager.h; sourceTree = "<group>"; };
-		AA2980B317EE2C5300CF46E3 /* LNUserDefaultsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNUserDefaultsManager.m; sourceTree = "<group>"; };
-		AA36376417D9EF9E003C5E55 /* LNPopoverContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNPopoverContentView.h; sourceTree = "<group>"; };
-		AA36376517D9EF9E003C5E55 /* LNPopoverContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNPopoverContentView.m; sourceTree = "<group>"; };
-		AA3EC36D17EB2A290003A180 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTFoundation.framework; path = ../../../../Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework; sourceTree = "<group>"; };
-		AA3EC36E17EB2A290003A180 /* DVTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTKit.framework; path = ../../../../Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework; sourceTree = "<group>"; };
-		AA3EC37117EB2A380003A180 /* IDEFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDEFoundation.framework; path = ../../../../Applications/Xcode.app/Contents/Frameworks/IDEFoundation.framework; sourceTree = "<group>"; };
-		AA3EC37217EB2A380003A180 /* IDEKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDEKit.framework; path = ../../../../Applications/Xcode.app/Contents/Frameworks/IDEKit.framework; sourceTree = "<group>"; };
-		AA470D5917C3CFEC005CBB7F /* LNDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNDetector.h; sourceTree = "<group>"; };
-		AA470D5A17C3CFEC005CBB7F /* LNDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNDetector.m; sourceTree = "<group>"; };
-		AA470D5C17C3D05D005CBB7F /* LNEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNEntity.h; sourceTree = "<group>"; };
-		AA470D5D17C3D05D005CBB7F /* LNEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNEntity.m; sourceTree = "<group>"; };
-		AA470D6317C3D380005CBB7F /* LinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA470D6417C3D380005CBB7F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		AA470D6817C3D380005CBB7F /* LinTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LinTests-Info.plist"; sourceTree = "<group>"; };
-		AA470D6A17C3D380005CBB7F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		AA470D6E17C3D380005CBB7F /* LinTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LinTests-Prefix.pch"; sourceTree = "<group>"; };
-		AA470D7C17C3DE31005CBB7F /* LNDetectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNDetectorTests.m; sourceTree = "<group>"; };
-		AA6377CC18C5CCFC005EADC7 /* LNImageButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNImageButtonCell.h; sourceTree = "<group>"; };
-		AA6377CD18C5CCFC005EADC7 /* LNImageButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNImageButtonCell.m; sourceTree = "<group>"; };
-		AA63897118C6019A0061C2C4 /* icon_plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_plus@2x.png"; sourceTree = "<group>"; };
-		AA63897218C6019A0061C2C4 /* icon_minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_minus.png; sourceTree = "<group>"; };
-		AA63897318C6019A0061C2C4 /* icon_minus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_minus@2x.png"; sourceTree = "<group>"; };
-		AA63897418C6019A0061C2C4 /* icon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon120.png; sourceTree = "<group>"; };
-		AA63897518C6019A0061C2C4 /* icon_plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_plus.png; sourceTree = "<group>"; };
-		AA63897618C6019A0061C2C4 /* icon_detach@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_detach@2x.png"; sourceTree = "<group>"; };
-		AA63897718C6019A0061C2C4 /* icon120@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon120@2x.png"; sourceTree = "<group>"; };
-		AA63897818C6019A0061C2C4 /* icon_detach.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_detach.png; sourceTree = "<group>"; };
-		AA7B0CAD17F4228E0004FE3B /* DVTDualProxyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTDualProxyWindow.h; sourceTree = "<group>"; };
-		AA7B0CB017F4229D0004FE3B /* IDEWorkspaceWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDEWorkspaceWindow.h; sourceTree = "<group>"; };
-		AA7B0CB317F422BB0004FE3B /* DVTSourceTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTSourceTextView.h; sourceTree = "<group>"; };
-		AA7D4DAF17C74CFE0092DF8A /* LNLocalizationCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNLocalizationCollection.h; sourceTree = "<group>"; };
-		AA7D4DB017C74CFE0092DF8A /* LNLocalizationCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNLocalizationCollection.m; sourceTree = "<group>"; };
-		AA7D4DB217C74D0A0092DF8A /* LNLocalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNLocalization.h; sourceTree = "<group>"; };
-		AA7D4DB317C74D0A0092DF8A /* LNLocalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNLocalization.m; sourceTree = "<group>"; };
-		AA8F8EEE17EDFC68004964FB /* NSTableView+editedColumnIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTableView+editedColumnIdentifier.h"; sourceTree = "<group>"; };
-		AA8F8EEF17EDFC68004964FB /* NSTableView+editedColumnIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTableView+editedColumnIdentifier.m"; sourceTree = "<group>"; };
-		AA93691517C4E4C000E94318 /* IDEWorkspace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDEWorkspace.h; sourceTree = "<group>"; };
-		AA95FDEB17EB48A9007D33D4 /* LNPopoverContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LNPopoverContentView.xib; sourceTree = "<group>"; };
-		AA95FDED17EB4E77007D33D4 /* LNPopoverWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNPopoverWindowController.h; sourceTree = "<group>"; };
-		AA95FDEE17EB4E77007D33D4 /* LNPopoverWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNPopoverWindowController.m; sourceTree = "<group>"; };
-		AAAC873117ED9D4F00BF251D /* LNHorizontalLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNHorizontalLine.h; sourceTree = "<group>"; };
-		AAAC873217ED9D4F00BF251D /* LNHorizontalLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNHorizontalLine.m; sourceTree = "<group>"; };
-		AAAC873917EDA9CF00BF251D /* LNPopoverWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNPopoverWindow.h; sourceTree = "<group>"; };
-		AAAC873A17EDA9CF00BF251D /* LNPopoverWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNPopoverWindow.m; sourceTree = "<group>"; };
-		AAB0CD2F17C4382D0085E913 /* LNRegularExpressionPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNRegularExpressionPattern.h; sourceTree = "<group>"; };
-		AAB0CD3017C4382D0085E913 /* LNRegularExpressionPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNRegularExpressionPattern.m; sourceTree = "<group>"; };
-		AAB0CD3217C448200085E913 /* LNRegularExpressionPattern+type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LNRegularExpressionPattern+type.h"; sourceTree = "<group>"; };
-		AAB0CD3317C448200085E913 /* LNRegularExpressionPattern+type.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LNRegularExpressionPattern+type.m"; sourceTree = "<group>"; };
-		AAB0CD3A17C477030085E913 /* LNDetectorTestSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNDetectorTestSet.h; sourceTree = "<group>"; };
-		AAB0CD3B17C477030085E913 /* LNDetectorTestSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNDetectorTestSet.m; sourceTree = "<group>"; };
-		AADDDA9217C49D4800BBA67C /* NSBundle+versions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+versions.h"; sourceTree = "<group>"; };
-		AADDDA9317C49D4800BBA67C /* NSBundle+versions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+versions.m"; sourceTree = "<group>"; };
-		AADEADB217C7B6D3001E0C65 /* LNLocalizationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNLocalizationTests.m; sourceTree = "<group>"; };
-		AADEADB517C87298001E0C65 /* IDEIndex+Lin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IDEIndex+Lin.h"; sourceTree = "<group>"; };
-		AADEADB617C87298001E0C65 /* IDEIndex+Lin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IDEIndex+Lin.m"; sourceTree = "<group>"; };
-		AADEADBB17C872EB001E0C65 /* IDEEditorDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDEEditorDocument.h; sourceTree = "<group>"; };
-		AADEADBE17C87392001E0C65 /* MethodSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodSwizzle.h; sourceTree = "<group>"; };
-		AADEADBF17C87392001E0C65 /* MethodSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodSwizzle.m; sourceTree = "<group>"; };
-		AAF0D6A917ECB87100B4318B /* LNTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNTableView.h; sourceTree = "<group>"; };
-		AAF0D6AA17ECB87100B4318B /* LNTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNTableView.m; sourceTree = "<group>"; };
-		AAF0D6AC17ECB89800B4318B /* LNTableHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNTableHeaderCell.h; sourceTree = "<group>"; };
-		AAF0D6AD17ECB89800B4318B /* LNTableHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNTableHeaderCell.m; sourceTree = "<group>"; };
-		AAF0D6AF17ECC4AF00B4318B /* LNTableCornerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNTableCornerView.h; sourceTree = "<group>"; };
-		AAF0D6B017ECC4AF00B4318B /* LNTableCornerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNTableCornerView.m; sourceTree = "<group>"; };
-		AAF0D6B217ECD8EC00B4318B /* LNButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNButtonCell.h; sourceTree = "<group>"; };
-		AAF0D6B317ECD8EC00B4318B /* LNButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNButtonCell.m; sourceTree = "<group>"; };
-		AAFE3C3E17EECF4A0018E478 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		F5859DBB18CABC2A009AF108 /* LNLocalizedStringCollectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNLocalizedStringCollectionOperation.h; sourceTree = "<group>"; };
-		F5859DBC18CABC2A009AF108 /* LNLocalizedStringCollectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNLocalizedStringCollectionOperation.m; sourceTree = "<group>"; };
+		AA023C121A82A2E700D4AE5F /* LinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA023C151A82A2E700D4AE5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA1313A11A82884B0080D488 /* MethodSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodSwizzle.h; sourceTree = "<group>"; };
+		AA1313A21A82884B0080D488 /* MethodSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodSwizzle.m; sourceTree = "<group>"; };
+		AA1313A51A82890D0080D488 /* DVTCompletingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTCompletingTextView.h; sourceTree = "<group>"; };
+		AA1313A81A8289360080D488 /* DVTSourceTextView+Lin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTSourceTextView+Lin.h"; sourceTree = "<group>"; };
+		AA1313A91A8289360080D488 /* DVTSourceTextView+Lin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVTSourceTextView+Lin.m"; sourceTree = "<group>"; };
+		AA1313AB1A8289D50080D488 /* IDEFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDEFoundation.framework; path = /Applications/Xcode.app/Contents/Frameworks/IDEFoundation.framework; sourceTree = "<absolute>"; };
+		AA1313AC1A8289D50080D488 /* IDEKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDEKit.framework; path = /Applications/Xcode.app/Contents/Frameworks/IDEKit.framework; sourceTree = "<absolute>"; };
+		AA1313AF1A8289E00080D488 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTFoundation.framework; path = /Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework; sourceTree = "<absolute>"; };
+		AA1313B01A8289E00080D488 /* DVTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTKit.framework; path = /Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework; sourceTree = "<absolute>"; };
+		AA1313B31A8289E80080D488 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		AA1DB1111A828C9800856B10 /* DVTTextCompletionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTTextCompletionController.h; sourceTree = "<group>"; };
+		AA1DB1161A828CD500856B10 /* DVTTextCompletionController+Lin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTTextCompletionController+Lin.h"; sourceTree = "<group>"; };
+		AA1DB1171A828CD500856B10 /* DVTTextCompletionController+Lin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVTTextCompletionController+Lin.m"; sourceTree = "<group>"; };
+		AA1DB1201A828FBF00856B10 /* LINTextCompletionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LINTextCompletionItem.h; sourceTree = "<group>"; };
+		AA1DB1211A828FBF00856B10 /* LINTextCompletionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINTextCompletionItem.m; sourceTree = "<group>"; };
+		AA49B1931A82959D003EA1A3 /* IDEWorkspace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEWorkspace.h; sourceTree = "<group>"; };
+		AA49B1941A8295F6003EA1A3 /* IDEWorkspace+Lin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IDEWorkspace+Lin.h"; sourceTree = "<group>"; };
+		AA49B1951A8295F6003EA1A3 /* IDEWorkspace+Lin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IDEWorkspace+Lin.m"; sourceTree = "<group>"; };
+		AA49B1971A8296AD003EA1A3 /* IDEIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDEIndex.h; sourceTree = "<group>"; };
+		AA49B19A1A829977003EA1A3 /* DVTFilePath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVTFilePath.h; sourceTree = "<group>"; };
+		AA49B19B1A829B02003EA1A3 /* Completions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Completions.plist; sourceTree = "<group>"; };
+		AA4A0AA61A874D20005109B0 /* DVTSourceCodeLanguage+Lin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTSourceCodeLanguage+Lin.h"; sourceTree = "<group>"; };
+		AA4A0AA71A874D20005109B0 /* DVTSourceCodeLanguage+Lin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVTSourceCodeLanguage+Lin.m"; sourceTree = "<group>"; };
+		AA4A0AAF1A877250005109B0 /* IDELanguageSupportCore.ideplugin */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = IDELanguageSupportCore.ideplugin; path = ../../../../Applications/Xcode.app/Contents/PlugIns/IDELanguageSupportCore.ideplugin; sourceTree = "<group>"; };
+		AA4A0AB01A877250005109B0 /* IDELanguageSupportUI.ideplugin */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = IDELanguageSupportUI.ideplugin; path = ../../../../Applications/Xcode.app/Contents/PlugIns/IDELanguageSupportUI.ideplugin; sourceTree = "<group>"; };
+		AA69EE811A87B9ED00139C5D /* IDEIndexCompletionItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEIndexCompletionItem.h; sourceTree = "<group>"; };
+		AA80F33B1A82804C007687A3 /* Lin.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Lin.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA80F33F1A82804C007687A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA80F3451A82805B007687A3 /* Lin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lin.h; sourceTree = "<group>"; };
+		AA80F3461A82805B007687A3 /* Lin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lin.m; sourceTree = "<group>"; };
+		AA89B4F71A872D0200E8CCD6 /* DVTTextCompletionDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVTTextCompletionDataSource.h; sourceTree = "<group>"; };
+		AA89B4F81A872D2000E8CCD6 /* DVTSourceCodeLanguage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVTSourceCodeLanguage.h; sourceTree = "<group>"; };
+		AA89B4FB1A872ED600E8CCD6 /* DVTTextCompletionDataSource+Lin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTTextCompletionDataSource+Lin.h"; sourceTree = "<group>"; };
+		AA89B4FC1A872ED600E8CCD6 /* DVTTextCompletionDataSource+Lin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVTTextCompletionDataSource+Lin.m"; sourceTree = "<group>"; };
+		AAB604921A83933F00C0E59B /* Localizations.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizations.strings; sourceTree = "<group>"; };
+		AAB604941A8393B800C0E59B /* LINLocalizationParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINLocalizationParserTests.m; sourceTree = "<group>"; };
+		AAB604961A8393F700C0E59B /* LINLocalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LINLocalization.h; sourceTree = "<group>"; };
+		AAB604971A8393F700C0E59B /* LINLocalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINLocalization.m; sourceTree = "<group>"; };
+		AAB6049F1A83A18400C0E59B /* IDEIndexCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEIndexCollection.h; sourceTree = "<group>"; };
+		AAB604A11A83A72600C0E59B /* DVTSourceTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVTSourceTextView.h; sourceTree = "<group>"; };
+		AAB604A31A83C3B900C0E59B /* LINLocalizationParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LINLocalizationParser.h; sourceTree = "<group>"; };
+		AAB604A41A83C3B900C0E59B /* LINLocalizationParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINLocalizationParser.m; sourceTree = "<group>"; };
+		AAB604AC1A83D3B900C0E59B /* DVTTextStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVTTextStorage.h; sourceTree = "<group>"; };
+		AAC2027C1A868C730010FDF7 /* Xcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Xcode.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		AA1B7DA017C3C1EC00A3A6D7 /* Frameworks */ = {
+		AA023C0F1A82A2E700D4AE5F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA3EC37317EB2A380003A180 /* IDEFoundation.framework in Frameworks */,
-				AA3EC37417EB2A380003A180 /* IDEKit.framework in Frameworks */,
-				AA3EC36F17EB2A290003A180 /* DVTFoundation.framework in Frameworks */,
-				AA3EC37017EB2A290003A180 /* DVTKit.framework in Frameworks */,
-				AA1B7DA717C3C1EC00A3A6D7 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA470D6017C3D380005CBB7F /* Frameworks */ = {
+		AA80F3381A82804C007687A3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA470D6517C3D380005CBB7F /* XCTest.framework in Frameworks */,
+				AA1313B41A8289E80080D488 /* Cocoa.framework in Frameworks */,
+				AA1313AD1A8289D50080D488 /* IDEFoundation.framework in Frameworks */,
+				AA1313AE1A8289D50080D488 /* IDEKit.framework in Frameworks */,
+				AA1313B11A8289E00080D488 /* DVTFoundation.framework in Frameworks */,
+				AA1313B21A8289E00080D488 /* DVTKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AA1B7D9A17C3C1EC00A3A6D7 = {
+		AA023C131A82A2E700D4AE5F /* LinTests */ = {
 			isa = PBXGroup;
 			children = (
-				AA1B7DAC17C3C1EC00A3A6D7 /* Lin */,
-				AA470D6617C3D380005CBB7F /* LinTests */,
-				AA1B7DA517C3C1EC00A3A6D7 /* Frameworks */,
-				AA1B7DA417C3C1EC00A3A6D7 /* Products */,
-			);
-			sourceTree = "<group>";
-		};
-		AA1B7DA417C3C1EC00A3A6D7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AA1B7DA317C3C1EC00A3A6D7 /* Lin.xcplugin */,
-				AA470D6317C3D380005CBB7F /* LinTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		AA1B7DA517C3C1EC00A3A6D7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AA3EC37117EB2A380003A180 /* IDEFoundation.framework */,
-				AA3EC37217EB2A380003A180 /* IDEKit.framework */,
-				AA3EC36D17EB2A290003A180 /* DVTFoundation.framework */,
-				AA3EC36E17EB2A290003A180 /* DVTKit.framework */,
-				AA1B7DA617C3C1EC00A3A6D7 /* Cocoa.framework */,
-				AA470D6417C3D380005CBB7F /* XCTest.framework */,
-				AA1B7DA817C3C1EC00A3A6D7 /* Other Frameworks */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		AA1B7DA817C3C1EC00A3A6D7 /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AA1B7DA917C3C1EC00A3A6D7 /* Foundation.framework */,
-				AA1B7DAA17C3C1EC00A3A6D7 /* CoreData.framework */,
-				AA1B7DAB17C3C1EC00A3A6D7 /* AppKit.framework */,
-			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
-		AA1B7DAC17C3C1EC00A3A6D7 /* Lin */ = {
-			isa = PBXGroup;
-			children = (
-				AA93691817C4E4C700E94318 /* Xcode-Private-Classes */,
-				AA20D88117ECB467006B7CA2 /* AppKit-Private-Classes */,
-				AADDDA9517C49D4D00BBA67C /* Categories */,
-				AA2980B517EE2CF600CF46E3 /* Shared */,
-				AA470D7817C3DD42005CBB7F /* Models */,
-				AADDDAA017C4A3BA00BBA67C /* Views */,
-				AADDDA9C17C4A0E200BBA67C /* Controllers */,
-				AA1B7DB817C3C20F00A3A6D7 /* Lin.h */,
-				AA1B7DB917C3C20F00A3A6D7 /* Lin.m */,
-				AADDDA9B17C4A0DA00BBA67C /* Resources */,
-				AA1B7DAD17C3C1EC00A3A6D7 /* Supporting Files */,
-			);
-			path = Lin;
-			sourceTree = "<group>";
-		};
-		AA1B7DAD17C3C1EC00A3A6D7 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				AA1B7DAE17C3C1EC00A3A6D7 /* Lin-Info.plist */,
-				AA1B7DAF17C3C1EC00A3A6D7 /* InfoPlist.strings */,
-				AA1B7DB217C3C1EC00A3A6D7 /* Lin-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		AA20D88117ECB467006B7CA2 /* AppKit-Private-Classes */ = {
-			isa = PBXGroup;
-			children = (
-				AA20D88017ECB1AD006B7CA2 /* NSPopoverFrame.h */,
-			);
-			name = "AppKit-Private-Classes";
-			sourceTree = "<group>";
-		};
-		AA2980B517EE2CF600CF46E3 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				AA2980B217EE2C5300CF46E3 /* LNUserDefaultsManager.h */,
-				AA2980B317EE2C5300CF46E3 /* LNUserDefaultsManager.m */,
-				F5859DBB18CABC2A009AF108 /* LNLocalizedStringCollectionOperation.h */,
-				F5859DBC18CABC2A009AF108 /* LNLocalizedStringCollectionOperation.m */,
-			);
-			name = Shared;
-			sourceTree = "<group>";
-		};
-		AA470D6617C3D380005CBB7F /* LinTests */ = {
-			isa = PBXGroup;
-			children = (
-				AAB0CD3D17C478EF0085E913 /* Models */,
-				AA470D7C17C3DE31005CBB7F /* LNDetectorTests.m */,
-				AADEADB217C7B6D3001E0C65 /* LNLocalizationTests.m */,
-				AAFE3C4017EED0950018E478 /* Resources */,
-				AA470D6717C3D380005CBB7F /* Supporting Files */,
+				AAB604941A8393B800C0E59B /* LINLocalizationParserTests.m */,
+				AAB604921A83933F00C0E59B /* Localizations.strings */,
+				AA023C141A82A2E700D4AE5F /* Supporting Files */,
 			);
 			path = LinTests;
 			sourceTree = "<group>";
 		};
-		AA470D6717C3D380005CBB7F /* Supporting Files */ = {
+		AA023C141A82A2E700D4AE5F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				AA470D6817C3D380005CBB7F /* LinTests-Info.plist */,
-				AA470D6917C3D380005CBB7F /* InfoPlist.strings */,
-				AA470D6E17C3D380005CBB7F /* LinTests-Prefix.pch */,
+				AA023C151A82A2E700D4AE5F /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		AA470D7817C3DD42005CBB7F /* Models */ = {
+		AA1313B51A8289EC0080D488 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AA470D5917C3CFEC005CBB7F /* LNDetector.h */,
-				AA470D5A17C3CFEC005CBB7F /* LNDetector.m */,
-				AA470D5C17C3D05D005CBB7F /* LNEntity.h */,
-				AA470D5D17C3D05D005CBB7F /* LNEntity.m */,
-				AAB0CD2F17C4382D0085E913 /* LNRegularExpressionPattern.h */,
-				AAB0CD3017C4382D0085E913 /* LNRegularExpressionPattern.m */,
-				AAB0CD3217C448200085E913 /* LNRegularExpressionPattern+type.h */,
-				AAB0CD3317C448200085E913 /* LNRegularExpressionPattern+type.m */,
-				AA7D4DAF17C74CFE0092DF8A /* LNLocalizationCollection.h */,
-				AA7D4DB017C74CFE0092DF8A /* LNLocalizationCollection.m */,
-				AA7D4DB217C74D0A0092DF8A /* LNLocalization.h */,
-				AA7D4DB317C74D0A0092DF8A /* LNLocalization.m */,
+				AA4A0AAF1A877250005109B0 /* IDELanguageSupportCore.ideplugin */,
+				AA4A0AB01A877250005109B0 /* IDELanguageSupportUI.ideplugin */,
+				AA1313B31A8289E80080D488 /* Cocoa.framework */,
+				AA1313AF1A8289E00080D488 /* DVTFoundation.framework */,
+				AA1313B01A8289E00080D488 /* DVTKit.framework */,
+				AA1313AB1A8289D50080D488 /* IDEFoundation.framework */,
+				AA1313AC1A8289D50080D488 /* IDEKit.framework */,
 			);
-			name = Models;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		AA63898118C6019F0061C2C4 /* Images */ = {
+		AA1DB1141A828CBA00856B10 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				AA63897118C6019A0061C2C4 /* icon_plus@2x.png */,
-				AA63897518C6019A0061C2C4 /* icon_plus.png */,
-				AA63897218C6019A0061C2C4 /* icon_minus.png */,
-				AA63897318C6019A0061C2C4 /* icon_minus@2x.png */,
-				AA63897618C6019A0061C2C4 /* icon_detach@2x.png */,
-				AA63897818C6019A0061C2C4 /* icon_detach.png */,
-				AA63897718C6019A0061C2C4 /* icon120@2x.png */,
-				AA63897418C6019A0061C2C4 /* icon120.png */,
-			);
-			name = Images;
-			sourceTree = "<group>";
-		};
-		AA93691817C4E4C700E94318 /* Xcode-Private-Classes */ = {
-			isa = PBXGroup;
-			children = (
-				AA93691517C4E4C000E94318 /* IDEWorkspace.h */,
-				AA11AC4017C66F0200889DFB /* DVTFilePath.h */,
-				AA11AC4317C6746800889DFB /* IDEIndex.h */,
-				AA11AC4617C6755400889DFB /* IDEIndexCollection.h */,
-				AADEADBB17C872EB001E0C65 /* IDEEditorDocument.h */,
-				AA7B0CAD17F4228E0004FE3B /* DVTDualProxyWindow.h */,
-				AA7B0CB017F4229D0004FE3B /* IDEWorkspaceWindow.h */,
-				AA7B0CB317F422BB0004FE3B /* DVTSourceTextView.h */,
-			);
-			name = "Xcode-Private-Classes";
-			sourceTree = "<group>";
-		};
-		AAB0CD3D17C478EF0085E913 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				AAB0CD3A17C477030085E913 /* LNDetectorTestSet.h */,
-				AAB0CD3B17C477030085E913 /* LNDetectorTestSet.m */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
-		AADDDA9517C49D4D00BBA67C /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				AADEADBE17C87392001E0C65 /* MethodSwizzle.h */,
-				AADEADBF17C87392001E0C65 /* MethodSwizzle.m */,
-				AADDDA9217C49D4800BBA67C /* NSBundle+versions.h */,
-				AADDDA9317C49D4800BBA67C /* NSBundle+versions.m */,
-				AADEADB517C87298001E0C65 /* IDEIndex+Lin.h */,
-				AADEADB617C87298001E0C65 /* IDEIndex+Lin.m */,
-				AA20D87D17ECB12A006B7CA2 /* NSPopoverFrame+Lin.h */,
-				AA20D87E17ECB12A006B7CA2 /* NSPopoverFrame+Lin.m */,
-				AA8F8EEE17EDFC68004964FB /* NSTableView+editedColumnIdentifier.h */,
-				AA8F8EEF17EDFC68004964FB /* NSTableView+editedColumnIdentifier.m */,
+				AA1313A11A82884B0080D488 /* MethodSwizzle.h */,
+				AA1313A21A82884B0080D488 /* MethodSwizzle.m */,
+				AA4A0AA61A874D20005109B0 /* DVTSourceCodeLanguage+Lin.h */,
+				AA4A0AA71A874D20005109B0 /* DVTSourceCodeLanguage+Lin.m */,
+				AA1313A81A8289360080D488 /* DVTSourceTextView+Lin.h */,
+				AA1313A91A8289360080D488 /* DVTSourceTextView+Lin.m */,
+				AA1DB1161A828CD500856B10 /* DVTTextCompletionController+Lin.h */,
+				AA1DB1171A828CD500856B10 /* DVTTextCompletionController+Lin.m */,
+				AA89B4FB1A872ED600E8CCD6 /* DVTTextCompletionDataSource+Lin.h */,
+				AA89B4FC1A872ED600E8CCD6 /* DVTTextCompletionDataSource+Lin.m */,
+				AA49B1941A8295F6003EA1A3 /* IDEWorkspace+Lin.h */,
+				AA49B1951A8295F6003EA1A3 /* IDEWorkspace+Lin.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
 		};
-		AADDDA9B17C4A0DA00BBA67C /* Resources */ = {
+		AA1DB1151A828CC100856B10 /* Xcode */ = {
 			isa = PBXGroup;
 			children = (
-				AA95FDEB17EB48A9007D33D4 /* LNPopoverContentView.xib */,
-				AA02CE8A17EE08240041C2BD /* LNAlertAccessoryView.xib */,
-				AA63898118C6019F0061C2C4 /* Images */,
+				AAC2027C1A868C730010FDF7 /* Xcode.h */,
+				AAB604A71A83C96600C0E59B /* DVTFoundation */,
+				AAB604A61A83C93800C0E59B /* DVTKit */,
+				AAB604A81A83C99F00C0E59B /* IDEFoundation */,
 			);
-			name = Resources;
+			name = Xcode;
 			sourceTree = "<group>";
 		};
-		AADDDA9C17C4A0E200BBA67C /* Controllers */ = {
+		AA80F3321A82804C007687A3 = {
 			isa = PBXGroup;
 			children = (
-				AA95FDED17EB4E77007D33D4 /* LNPopoverWindowController.h */,
-				AA95FDEE17EB4E77007D33D4 /* LNPopoverWindowController.m */,
+				AA80F33D1A82804C007687A3 /* Lin */,
+				AA023C131A82A2E700D4AE5F /* LinTests */,
+				AA1313B51A8289EC0080D488 /* Frameworks */,
+				AA80F33C1A82804C007687A3 /* Products */,
 			);
-			name = Controllers;
 			sourceTree = "<group>";
 		};
-		AADDDAA017C4A3BA00BBA67C /* Views */ = {
+		AA80F33C1A82804C007687A3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AAAC873917EDA9CF00BF251D /* LNPopoverWindow.h */,
-				AAAC873A17EDA9CF00BF251D /* LNPopoverWindow.m */,
-				AA36376417D9EF9E003C5E55 /* LNPopoverContentView.h */,
-				AA36376517D9EF9E003C5E55 /* LNPopoverContentView.m */,
-				AAF0D6A917ECB87100B4318B /* LNTableView.h */,
-				AAF0D6AA17ECB87100B4318B /* LNTableView.m */,
-				AAF0D6AF17ECC4AF00B4318B /* LNTableCornerView.h */,
-				AAF0D6B017ECC4AF00B4318B /* LNTableCornerView.m */,
-				AAF0D6AC17ECB89800B4318B /* LNTableHeaderCell.h */,
-				AAF0D6AD17ECB89800B4318B /* LNTableHeaderCell.m */,
-				AAF0D6B217ECD8EC00B4318B /* LNButtonCell.h */,
-				AAF0D6B317ECD8EC00B4318B /* LNButtonCell.m */,
-				AAAC873117ED9D4F00BF251D /* LNHorizontalLine.h */,
-				AAAC873217ED9D4F00BF251D /* LNHorizontalLine.m */,
-				AA02CE8C17EE083A0041C2BD /* LNAlertAccessoryView.h */,
-				AA02CE8D17EE083A0041C2BD /* LNAlertAccessoryView.m */,
-				AA6377CC18C5CCFC005EADC7 /* LNImageButtonCell.h */,
-				AA6377CD18C5CCFC005EADC7 /* LNImageButtonCell.m */,
+				AA80F33B1A82804C007687A3 /* Lin.xcplugin */,
+				AA023C121A82A2E700D4AE5F /* LinTests.xctest */,
 			);
-			name = Views;
+			name = Products;
 			sourceTree = "<group>";
 		};
-		AAFE3C4017EED0950018E478 /* Resources */ = {
+		AA80F33D1A82804C007687A3 /* Lin */ = {
 			isa = PBXGroup;
 			children = (
-				AAFE3C3E17EECF4A0018E478 /* Localizable.strings */,
+				AA1DB1151A828CC100856B10 /* Xcode */,
+				AA1DB1141A828CBA00856B10 /* Categories */,
+				AAB6049E1A839BC500C0E59B /* Models */,
+				AA80F3451A82805B007687A3 /* Lin.h */,
+				AA80F3461A82805B007687A3 /* Lin.m */,
+				AA80F33E1A82804C007687A3 /* Supporting Files */,
 			);
-			name = Resources;
+			path = Lin;
+			sourceTree = "<group>";
+		};
+		AA80F33E1A82804C007687A3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AA80F33F1A82804C007687A3 /* Info.plist */,
+				AA49B19B1A829B02003EA1A3 /* Completions.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AAB6049E1A839BC500C0E59B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AAB604A31A83C3B900C0E59B /* LINLocalizationParser.h */,
+				AAB604A41A83C3B900C0E59B /* LINLocalizationParser.m */,
+				AAB604961A8393F700C0E59B /* LINLocalization.h */,
+				AAB604971A8393F700C0E59B /* LINLocalization.m */,
+				AA1DB1201A828FBF00856B10 /* LINTextCompletionItem.h */,
+				AA1DB1211A828FBF00856B10 /* LINTextCompletionItem.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		AAB604A61A83C93800C0E59B /* DVTKit */ = {
+			isa = PBXGroup;
+			children = (
+				AA1313A51A82890D0080D488 /* DVTCompletingTextView.h */,
+				AAB604A11A83A72600C0E59B /* DVTSourceTextView.h */,
+				AA1DB1111A828C9800856B10 /* DVTTextCompletionController.h */,
+				AA89B4F71A872D0200E8CCD6 /* DVTTextCompletionDataSource.h */,
+				AAB604AC1A83D3B900C0E59B /* DVTTextStorage.h */,
+			);
+			name = DVTKit;
+			sourceTree = "<group>";
+		};
+		AAB604A71A83C96600C0E59B /* DVTFoundation */ = {
+			isa = PBXGroup;
+			children = (
+				AA49B19A1A829977003EA1A3 /* DVTFilePath.h */,
+				AA89B4F81A872D2000E8CCD6 /* DVTSourceCodeLanguage.h */,
+			);
+			name = DVTFoundation;
+			sourceTree = "<group>";
+		};
+		AAB604A81A83C99F00C0E59B /* IDEFoundation */ = {
+			isa = PBXGroup;
+			children = (
+				AA49B1971A8296AD003EA1A3 /* IDEIndex.h */,
+				AA69EE811A87B9ED00139C5D /* IDEIndexCompletionItem.h */,
+				AAB6049F1A83A18400C0E59B /* IDEIndexCollection.h */,
+				AA49B1931A82959D003EA1A3 /* IDEWorkspace.h */,
+			);
+			name = IDEFoundation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AA1B7DA217C3C1EC00A3A6D7 /* Lin */ = {
+		AA023C111A82A2E700D4AE5F /* LinTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA1B7DB517C3C1EC00A3A6D7 /* Build configuration list for PBXNativeTarget "Lin" */;
+			buildConfigurationList = AA023C181A82A2E700D4AE5F /* Build configuration list for PBXNativeTarget "LinTests" */;
 			buildPhases = (
-				AA1B7D9F17C3C1EC00A3A6D7 /* Sources */,
-				AA1B7DA017C3C1EC00A3A6D7 /* Frameworks */,
-				AA1B7DA117C3C1EC00A3A6D7 /* Resources */,
+				AA023C0E1A82A2E700D4AE5F /* Sources */,
+				AA023C0F1A82A2E700D4AE5F /* Frameworks */,
+				AA023C101A82A2E700D4AE5F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LinTests;
+			productName = LinTests;
+			productReference = AA023C121A82A2E700D4AE5F /* LinTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AA80F33A1A82804C007687A3 /* Lin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA80F3421A82804C007687A3 /* Build configuration list for PBXNativeTarget "Lin" */;
+			buildPhases = (
+				AA80F3371A82804C007687A3 /* Sources */,
+				AA80F3381A82804C007687A3 /* Frameworks */,
+				AA80F3391A82804C007687A3 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -443,168 +283,127 @@
 			);
 			name = Lin;
 			productName = Lin;
-			productReference = AA1B7DA317C3C1EC00A3A6D7 /* Lin.xcplugin */;
+			productReference = AA80F33B1A82804C007687A3 /* Lin.xcplugin */;
 			productType = "com.apple.product-type.bundle";
-		};
-		AA470D6217C3D380005CBB7F /* LinTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AA470D7117C3D380005CBB7F /* Build configuration list for PBXNativeTarget "LinTests" */;
-			buildPhases = (
-				AA470D5F17C3D380005CBB7F /* Sources */,
-				AA470D6017C3D380005CBB7F /* Frameworks */,
-				AA470D6117C3D380005CBB7F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				AA470D7017C3D380005CBB7F /* PBXTargetDependency */,
-			);
-			name = LinTests;
-			productName = LinTests;
-			productReference = AA470D6317C3D380005CBB7F /* LinTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		AA1B7D9B17C3C1EC00A3A6D7 /* Project object */ = {
+		AA80F3331A82804C007687A3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
-				ORGANIZATIONNAME = "Tanaka Katsuma";
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Katsuma Tanaka";
 				TargetAttributes = {
-					AA470D6217C3D380005CBB7F = {
-						TestTargetID = AA1B7DA217C3C1EC00A3A6D7;
+					AA023C111A82A2E700D4AE5F = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					AA80F33A1A82804C007687A3 = {
+						CreatedOnToolsVersion = 6.1;
 					};
 				};
 			};
-			buildConfigurationList = AA1B7D9E17C3C1EC00A3A6D7 /* Build configuration list for PBXProject "Lin" */;
+			buildConfigurationList = AA80F3361A82804C007687A3 /* Build configuration list for PBXProject "Lin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = AA1B7D9A17C3C1EC00A3A6D7;
-			productRefGroup = AA1B7DA417C3C1EC00A3A6D7 /* Products */;
+			mainGroup = AA80F3321A82804C007687A3;
+			productRefGroup = AA80F33C1A82804C007687A3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AA1B7DA217C3C1EC00A3A6D7 /* Lin */,
-				AA470D6217C3D380005CBB7F /* LinTests */,
+				AA80F33A1A82804C007687A3 /* Lin */,
+				AA023C111A82A2E700D4AE5F /* LinTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		AA1B7DA117C3C1EC00A3A6D7 /* Resources */ = {
+		AA023C101A82A2E700D4AE5F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA63897B18C6019A0061C2C4 /* icon_minus@2x.png in Resources */,
-				AA63897F18C6019A0061C2C4 /* icon120@2x.png in Resources */,
-				AA63898018C6019A0061C2C4 /* icon_detach.png in Resources */,
-				AA63897A18C6019A0061C2C4 /* icon_minus.png in Resources */,
-				AA95FDEC17EB48A9007D33D4 /* LNPopoverContentView.xib in Resources */,
-				AA63897C18C6019A0061C2C4 /* icon120.png in Resources */,
-				AA63897D18C6019A0061C2C4 /* icon_plus.png in Resources */,
-				AA63897E18C6019A0061C2C4 /* icon_detach@2x.png in Resources */,
-				AA63897918C6019A0061C2C4 /* icon_plus@2x.png in Resources */,
-				AA02CE8B17EE08240041C2BD /* LNAlertAccessoryView.xib in Resources */,
-				AA1B7DB117C3C1EC00A3A6D7 /* InfoPlist.strings in Resources */,
+				AAB604931A83933F00C0E59B /* Localizations.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA470D6117C3D380005CBB7F /* Resources */ = {
+		AA80F3391A82804C007687A3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA470D6B17C3D380005CBB7F /* InfoPlist.strings in Resources */,
-				AAFE3C3F17EECF4A0018E478 /* Localizable.strings in Resources */,
+				AA49B19C1A829B02003EA1A3 /* Completions.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		AA1B7D9F17C3C1EC00A3A6D7 /* Sources */ = {
+		AA023C0E1A82A2E700D4AE5F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA7D4DB117C74CFE0092DF8A /* LNLocalizationCollection.m in Sources */,
-				AAF0D6B417ECD8EC00B4318B /* LNButtonCell.m in Sources */,
-				AAF0D6B117ECC4AF00B4318B /* LNTableCornerView.m in Sources */,
-				AAB0CD3417C448200085E913 /* LNRegularExpressionPattern+type.m in Sources */,
-				AADDDA9417C49D4800BBA67C /* NSBundle+versions.m in Sources */,
-				AAAC873B17EDA9CF00BF251D /* LNPopoverWindow.m in Sources */,
-				AA8F8EF017EDFC68004964FB /* NSTableView+editedColumnIdentifier.m in Sources */,
-				AA6377CE18C5CCFC005EADC7 /* LNImageButtonCell.m in Sources */,
-				AA20D87F17ECB12A006B7CA2 /* NSPopoverFrame+Lin.m in Sources */,
-				AA02CE8E17EE083A0041C2BD /* LNAlertAccessoryView.m in Sources */,
-				AA36376617D9EF9E003C5E55 /* LNPopoverContentView.m in Sources */,
-				AA470D5E17C3D05D005CBB7F /* LNEntity.m in Sources */,
-				AA7D4DB417C74D0A0092DF8A /* LNLocalization.m in Sources */,
-				AAB0CD3117C4382D0085E913 /* LNRegularExpressionPattern.m in Sources */,
-				AA1B7DBA17C3C20F00A3A6D7 /* Lin.m in Sources */,
-				AAF0D6AE17ECB89800B4318B /* LNTableHeaderCell.m in Sources */,
-				AAAC873317ED9D4F00BF251D /* LNHorizontalLine.m in Sources */,
-				AADEADB717C87298001E0C65 /* IDEIndex+Lin.m in Sources */,
-				AAF0D6AB17ECB87100B4318B /* LNTableView.m in Sources */,
-				AA2980B417EE2C5300CF46E3 /* LNUserDefaultsManager.m in Sources */,
-				AA95FDEF17EB4E77007D33D4 /* LNPopoverWindowController.m in Sources */,
-				AADEADC017C87392001E0C65 /* MethodSwizzle.m in Sources */,
-				F5859DBD18CABC2A009AF108 /* LNLocalizedStringCollectionOperation.m in Sources */,
-				AA470D5B17C3CFEC005CBB7F /* LNDetector.m in Sources */,
+				AAB6049D1A839A0C00C0E59B /* LINLocalization.m in Sources */,
+				AAB604951A8393B800C0E59B /* LINLocalizationParserTests.m in Sources */,
+				AAB604AB1A83CBD400C0E59B /* LINLocalizationParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA470D5F17C3D380005CBB7F /* Sources */ = {
+		AA80F3371A82804C007687A3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAFE3C4117EED36C0018E478 /* LNLocalizationCollection.m in Sources */,
-				AADEADB417C7B838001E0C65 /* LNLocalization.m in Sources */,
-				AAB0CD3C17C477030085E913 /* LNDetectorTestSet.m in Sources */,
-				AAB0CD3717C46B070085E913 /* LNEntity.m in Sources */,
-				AAB0CD3817C46B070085E913 /* LNRegularExpressionPattern.m in Sources */,
-				AAB0CD3917C46B070085E913 /* LNRegularExpressionPattern+type.m in Sources */,
-				AAB0CD3617C46A730085E913 /* LNDetector.m in Sources */,
-				AA470D7D17C3DE31005CBB7F /* LNDetectorTests.m in Sources */,
-				AADEADB317C7B6D3001E0C65 /* LNLocalizationTests.m in Sources */,
+				AAB604981A8393F700C0E59B /* LINLocalization.m in Sources */,
+				AA89B4FD1A872ED600E8CCD6 /* DVTTextCompletionDataSource+Lin.m in Sources */,
+				AAB604A51A83C3B900C0E59B /* LINLocalizationParser.m in Sources */,
+				AA4A0AA81A874D20005109B0 /* DVTSourceCodeLanguage+Lin.m in Sources */,
+				AA49B1961A8295F6003EA1A3 /* IDEWorkspace+Lin.m in Sources */,
+				AA1DB1221A828FBF00856B10 /* LINTextCompletionItem.m in Sources */,
+				AA1313AA1A8289360080D488 /* DVTSourceTextView+Lin.m in Sources */,
+				AA1DB1181A828CD500856B10 /* DVTTextCompletionController+Lin.m in Sources */,
+				AA80F3471A82805B007687A3 /* Lin.m in Sources */,
+				AA1313A31A82884B0080D488 /* MethodSwizzle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		AA470D7017C3D380005CBB7F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = AA1B7DA217C3C1EC00A3A6D7 /* Lin */;
-			targetProxy = AA470D6F17C3D380005CBB7F /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		AA1B7DAF17C3C1EC00A3A6D7 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AA1B7DB017C3C1EC00A3A6D7 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		AA470D6917C3D380005CBB7F /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AA470D6A17C3D380005CBB7F /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		AA1B7DB317C3C1EC00A3A6D7 /* Debug */ = {
+		AA023C191A82A2E700D4AE5F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = LinTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AA023C1A1A82A2E700D4AE5F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = LinTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		AA80F3401A82804C007687A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -619,11 +418,12 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -633,16 +433,17 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
-		AA1B7DB417C3C1EC00A3A6D7 /* Release */ = {
+		AA80F3411A82804C007687A3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -657,24 +458,26 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
-		AA1B7DB617C3C1EC00A3A6D7 /* Debug */ = {
+		AA80F3431A82804C007687A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -682,19 +485,18 @@
 				DSTROOT = "$(HOME)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/SharedFrameworks",
-					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Frameworks",
+					"$(DEVELOPER_DIR)/../Frameworks",
+					"$(DEVELOPER_DIR)/../SharedFrameworks",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lin/Lin-Prefix.pch";
-				INFOPLIST_FILE = "Lin/Lin-Info.plist";
+				INFOPLIST_FILE = Lin/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Debug;
 		};
-		AA1B7DB717C3C1EC00A3A6D7 /* Release */ = {
+		AA80F3441A82804C007687A3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -702,83 +504,48 @@
 				DSTROOT = "$(HOME)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/SharedFrameworks",
-					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Frameworks",
+					"$(DEVELOPER_DIR)/../Frameworks",
+					"$(DEVELOPER_DIR)/../SharedFrameworks",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lin/Lin-Prefix.pch";
-				INFOPLIST_FILE = "Lin/Lin-Info.plist";
+				INFOPLIST_FILE = Lin/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = xcplugin;
-			};
-			name = Release;
-		};
-		AA470D7217C3D380005CBB7F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "LinTests/LinTests-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "LinTests/LinTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		AA470D7317C3D380005CBB7F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "LinTests/LinTests-Prefix.pch";
-				INFOPLIST_FILE = "LinTests/LinTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AA1B7D9E17C3C1EC00A3A6D7 /* Build configuration list for PBXProject "Lin" */ = {
+		AA023C181A82A2E700D4AE5F /* Build configuration list for PBXNativeTarget "LinTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA1B7DB317C3C1EC00A3A6D7 /* Debug */,
-				AA1B7DB417C3C1EC00A3A6D7 /* Release */,
+				AA023C191A82A2E700D4AE5F /* Debug */,
+				AA023C1A1A82A2E700D4AE5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA1B7DB517C3C1EC00A3A6D7 /* Build configuration list for PBXNativeTarget "Lin" */ = {
+		AA80F3361A82804C007687A3 /* Build configuration list for PBXProject "Lin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA1B7DB617C3C1EC00A3A6D7 /* Debug */,
-				AA1B7DB717C3C1EC00A3A6D7 /* Release */,
+				AA80F3401A82804C007687A3 /* Debug */,
+				AA80F3411A82804C007687A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA470D7117C3D380005CBB7F /* Build configuration list for PBXNativeTarget "LinTests" */ = {
+		AA80F3421A82804C007687A3 /* Build configuration list for PBXNativeTarget "Lin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA470D7217C3D380005CBB7F /* Debug */,
-				AA470D7317C3D380005CBB7F /* Release */,
+				AA80F3431A82804C007687A3 /* Debug */,
+				AA80F3441A82804C007687A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = AA1B7D9B17C3C1EC00A3A6D7 /* Project object */;
+	rootObject = AA80F3331A82804C007687A3 /* Project object */;
 }

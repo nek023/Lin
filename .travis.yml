@@ -1,3 +1,4 @@
 language: objective-c
-script: make test
+script:
+- make clean test
 

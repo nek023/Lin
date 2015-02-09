@@ -2,20 +2,25 @@
 //  Lin.h
 //  Lin
 //
-//  Created by Tanaka Katsuma on 2013/08/21.
-//  Copyright (c) 2013年 Tanaka Katsuma. All rights reserved.
+//  Created by Katsuma Tanaka on 2015/02/05.
+//  Copyright (c) 2015年 Katsuma Tanaka. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
 @class IDEIndex;
+@class DVTCompletingTextView;
+@class IDEWorkspace;
 
-@interface Lin : NSObject <NSPopoverDelegate>
+@interface Lin : NSObject
 
 + (void)pluginDidLoad:(NSBundle *)bundle;
-+ (instancetype)sharedPlugIn;
++ (instancetype)sharedInstance;
 
 - (void)indexNeedsUpdate:(IDEIndex *)index;
-- (void)removeLocalizationsForIndex:(IDEIndex *)index;
+
+- (BOOL)isAutoCompletableFunction:(NSString *)name;
+- (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView location:(NSUInteger)location;
+- (NSArray *)completionItemsForWorkspace:(IDEWorkspace *)workspace;
 
 @end

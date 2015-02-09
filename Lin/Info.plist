@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>jp.questbeat.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2015年 Katsuma Tanaka. All rights reserved.</string>
+	<key>NSPrincipalClass</key>
+	<string>Lin</string>
+	<key>DVTPlugInCompatibilityUUIDs</key>
+	<array>
+		<string>C4A681B0-4A26-480E-93EC-1218098B9AA0</string>
+		<string>FEC992CC-CA4A-4CFD-8881-77300FCB848A</string>
+	</array>
+	<key>XCGCReady</key>
+	<true/>
+	<key>XCPluginHasUI</key>
+	<false/>
+	<key>XC5Compatible</key>
+	<true/>
+	<key>XC4Compatible</key>
+	<true/>
+</dict>
+</plist>
