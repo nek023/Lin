@@ -1,7 +1,13 @@
 //
-// Prefix header for all source files of the 'LinTests' target in the 'LinTests' project
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
 //
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
 #endif
+
+// Fix Xcode 5 confusion about #defines
+#undef NULL
+#define NULL ((void*)0)

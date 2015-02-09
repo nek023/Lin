@@ -1,57 +1,60 @@
 # Lin
-Xcode4 plugin showing completion for NSLocalizedString and localizedStringForKey:value:table:
+Lin is a open source plug-in for **Xcode 5**.  
+It lets you search/manage localizations without opening the .strings files.
 
-[![Build Status](https://travis-ci.org/questbeat/Lin.png?branch=master)](https://travis-ci.org/questbeat/Lin)
+[![Build Status](https://travis-ci.org/questbeat/Lin-Xcode5.svg?branch=master)](https://travis-ci.org/questbeat/Lin-Xcode5)
+
+![01.png](http://questbe.at/lin/img/screenshots/01.png)
+
+Lin for Xcode 4 (previous version)  
+[questbeat/Lin](https://github.com/questbeat/Lin)
 
 
-## WIP: New version
-I'm working on the new version of this plugin, and it'll be put on this repository.
 
 
-## Lin for Xcode 5
-**A new version with Xcode 5 support is available!**
+## Features
+When you are focusing on NSLocalizedString or other functions to get a localized version of a string, Lin shows the list of localizations that contains the inputted key string.
 
-[questbeat/Lin-Xcode5](https://github.com/questbeat/Lin-Xcode5)
+![02.gif](http://questbe.at/lin/img/screenshots/02.gif)
+
+You can add a new localization or remove a localization from the popover.  
+(Click +/- button in the bottom left of the popover.)
+
+![03.gif](http://questbe.at/lin/img/screenshots/03.png)
+
+You can also edit key or value of a localization by clicking the row on the table.
+
+![04.png](http://questbe.at/lin/img/screenshots/04.png)
+
+Lin has not only popover mode, but also window mode.  
+The window will appear when you drag-and-drop the popover.  
+In window mode, the search field can be used to find the localization with a free keyword.
+
+![05.gif](http://questbe.at/lin/img/screenshots/05.gif)
 
 
 ## Installation
-Build the Lin, then the plugin will automatically be installed in `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`.  
-Relaunch Xcode and Lin will make your life easier.
+Download the project and build it, then relaunch Xcode.  
+Lin will be installed in `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins` automatically.
+
+If you want to uninstall Lin, remove Lin.xcplugin in `Plug-ins` directory.
 
 
-## Usage
-After installation `Enable Lin` will appear in Edit menu.  
+## Settings
+You can enable/disable Lin or show window manually by opening the Lin menu in the Editor menu in Xcode.
 
-![lin_ss01.png](http://adotout.sakura.ne.jp/github/Lin/lin_ss01.png)
-
-Selecting a line with either:
-
-- NSLocalizedString( @"", )
-- localizedStringForKey: @"" value: table:
-- NSLocalizedStringFromTable( @"", , )
-- NSLocalizedStringFromTableInBundle( @"", , , )
-- NSLocalizedStringWithDefaultValue( @"", , , , )
-
-will show completion (see **Warnings** section no popup shows).
-
-![lin_ss02.png](http://adotout.sakura.ne.jp/github/Lin/lin_ss02.png)
-
-Narrowing down the lists by key.  
-
-![lin_ss03.png](http://adotout.sakura.ne.jp/github/Lin/lin_ss03.png)
-
-You can modify value directly from the popover window. (`.strings` file containing key will be automatically updated) 
-
-![lin_ss04.png](http://adotout.sakura.ne.jp/github/Lin/lin_ss04.png)
+![06.png](http://questbe.at/lin/img/screenshots/06.png)
 
 
-## Warnings
-
-.strings files must be **UTF8**
-
-Completion popup **won't show** with **empty .strings** files
-
-After **modifying** a .string file, dont forget to **save** otherwise new strings won't appear in completion popup
+## Notes
+* `.strings` files must be UTF-8
+* Supported functions:
+  * NSLocalizedString
+  * NSLocalizedStringFromTable
+  * NSLocalizedStringFromTableInBundle
+  * NSLocalizedStringWithDefaultValue
+  * localizedStringForKey:value:table:
+* After modifying a `.string` file, don't forget to save otherwise new strings won't appear in completion popup
 
 
 ## License

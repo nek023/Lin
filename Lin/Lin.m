@@ -1,183 +1,525 @@
-/*
- Copyright (c) 2013 Katsuma Tanaka
-
- Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+//
+//  Lin.m
+//  Lin
+//
+//  Created by Tanaka Katsuma on 2013/08/21.
+//  Copyright (c) 2013年 Tanaka Katsuma. All rights reserved.
+//
 
 #import "Lin.h"
 
-// Xcode Classes
+// Xcode
+#import "IDEWorkspace.h"
 #import "DVTFilePath.h"
 #import "IDEIndex.h"
 #import "IDEIndexCollection.h"
-#import "IDEWorkspace.h"
 #import "IDEEditorDocument.h"
+#import "IDEWorkspaceWindow.h"
+#import "DVTSourceTextView.h"
 
-// Localization
-#import "Localization.h"
-#import "LocalizationItem.h"
+// Categories
+#import "NSBundle+versions.h"
 
-@interface RegEx : NSObject
+// Shared
+#import "LNUserDefaultsManager.h"
 
-@property (nonatomic, retain) NSString *expression;
-@property NSUInteger numberOfRanges;
-@property NSUInteger entityRangeInLineIndex;
-@property NSUInteger keyRangeInLineIndex;
+// Models
+#import "LNDetector.h"
+#import "LNEntity.h"
+#import "LNLocalizationCollection.h"
+#import "LNLocalization.h"
+
+// Views
+#import "LNPopoverContentView.h"
+
+// Controllers
+#import "LNPopoverWindowController.h"
+#import "LNLocalizedStringCollectionOperation.h"
+
+static Lin *_sharedPlugin = nil;
+
+@interface NSPopover ()
+
+- (id)_popoverWindow;
 
 @end
 
-@implementation RegEx
+@interface Lin ()
 
--(id) initWithExpression: ( NSString *) expression numberOfRanges: ( NSUInteger ) numberOfRanges entityRangeInLineIndex: ( NSUInteger ) entityRangeInLineIndex keyRangeInLineIndex: ( NSUInteger ) keyRangeInLineIndex
-{
-    if (self = [super init]) {
-        _expression = [NSString stringWithString: expression];
-        _numberOfRanges = numberOfRanges;
-        _entityRangeInLineIndex = entityRangeInLineIndex;
-        _keyRangeInLineIndex = keyRangeInLineIndex;
-    }
-    return self;
-}
+@property (nonatomic, strong) NSPopover *popover;
+@property (nonatomic, strong) LNPopoverWindowController *popoverWindowController;
+
+@property (nonatomic, strong) NSTextView *textView;
+
+@property (nonatomic, strong) LNDetector *detector;
+@property (nonatomic, strong) NSMutableDictionary *workspaceLocalizations;
+@property (nonatomic, copy) NSString *currentWorkspaceFilePath;
+@property (nonatomic, unsafe_unretained) NSResponder *previousFirstResponder;
+@property (nonatomic, assign, getter = isActivated) BOOL activated;
+
+@property (nonatomic, strong) NSMenuItem *enableMenuItem;
+@property (nonatomic, strong) NSMenuItem *showWindowMenuItem;
+@property (nonatomic, strong) NSOperationQueue *collectionProcessQueue;
 
 @end
 
 @implementation Lin
 
-static Lin *sharedPlugin = nil;
-static NSString *kLinUserDefaultsEnableKey = @"LINEnabled";
-static NSString *kLinUserDefaultsParseStringsOutsideProjectKey = @"LINParseStringsOutsideProject";
-static NSString *regexs[] = {
-    @"NSLocalizedString\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*\\)",
-    @"localizedStringForKey:\\s*@\"(.*)\"\\s*value:\\s*(.*)\\s*table:\\s*(.*)",
-    @"NSLocalizedStringFromTable\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*\\)",
-    @"NSLocalizedStringFromTableInBundle\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*\\)",
-    @"NSLocalizedStringWithDefaultValue\\s*\\(\\s*@\"(.*)\"\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*\\)" };
-static NSUInteger numberOfRanges[] = { 3, 4, 4, 5, 6 };
-static NSUInteger entityRangeInLineIndices[] = { 0, 0, 0, 0, 0 };
-static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
-
-+ (instancetype)sharedPlugin
++ (void)pluginDidLoad:(NSBundle *)bundle
 {
-    return sharedPlugin;
-}
-
-+ (void)pluginDidLoad:(NSBundle *)plugin
-{
-    static dispatch_once_t onceToken;
-
-    dispatch_once(&onceToken, ^{
-        sharedPlugin = [[self alloc] initWithBundle:plugin];
+    static dispatch_once_t _onceToken;
+    dispatch_once(&_onceToken, ^{
+        _sharedPlugin = [[self alloc] init];
     });
 }
 
-- (id)init
++ (instancetype)sharedPlugIn
 {
-    return [self initWithBundle:nil];
+    return _sharedPlugin;
 }
 
-- (id)initWithBundle:(NSBundle *)bundle
+- (instancetype)init
 {
     self = [super init];
-
-    if(self) {
+    
+    if (self) {
         // Initialization
-        self.localizationFileSets = [NSMutableDictionary dictionary];
-        self.localizations = [NSMutableDictionary dictionary];
-
-        // Register defaults
-        NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  [NSNumber numberWithBool:YES], kLinUserDefaultsEnableKey,
-                                  [NSNumber numberWithBool:NO], kLinUserDefaultsParseStringsOutsideProjectKey,
-                                  nil];
-        [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
-
-        // Load Nib
-        NSNib *nib = [[NSNib alloc] initWithNibNamed:@"Popover" bundle:bundle];
-        [nib instantiateNibWithOwner:self topLevelObjects:nil];
-        [nib release];
-
-        // Popover settings
-        self.popover.delegate = self;
-        self.popover.behavior = NSPopoverBehaviorTransient;
-        self.popover.animates = NO;
-
-        // Set delegate
-        PopoverContentView *popoverContentView = (PopoverContentView *)self.popover.contentViewController.view;
-        popoverContentView.delegate = self;
-
-        // Register observer
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:nil];
-
-        // Create regexs array
-        NSAssert( sizeof(numberOfRanges)/sizeof(NSUInteger) == sizeof(regexs)/sizeof(NSString *), @"Regexs definitions arrays should all have same size" );
-        NSAssert( sizeof(entityRangeInLineIndices)/sizeof(NSUInteger) == sizeof(regexs)/sizeof(NSString *), @"Regexs definitions arrays should all have same size" );
-        NSAssert( sizeof(keyRangeInLineIndices)/sizeof(NSUInteger) == sizeof(regexs)/sizeof(NSString *), @"Regexs definitions arrays should all have same size" );
-
-        NSMutableArray *pTempRegexs = [NSMutableArray array];
-
-        for(NSUInteger i=0;i<sizeof(regexs)/sizeof(NSString *);i++) {
-            [pTempRegexs addObject: [[RegEx alloc] initWithExpression: regexs[i] numberOfRanges:numberOfRanges[i] entityRangeInLineIndex:entityRangeInLineIndices[i] keyRangeInLineIndex:keyRangeInLineIndices[i]]];
+        self.detector = [LNDetector detector];
+        self.workspaceLocalizations = [NSMutableDictionary dictionary];
+        
+        // Create menu
+        [self createMenuItem];
+        
+        // Load views
+        [self instantiatePopover];
+        [self instantiatePopoverWindowController];
+        
+        // Register to notification center
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(workspaceWindowDidBecomeMain:)
+                                                     name:NSWindowDidBecomeMainNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(indexDidIndexWorkspace:)
+                                                     name:@"IDEIndexDidIndexWorkspaceNotification"
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(editorDocumentDidSave:)
+                                                     name:@"IDEEditorDocumentDidSaveNotification"
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(popoverWindowControllerWindowWillClose:)
+                                                     name:LNPopoverWindowControllerWindowWillCloseNotification
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(popoverContentViewLocalizationDidSelect:)
+                                                     name:LNPopoverContentViewLocalizationDidSelectNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(popoverContentViewAlertDidDismiss:)
+                                                     name:LNPopoverContentViewAlertDidDismissNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(popoverContentViewDetachButtonDidClick:)
+                                                     name:LNPopoverContentViewDetachButtonDidClickNotification
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(menuDidChange:)
+                                                     name:NSMenuDidChangeItemNotification
+                                                   object:nil];
+        
+        // Activate if enabled
+        if ([[LNUserDefaultsManager sharedManager] isEnabled]) {
+            [self activate];
         }
-        _regexs = [NSArray arrayWithArray: pTempRegexs];
-        [pTempRegexs release];
+        
+        self.collectionProcessQueue = [[NSOperationQueue alloc] init];
+        self.collectionProcessQueue.maxConcurrentOperationCount = 1;
     }
-
+    
     return self;
 }
 
-- (void)setEnabled:(BOOL)enabled
+- (void)instantiatePopover
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:enabled forKey:kLinUserDefaultsEnableKey];
-    [userDefaults synchronize];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSViewController *contentViewController = [[NSViewController alloc] initWithNibName:@"LNPopoverContentView" bundle:bundle];
+    
+    NSPopover *popover = [[NSPopover alloc] init];
+    popover.delegate = self;
+    popover.behavior = NSPopoverBehaviorTransient;
+    popover.appearance = NSPopoverAppearanceMinimal;
+    popover.animates = NO;
+    popover.contentViewController = contentViewController;
+    
+    self.popover = popover;
 }
 
-- (BOOL)enabled
+- (void)instantiatePopoverWindowController
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kLinUserDefaultsEnableKey];
-}
-
-- (void)setParseStringsOutsideProject:(BOOL)value
-{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:value forKey:kLinUserDefaultsParseStringsOutsideProjectKey];
-    [userDefaults synchronize];
-}
-
-- (BOOL)parseStringsOutsideProject
-{
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kLinUserDefaultsParseStringsOutsideProjectKey];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSViewController *contentViewController = [[NSViewController alloc] initWithNibName:@"LNPopoverContentView" bundle:bundle];
+    LNPopoverContentView *contentView = (LNPopoverContentView *)contentViewController.view;
+    [contentView.detachButton setHidden:YES];
+    
+    LNPopoverWindowController *popoverWindowController = [[LNPopoverWindowController alloc] initWithContentViewController:contentViewController];
+    
+    self.popoverWindowController = popoverWindowController;
 }
 
 - (void)dealloc
 {
-    [_textView release];
-
-    [_currentWorkspacePath release];
-    [_localizationFileSets release];
-    [_localizations release];
-
-    [super dealloc];
+    // Deactivate
+    [self deactivate];
+    
+    // Remove from notification center
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSWindowDidBecomeMainNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"IDEIndexDidIndexWorkspaceNotification"
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"IDEEditorDocumentDidSaveNotification"
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:LNPopoverWindowControllerWindowWillCloseNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:LNPopoverContentViewLocalizationDidSelectNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:LNPopoverContentViewAlertDidDismissNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:LNPopoverContentViewDetachButtonDidClickNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSMenuDidChangeItemNotification
+                                                  object:nil];
 }
 
 
-#pragma mark - Setup
+#pragma mark - Managing Application State
 
-- (void)applicationDidFinishLaunching:(NSNotification *)notification
+- (void)activate
 {
-    // Remove observer
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSApplicationDidFinishLaunchingNotification object:nil];
+    if (!self.activated) {
+        self.activated = YES;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textDidChange:)
+                                                     name:NSTextDidChangeNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textViewDidChangeSelection:)
+                                                     name:NSTextViewDidChangeSelectionNotification
+                                                   object:nil];
+    }
+}
 
-    // Set menu items
+- (void)deactivate
+{
+    if (self.activated) {
+        self.activated = NO;
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:NSTextDidChangeNotification
+                                                      object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:NSTextViewDidChangeSelectionNotification
+                                                      object:nil];
+    }
+}
+
+
+#pragma mark - Notifications
+
+- (void)textDidChange:(NSNotification *)notification
+{
+	if ([[notification object] isKindOfClass:[DVTSourceTextView class]]) {
+        NSTextView *textView = (NSTextView *)[notification object];
+        self.textView = textView;
+        
+        // Find entity
+        LNEntity *entity = [self selectedEntityInTextView:textView];
+        
+        if (entity) {
+            [self presentPopoverInTextView:textView entity:entity];
+        } else {
+            [self dismissPopover];
+        }
+	}
+}
+
+- (void)textViewDidChangeSelection:(NSNotification *)notification
+{
+	if ([[notification object] isKindOfClass:[DVTSourceTextView class]]) {
+        NSTextView *textView = (NSTextView *)[notification object];
+        self.textView = textView;
+        
+        // Find entity
+        LNEntity *entity = [self selectedEntityInTextView:textView];
+        
+        if (entity) {
+            [self presentPopoverInTextView:textView entity:entity];
+        } else {
+            [self dismissPopover];
+        }
+	}
+}
+
+- (void)workspaceWindowDidBecomeMain:(NSNotification *)notification
+{
+    if ([[notification object] isKindOfClass:[IDEWorkspaceWindow class]]) {
+        NSWindow *workspaceWindow = (NSWindow *)[notification object];
+        NSWindowController *workspaceWindowController = (NSWindowController *)workspaceWindow.windowController;
+        
+        IDEWorkspace *workspace = (IDEWorkspace *)[workspaceWindowController valueForKey:@"_workspace"];
+        DVTFilePath *representingFilePath = workspace.representingFilePath;
+        NSString *pathString = representingFilePath.pathString;
+        
+        self.currentWorkspaceFilePath = pathString;
+    }
+}
+
+- (void)indexDidIndexWorkspace:(NSNotification *)notification
+{
+    IDEIndex *index = (IDEIndex *)[notification object];
+    [self indexNeedsUpdate:index];
+}
+
+- (void)editorDocumentDidSave:(NSNotification *)notification
+{
+    IDEEditorDocument *editorDocument = (IDEEditorDocument *)[notification object];
+    DVTFilePath *filePath = editorDocument.filePath;
+    NSString *pathString = filePath.pathString;
+    
+    // Check whether there are any changes to .strings
+    NSArray *collections = [self.workspaceLocalizations objectForKey:self.currentWorkspaceFilePath];
+    
+    for (LNLocalizationCollection *collection in collections) {
+        if ([collection.filePath isEqualToString:pathString]) {
+            [collection reloadLocalizations];
+            
+            break;
+        }
+    }
+}
+
+- (void)popoverWindowControllerWindowWillClose:(NSNotification *)notification
+{
+    // Instantiate popover
+    [self instantiatePopover];
+}
+
+- (void)popoverContentViewLocalizationDidSelect:(NSNotification *)notification
+{
+    NSTextView *textView = self.textView;
+    LNEntity *entity = [self selectedEntityInTextView:textView];
+    
+    if (entity) {
+        NSArray *selectedRanges = textView.selectedRanges;
+        
+        if (selectedRanges.count > 0) {
+            NSRange selectedRange = [[selectedRanges objectAtIndex:0] rangeValue];
+            
+            // Locate the key
+            NSRange lineRange = [textView.textStorage.string lineRangeForRange:selectedRange];
+            NSRange keyRange = NSMakeRange(lineRange.location + entity.keyRange.location, entity.keyRange.length);
+            
+            // Replace
+            LNLocalization *localization = [[notification userInfo] objectForKey:LNPopoverContentViewLocalizationKey];
+            [textView insertText:localization.key replacementRange:keyRange];
+        }
+    }
+}
+
+- (void)popoverContentViewAlertDidDismiss:(NSNotification *)notification
+{
+    // Show popover again
+    [self presentPopoverInTextView:self.textView entity:[self selectedEntityInTextView:self.textView]];
+}
+
+- (void)popoverContentViewDetachButtonDidClick:(NSNotification *)notification
+{
+    [self preparePopoverWindow];
+    [self detachPopover];
+}
+
+- (void)menuDidChange:(NSNotification *)notification
+{
+    // Create menu item
     [self createMenuItem];
+}
 
-    if(self.enabled) {
-        // Activate
+
+#pragma mark - Detachig Popover
+
+- (void)preparePopoverWindow
+{
+    // Resize popover window
+    NSWindow *popoverWindow = [self.popover _popoverWindow];
+    
+    [self.popoverWindowController.window setFrame:NSMakeRect(popoverWindow.frame.origin.x,
+                                                             popoverWindow.frame.origin.y - (80.0 / 2.0),
+                                                             self.popover.contentSize.width,
+                                                             self.popover.contentSize.height + 80.0)
+                                          display:NO];
+    
+    // Copy popover content
+    LNPopoverContentView *popoverContentView = (LNPopoverContentView *)self.popover.contentViewController.view;
+    LNPopoverContentView *popoverWindowContentView = (LNPopoverContentView *)self.popoverWindowController.contentViewController.view;
+    popoverWindowContentView.tableView.sortDescriptors = popoverContentView.tableView.sortDescriptors;
+    popoverWindowContentView.collections = popoverContentView.collections;
+    popoverWindowContentView.searchString = popoverContentView.searchString;
+}
+
+- (void)detachPopover
+{
+    [self dismissPopover];
+    [self.popoverWindowController showWindow:nil];
+}
+
+
+#pragma mark - Entity
+
+- (LNEntity *)selectedEntityInTextView:(NSTextView *)textView
+{
+    NSArray *selectedRanges = textView.selectedRanges;
+    
+    if (selectedRanges.count > 0) {
+        NSRange selectedRange = [[selectedRanges objectAtIndex:0] rangeValue];
+        
+        // Locate the line containing the caret
+        NSString *string = textView.textStorage.string;
+        NSRange lineRange = [string lineRangeForRange:selectedRange];
+        NSString *lineString = [string substringWithRange:lineRange];
+        NSRange selectedRangeInLine = NSMakeRange(selectedRange.location - lineRange.location, selectedRange.length);
+        
+        // Search for the entities
+        NSArray *entities = [self.detector entitiesInString:lineString];
+        
+        for (LNEntity *entity in entities) {
+            if (NSLocationInRange(selectedRangeInLine.location, entity.entityRange)) {
+                return entity;
+            }
+        }
+    }
+    
+    return nil;
+}
+
+
+#pragma mark - Menu
+
+- (void)createMenuItem
+{
+    NSMenuItem *editorMenuItem = [[NSApp mainMenu] itemWithTitle:@"Editor"];
+    
+    if (editorMenuItem && [[editorMenuItem submenu] itemWithTitle:@"Lin"] == nil) {
+        // Load defaults
+        BOOL enabled = [[LNUserDefaultsManager sharedManager] isEnabled];
+        
+        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Lin" action:NULL keyEquivalent:@""];
+        
+        NSMenu *submenu = [[NSMenu alloc] initWithTitle:@"Lin"];
+        menuItem.submenu = submenu;
+        
+        // Enable Lin
+        NSMenuItem *enableMenuItem = [[NSMenuItem alloc] initWithTitle:@"Enable Lin" action:@selector(toggleEnabled:) keyEquivalent:@""];
+        [enableMenuItem setTarget:self];
+        enableMenuItem.state = enabled ? NSOnState : NSOffState;
+        
+        [submenu addItem:enableMenuItem];
+        self.enableMenuItem = enableMenuItem;
+        
+        // Show Window
+        NSMenuItem *showWindowMenuItem = [[NSMenuItem alloc] initWithTitle:@"Show Window" action:@selector(showWindow:) keyEquivalent:@""];
+        [showWindowMenuItem setTarget:self];
+        
+        [submenu addItem:showWindowMenuItem];
+        self.showWindowMenuItem = showWindowMenuItem;
+        
+        // Separator
+        [submenu addItem:[NSMenuItem separatorItem]];
+        
+        // Version Info
+        NSMenuItem *versionInfoMenuItem = [[NSMenuItem alloc] initWithTitle:@"Version Info" action:@selector(showVersionInfo:) keyEquivalent:@""];
+        [versionInfoMenuItem setTarget:self];
+        [submenu addItem:versionInfoMenuItem];
+        
+        [[editorMenuItem submenu] addItem:[NSMenuItem separatorItem]];
+        [[editorMenuItem submenu] addItem:menuItem];
+    }
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+    if (menuItem == self.showWindowMenuItem) {
+        return [[LNUserDefaultsManager sharedManager] isEnabled];
+    }
+    
+    return YES;
+}
+
+- (void)toggleEnabled:(id)sender
+{
+    // Save defaults
+    LNUserDefaultsManager *userDefaultManager = [LNUserDefaultsManager sharedManager];
+    BOOL enabled = ![userDefaultManager isEnabled];
+    userDefaultManager.enabled = enabled;
+    
+    // Update menu item
+    self.enableMenuItem.state = enabled ? NSOnState : NSOffState;
+    
+    // Activate/Deactivate
+    if (enabled) {
         [self activate];
+    } else {
+        [self deactivate];
+    }
+}
+
+- (void)showWindow:(id)sender
+{
+    // Prepare window
+    NSArray *collections = [self.workspaceLocalizations objectForKey:self.currentWorkspaceFilePath];
+    
+    LNPopoverContentView *popoverWindowContentView = (LNPopoverContentView *)self.popoverWindowController.contentViewController.view;
+    popoverWindowContentView.collections = collections;
+    popoverWindowContentView.searchString = @"";
+    
+    // Show window
+    [self.popoverWindowController.window setFrame:NSMakeRect(0, 0, 500, 280) display:NO];
+    [self.popoverWindowController.window center];
+    [self.popoverWindowController showWindow:nil];
+}
+
+- (void)showVersionInfo:(id)sender
+{
+    // Create alert
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Lin"
+                                     defaultButton:@"OK"
+                                   alternateButton:nil
+                                       otherButton:@"Open Website"
+                         informativeTextWithFormat:@"Version %@\n\nCopyright (c) 2013 Katsuma Tanaka\n\nEmail: questbeat@gmail.com\nTwitter: @questbeat", [bundle shortVersionString]];
+    
+    // Set icon
+    NSString *filePath = [bundle pathForResource:@"icon120" ofType:@"tiff"];
+    NSImage *icon = [[NSImage alloc] initWithContentsOfFile:filePath];
+    [alert setIcon:icon];
+    
+    // Show alert
+    if ([alert runModal] == NSAlertOtherReturn) {
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://questbe.at/lin"]];
     }
 }
 
@@ -188,281 +530,111 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
 {
     DVTFilePath *workspaceFile = index.workspaceFile;
     NSString *workspaceFilePath = workspaceFile.pathString;
-
-    if(workspaceFilePath) {
-        [self updateLocalizationFilesWithIndex:index];
-        [self updateLocalizationsForWorkspace:workspaceFilePath];
+    
+    if (workspaceFilePath) {
+        [self.collectionProcessQueue cancelAllOperations];
+        [self updateLocalizationsForIndex:index];
     }
 }
 
-- (void)removeFilesForIndex:(IDEIndex *)index
+- (void)updateLocalizationsForIndex:(IDEIndex *)index
 {
-    DVTFilePath *workspaceFile = index.workspaceFile;
-    NSString *workspaceFilePath = workspaceFile.pathString;
-
-    if(workspaceFilePath) {
-        [self.localizationFileSets removeObjectForKey:workspaceFilePath];
-        [self.localizations removeObjectForKey:workspaceFilePath];
-    }
-}
-
-
-#pragma mark - Localization
-
-- (void)updateLocalizationFilesWithIndex:(IDEIndex *)index
-{
-    DVTFilePath *workspaceFile = index.workspaceFile;
-    NSString *workspaceFilePath = workspaceFile.pathString;
-
-    if(workspaceFilePath) {
-        // Remove previous localization
-        [self.localizations removeObjectForKey:workspaceFilePath];
-
-        // Find .strings files
-        IDEIndexCollection *indexCollection = [index filesContaining:@".strings" anchorStart:NO anchorEnd:NO subsequence:NO ignoreCase:YES cancelWhen:nil];
-
-        NSMutableSet *localizationFileSet = [NSMutableSet set];
-
-        NSArray *pathComponents = [workspaceFilePath pathComponents];
-        NSMutableString *projectRoot = [NSMutableString string];
-        for (int i=0; i<pathComponents.count - 2; i++)
-            [projectRoot appendFormat:@"%@%@", [pathComponents objectAtIndex:i], i == 0 ? @"" : @"/"];
-
-        for(DVTFilePath *filePath in indexCollection) {
-            NSString *pathString = filePath.pathString;
-
-            if(self.parseStringsOutsideProject ||  (!self.parseStringsOutsideProject  &&  [pathString rangeOfString:projectRoot].location != NSNotFound))
-            {
-                NSLog(@"Adding %@ to localization file set", pathString);
-                [localizationFileSet addObject:pathString];
+    LNLocalizedStringCollectionOperation *processOperation = [[LNLocalizedStringCollectionOperation alloc] initWithIndex:index];
+    processOperation.collectionCompletedBlock = ^(NSString *workspaceFilePath, NSArray *collections) {
+        [self.workspaceLocalizations setObject:collections forKey:workspaceFilePath];
+        if ([workspaceFilePath isEqualToString:self.currentWorkspaceFilePath]) {
+            if ([self.popover isShown]) {
+                LNPopoverContentView *contentView = (LNPopoverContentView *)self.popover.contentViewController.view;
+                contentView.collections = collections;
+            } else if ([self.popoverWindowController.window isVisible]) {
+                LNPopoverContentView *contentView = (LNPopoverContentView *)self.popoverWindowController.contentViewController.view;
+                contentView.collections = collections;
             }
         }
+    };
+    
+    [self.collectionProcessQueue addOperation:processOperation];
+}
 
-        [self.localizationFileSets setObject:localizationFileSet forKey:workspaceFilePath];
+- (void)removeLocalizationsForIndex:(IDEIndex *)index
+{
+    DVTFilePath *workspaceFile = index.workspaceFile;
+    NSString *workspaceFilePath = workspaceFile.pathString;
+    
+    if (workspaceFilePath) {
+        [self.workspaceLocalizations removeObjectForKey:workspaceFilePath];
     }
 }
 
-- (void)updateLocalizationsForWorkspace:(NSString *)workspaceFilePath
+
+#pragma mark - Popover
+
+- (void)presentPopoverInTextView:(NSTextView *)textView entity:(LNEntity *)entity
 {
-    // Update localization data
-    NSMutableSet *localizationFileSet = [self.localizationFileSets objectForKey:workspaceFilePath];
-
-    Localization *localization = [Localization localization];
-
-    for(NSString *localizationFilePath in localizationFileSet) {
-        [localization addLocalizationFromContentsOfFile:localizationFilePath encoding:NSUTF8StringEncoding];
+    if (![[LNUserDefaultsManager sharedManager] isEnabled]) {
+        return;
     }
-
-    [self.localizations setObject:localization forKey:workspaceFilePath];
-}
-
-
-#pragma mark - Menu
-
-- (void)createMenuItem
-{
-    NSMenuItem *editMenuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"];
-
-    if(editMenuItem) {
-        // Load defaults
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        BOOL enabled = [userDefaults boolForKey:kLinUserDefaultsEnableKey];
-        BOOL parseStringsOutsideProject = [userDefaults boolForKey:kLinUserDefaultsParseStringsOutsideProjectKey];
-
-        // Separator
-        [[editMenuItem submenu] addItem:[NSMenuItem separatorItem]];
-
-        // Enable Lin
-        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Enable Lin" action:@selector(toggle:) keyEquivalent:@""];
-        menuItem.target = self;
-        menuItem.state = enabled ? NSOnState : NSOffState;
-
-        [[editMenuItem submenu] addItem:menuItem];
-        [menuItem release];
-
-        // Parse .strings outside project's path
-        menuItem = [[NSMenuItem alloc] initWithTitle:@"Parse .strings outside project's path" action:@selector(toggleParse:) keyEquivalent:@""];
-        menuItem.target = self;
-        menuItem.state = parseStringsOutsideProject ? NSOnState : NSOffState;
-
-        [[editMenuItem submenu] addItem:menuItem];
-        [menuItem release];
-    }
-}
-
-- (void)toggle:(id)sender
-{
-    // Save defaults
-    self.enabled = !self.enabled;
-
-    // Update menu item
-    NSMenuItem *menuItem = (NSMenuItem *)sender;
-    menuItem.state = self.enabled ? NSOnState : NSOffState;
-
-    if(self.enabled) {
-        [self activate];
-    } else {
-        [self deactivate];
-    }
-}
-
-- (void)toggleParse:(id)sender
-{
-    // Save defaults
-    self.parseStringsOutsideProject = !self.parseStringsOutsideProject;
-
-    // Update menu item
-    NSMenuItem *menuItem = (NSMenuItem *)sender;
-    menuItem.state = self.parseStringsOutsideProject ? NSOnState : NSOffState;
-}
-
-
-#pragma mark - Notification
-
-- (void)activate
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(workspaceWindowDidBecomeMain:) name:NSWindowDidBecomeMainNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeSelection:) name:NSTextViewDidChangeSelectionNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editorDocumentDidSave:) name:@"IDEEditorDocumentDidSaveNotification" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(indexDidChange:) name:@"IDEIndexDidChangeNotification" object:nil];
-}
-
-- (void)deactivate
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSWindowDidBecomeMainNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSTextViewDidChangeSelectionNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSTextDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"IDEEditorDocumentDidSaveNotification" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"IDEIndexDidChangeNotification" object:nil];
-}
-
-- (void)workspaceWindowDidBecomeMain:(NSNotification *)notification
-{
-    // Update currentWorkspacePath property
-    if([[notification object] isKindOfClass:NSClassFromString(@"IDEWorkspaceWindow")]) {
-        NSWindow *workspaceWindow = (NSWindow *)[notification object];
-        NSWindowController *workspaceWindowController = (NSWindowController *)workspaceWindow.windowController;
-
-        IDEWorkspace *workspace = (IDEWorkspace *)[workspaceWindowController valueForKey:@"_workspace"];
-        DVTFilePath *filePath = workspace.filePath;
-        NSString *pathString = filePath.pathString;
-
-        self.currentWorkspacePath = pathString;
-    }
-}
-
-- (void)editorDocumentDidSave:(NSNotification *)notification
-{
-    IDEEditorDocument *editorDocument = (IDEEditorDocument *)[notification object];
-    DVTFilePath *filePath = editorDocument.filePath;
-    NSString *pathString = filePath.pathString;
-
-    // Check whether there are any changes to .strings
-    NSMutableSet *localizationFileSet = [self.localizationFileSets objectForKey:self.currentWorkspacePath];
-
-    for(NSString *localizationFilePath in localizationFileSet) {
-        if([localizationFilePath isEqualToString:pathString]) {
-            [self updateLocalizationsForWorkspace:self.currentWorkspacePath];
-
-            break;
-        }
-    }
-}
-
-- (void)indexDidChange:(NSNotification *)notification
-{
-    // Update index
-    IDEIndex *index = (IDEIndex *)[notification object];
-    [self indexNeedsUpdate:index];
-}
-
-
-#pragma mark - Text View
-
-- (void)textDidChange:(NSNotification *)notification
-{
-    if([[notification object] isKindOfClass:NSClassFromString(@"DVTSourceTextView")]) {
-        NSTextView *textView = (NSTextView *)[notification object];
-        self.textView = textView;
-
-        [self showPopoverWithTextView:textView];
-    }
-}
-
-- (void)textViewDidChangeSelection:(NSNotification *)notification
-{
-    if([[notification object] isKindOfClass:NSClassFromString(@"DVTSourceTextView")]) {
-        NSTextView *textView = (NSTextView *)[notification object];
-        self.textView = textView;
-
-        [self showPopoverWithTextView:textView];
-    }
-}
-
-- (void)showPopoverWithTextView:(NSTextView *)textView;
-{
-    if(!self.enabled) return;
-
+    
     NSArray *selectedRanges = textView.selectedRanges;
-
-    if(selectedRanges.count > 0) {
+    
+    if (selectedRanges.count > 0) {
         NSRange selectedRange = [[selectedRanges objectAtIndex:0] rangeValue];
-
-        NSString *text = textView.textStorage.string;
-        NSRange lineRange = [text lineRangeForRange:selectedRange];
-        NSString *lineText = [text substringWithRange:lineRange];
-
-        __block BOOL matched = NO;
-
-        __block NSRange entityRangeInLine;
-        __block NSRange keyRangeInLine;
-
-        for( RegEx *regEx in _regexs) {
-            // Regular expression
-            NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:regEx.expression options:0 error:NULL];
-
-            [regularExpression enumerateMatchesInString:lineText options:0 range:NSMakeRange(0, lineText.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-                if(result.numberOfRanges == regEx.numberOfRanges) {
-                    matched = YES;
-
-                    entityRangeInLine = [result rangeAtIndex:regEx.entityRangeInLineIndex];
-                    keyRangeInLine = [result rangeAtIndex:regEx.keyRangeInLineIndex];
-                }
-
-                *stop = YES;
-            }];
-
-            if(matched)
-                break;
-        }
-
-        if(matched) {
-            NSRange entityRange = NSMakeRange(lineRange.location + entityRangeInLine.location, entityRangeInLine.length);
-            NSRange keyRange = NSMakeRange(lineRange.location + keyRangeInLine.location, keyRangeInLine.length);
-
-            if(entityRange.location <= selectedRange.location && selectedRange.location <= (entityRange.location + entityRange.length)) {
-                NSRect selectionRectOnScreen = [textView firstRectForCharacterRange:NSMakeRange(keyRange.location, 1)];
-                NSRect selectionRectInWindow = [textView.window convertRectFromScreen:selectionRectOnScreen];
-                NSRect selectionRectInView = [textView convertRect:selectionRectInWindow fromView:nil];
-
+        
+        // Locate the line containing the caret
+        NSRange lineRange = [textView.textStorage.string lineRangeForRange:selectedRange];
+        
+        // Stick popover at the beginning of the key
+        NSRange keyRange = NSMakeRange(lineRange.location + entity.keyRange.location, 1);
+        NSRect keyRectOnScreen = [textView firstRectForCharacterRange:keyRange];
+        NSRect keyRectOnWindow = [textView.window convertRectFromScreen:keyRectOnScreen];
+        NSRect keyRectOnTextView = [textView convertRect:keyRectOnWindow fromView:nil];
+        
+        // Update or show popover
+        NSArray *collections = [self.workspaceLocalizations objectForKey:self.currentWorkspaceFilePath];
+        NSString *key = [textView.textStorage.string substringWithRange:NSMakeRange(lineRange.location + entity.keyRange.location, entity.keyRange.length)];
+        
+        if ([self.popoverWindowController.window isVisible]) {
+            // Update popover content
+            LNPopoverContentView *contentView = (LNPopoverContentView *)self.popoverWindowController.contentViewController.view;
+            contentView.collections = collections;
+            contentView.searchString = key;
+        } else {
+            if ([self.popover isShown]) {
+                // Update the position for popover when the cursor moved
+                self.popover.positioningRect = keyRectOnTextView;
+                
+                // Update popover content
+                LNPopoverContentView *contentView = (LNPopoverContentView *)self.popover.contentViewController.view;
+                contentView.searchString = key;
+            } else {
                 // Show popover
-                Localization *localization = [self.localizations objectForKey:self.currentWorkspacePath];
-                NSArray *localizationItems = [localization localizationItems];
-
-                PopoverContentView *contentView = (PopoverContentView *)self.popover.contentViewController.view;
-                contentView.localizationItems = localizationItems;
-                contentView.keyFilter = [lineText substringWithRange:keyRangeInLine];
-
-                [self.popover showRelativeToRect:selectionRectInView ofView:textView preferredEdge:NSMinYEdge];
-
-                return;
+                [self.popover showRelativeToRect:keyRectOnTextView
+                                          ofView:textView
+                                   preferredEdge:NSMinYEdge];
+                
+                // Update popover content
+                LNPopoverContentView *contentView = (LNPopoverContentView *)self.popover.contentViewController.view;
+                contentView.collections = collections;
+                contentView.searchString = key;
             }
         }
     }
+}
 
-    if(self.popover.shown) {
-        [self.popover close];
+- (void)dismissPopover
+{
+    if ([self.popoverWindowController.window isVisible]) {
+        // Update popover content
+        NSArray *collections = [self.workspaceLocalizations objectForKey:self.currentWorkspaceFilePath];
+        
+        LNPopoverContentView *contentView = (LNPopoverContentView *)self.popoverWindowController.contentViewController.view;
+        contentView.collections = collections;
+        contentView.searchString = nil;
+    } else {
+        // Hide popover
+        if (self.popover.shown) {
+            [self.popover performClose:self];
+        }
     }
 }
 
@@ -482,137 +654,12 @@ static NSUInteger keyRangeInLineIndices[] = { 1, 1, 1, 1, 1 };
     [self.textView.window makeFirstResponder:self.previousFirstResponder];
 }
 
-
-#pragma mark - PopoverContentViewDelegate
-
-- (void)popoverContentView:(PopoverContentView *)popoverContentView didSelectLocalizationItem:(LocalizationItem *)localizationItem
+- (NSWindow *)detachableWindowForPopover:(NSPopover *)popover
 {
-    NSArray *selectedRanges = self.textView.selectedRanges;
-
-    if(selectedRanges.count > 0) {
-        NSRange selectedRange = [[selectedRanges objectAtIndex:0] rangeValue];
-
-        NSString *text = self.textView.textStorage.string;
-        NSRange lineRange = [text lineRangeForRange:selectedRange];
-        NSString *lineText = [text substringWithRange:lineRange];
-
-        __block BOOL matched = NO;
-
-        __block NSRange entityRangeInLine;
-        __block NSRange keyRangeInLine;
-
-        for( RegEx *regEx in _regexs) {
-            // Regular expression
-            NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:regEx.expression options:0 error:NULL];
-
-            [regularExpression enumerateMatchesInString:lineText options:0 range:NSMakeRange(0, lineText.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-                if(result.numberOfRanges == regEx.numberOfRanges) {
-                    matched = YES;
-
-                    entityRangeInLine = [result rangeAtIndex:regEx.entityRangeInLineIndex];
-                    keyRangeInLine = [result rangeAtIndex:regEx.keyRangeInLineIndex];
-                }
-
-                *stop = YES;
-            }];
-
-            if(matched)
-                break;
-        }
-
-        if(matched) {
-            // Make a new entity
-            NSRange keyRangeInEntity = NSMakeRange(keyRangeInLine.location - entityRangeInLine.location, keyRangeInLine.length);
-            NSString *entity = [lineText substringWithRange:entityRangeInLine];
-            NSString *newEntity = [entity stringByReplacingCharactersInRange:keyRangeInEntity withString:localizationItem.key];
-
-            // Insert entity
-            NSRange entityRange = NSMakeRange(lineRange.location + entityRangeInLine.location, entityRangeInLine.length);
-            [self.textView insertText:newEntity replacementRange:entityRange];
-        }
-    }
-}
-
-- (void)popoverContentView:(PopoverContentView *)popoverContentView didChangeLocalizationItem:(LocalizationItem *)localizationItem newLocalizationItem:(LocalizationItem *)newLocalizationItem
-{
-    NSString* filePath = [ NSString stringWithString: localizationItem.stringsFilename ];
-    NSStringEncoding encoding = NSUTF8StringEncoding;
-
-    if(filePath) {
-        NSError *error = nil;
-        NSString *text = [NSString stringWithContentsOfFile:filePath encoding:encoding error:&error];
-
-        if(error) {
-            error = nil;
-            encoding = NSUTF16StringEncoding;
-            text = [NSString stringWithContentsOfFile:filePath encoding:encoding error:&error];
-
-            if(error) {
-                NSLog(@"Error: %@", [error localizedDescription]);
-                return;
-            }
-        }
-
-        [text enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
-            NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"(\"(.*)\"|(.*))\\s*=\\s*\"(.*)\";$" options:0 error:NULL];
-
-            __block BOOL matched = NO;
-
-            __block NSRange entityRangeInLine;
-            __block NSRange keyRangeInLine;
-            __block NSRange stringValueRangeInLine;
-
-            [regularExpression enumerateMatchesInString:line options:0 range:NSMakeRange(0, line.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-                if(result.numberOfRanges == 5) {
-                    entityRangeInLine = [result rangeAtIndex:0];
-
-                    keyRangeInLine = [result rangeAtIndex:2];
-                    if(keyRangeInLine.location == NSNotFound) keyRangeInLine = [result rangeAtIndex:3];
-
-                    stringValueRangeInLine = [result rangeAtIndex:4];
-
-                    NSString *key = [line substringWithRange:keyRangeInLine];
-                    matched = [key isEqualToString:localizationItem.key];
-                }
-
-                *stop = YES;
-            }];
-
-            if(matched) {
-                NSRange lineRange = [text rangeOfString:line];
-                NSRange keyRange = NSMakeRange(lineRange.location + keyRangeInLine.location, keyRangeInLine.length);
-                NSRange stringValueRange = NSMakeRange(lineRange.location + stringValueRangeInLine.location, stringValueRangeInLine.length);
-
-                NSString *newText = [text stringByReplacingCharactersInRange:keyRange withString:newLocalizationItem.key];
-                newText = [newText stringByReplacingCharactersInRange:NSMakeRange(stringValueRange.location - (keyRange.length - newLocalizationItem.key.length), stringValueRange.length) withString:newLocalizationItem.stringValue];
-
-                // Save
-                NSError *error = nil;
-                [newText writeToFile:filePath atomically:YES encoding:encoding error:&error];
-
-                if(error) {
-                    NSLog(@"Error: %@", [error localizedDescription]);
-                    return;
-                }
-
-                // Update
-                [self updateLocalizationsForWorkspace:self.currentWorkspacePath];
-
-                // Update popover
-                Localization *localization = [self.localizations objectForKey:self.currentWorkspacePath];
-                NSArray *localizationItems = [localization localizationItems];
-
-                if(localizationItems.count > 0) {
-                    PopoverContentView *contentView = (PopoverContentView *)self.popover.contentViewController.view;
-                    contentView.localizationItems = localizationItems;
-
-                    return;
-                }
-
-                *stop = YES;
-            }
-        }];
-    }
+    // Prepare for detaching
+    [self preparePopoverWindow];
+    
+    return self.popoverWindowController.window;
 }
 
 @end

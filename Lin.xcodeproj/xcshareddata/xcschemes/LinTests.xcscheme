@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0460"
+   LastUpgradeVersion = "0500"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AAB2062D175C373D0004DA3A"
-               BuildableName = "LinTests.octest"
+               BlueprintIdentifier = "AA470D6217C3D380005CBB7F"
+               BuildableName = "LinTests.xctest"
                BlueprintName = "LinTests"
                ReferencedContainer = "container:Lin.xcodeproj">
             </BuildableReference>
@@ -32,8 +32,8 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AAB2062D175C373D0004DA3A"
-               BuildableName = "LinTests.octest"
+               BlueprintIdentifier = "AA470D6217C3D380005CBB7F"
+               BuildableName = "LinTests.xctest"
                BlueprintName = "LinTests"
                ReferencedContainer = "container:Lin.xcodeproj">
             </BuildableReference>
