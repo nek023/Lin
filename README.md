@@ -1,4 +1,5 @@
 # Lin
+
 Lin is a Xcode plugin that provides auto-completion for `NSLocalizedString`.  
 Both Objective-C and Swift are supported.
 
@@ -8,6 +9,7 @@ Both Objective-C and Swift are supported.
 
 
 ## Installation
+
 Download the project and build it, and then relaunch Xcode.  
 Lin will be installed in `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins` automatically.
 
@@ -15,6 +17,7 @@ If you want to uninstall Lin, remove Lin.xcplugin in the `Plug-ins` directory.
 
 
 ## Notes
+
 * Supported Xcode versions
   * Xcode 6.1
   * Xcode 6.2 beta
@@ -25,7 +28,16 @@ If you want to uninstall Lin, remove Lin.xcplugin in the `Plug-ins` directory.
   * NSLocalizedStringWithDefaultValue
 
 
+## Troubleshooting
+
+### I installed Lin by using Alcatraz, and it doesn't work.
+
+1. Remove all cached data of Alcatraz: `rm -rf ~/Library/Application\ Support/Alcatraz`
+2. Reinstall Lin and restart Xcode.
+
+
 ## License
+
 Lin is released under the **MIT License**.
 
 > Copyright (c) 2014 Katsuma Tanaka
