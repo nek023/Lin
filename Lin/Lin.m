@@ -144,12 +144,20 @@ static id _sharedInstance = nil;
 
 #pragma mark - Auto Completion
 
-- (BOOL)isAutoCompletableFunction:(NSString *)name
+- (NSArray *)completionItemsForWorkspace:(IDEWorkspace *)workspace
 {
-    return [[self.configurations valueForKey:@"LINFunctionName"] containsObject:name];
+    NSString *workspaceFilePath = workspace.representingFilePath.pathString;
+    if (workspaceFilePath == nil) return nil;
+    
+    return self.completionItems[workspaceFilePath];
 }
 
 - (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView
+{
+    return [self shouldAutoCompleteInTextView:textView keyRange:nil];
+}
+
+- (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView keyRange:(NSRange *)keyRangePtr
 {
     if (textView == nil) return NO;
     
@@ -167,9 +175,14 @@ static id _sharedInstance = nil;
                 NSArray *matches = [regularExpression matchesInString:string options:0 range:NSMakeRange(0, string.length)];
                 
                 for (NSTextCheckingResult *match in matches) {
-                    NSRange lastRange = [match rangeAtIndex:match.numberOfRanges - 1];
+                    if (match.numberOfRanges == 0) continue;
+                    NSRange keyRange = [match rangeAtIndex:match.numberOfRanges - 1];
                     
-                    if (NSMaxRange(lastRange) == NSMaxRange(selectedRange)) {
+                    if (NSMaxRange(keyRange) == NSMaxRange(selectedRange)) {
+                        if (keyRangePtr) {
+                            *keyRangePtr = keyRange;
+                        }
+                        
                         return YES;
                     }
                 }
@@ -180,12 +193,34 @@ static id _sharedInstance = nil;
     return NO;
 }
 
-- (NSArray *)completionItemsForWorkspace:(IDEWorkspace *)workspace
+- (NSRange)replacableTableNameRangeInTextView:(DVTCompletingTextView *)textView
 {
-    NSString *workspaceFilePath = workspace.representingFilePath.pathString;
-    if (workspaceFilePath == nil) return nil;
+    if (textView == nil) return NSMakeRange(NSNotFound, 0);
     
-    return self.completionItems[workspaceFilePath];
+    DVTTextStorage *textStorage = (DVTTextStorage *)textView.textStorage;
+    DVTSourceCodeLanguage *language = textStorage.language;
+    NSString *string = textStorage.string;
+    NSRange selectedRange = textView.selectedRange;
+    
+    for (NSDictionary *configuration in self.configurations) {
+        for (NSDictionary *patterns in configuration[@"LINTableNameCompletionPatterns"]) {
+            NSString *pattern = patterns[language.languageName];
+            
+            if (pattern) {
+                NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
+                NSArray *matches = [regularExpression matchesInString:string options:0 range:NSMakeRange(0, string.length)];
+                
+                for (NSTextCheckingResult *match in matches) {
+                    if (match.numberOfRanges == 0 || !NSLocationInRange(selectedRange.location, match.range)) continue;
+                    NSRange tableNameRange = [match rangeAtIndex:match.numberOfRanges - 1];
+                    
+                    return tableNameRange;
+                }
+            }
+        }
+    }
+    
+    return NSMakeRange(NSNotFound, 0);
 }
 
 @end

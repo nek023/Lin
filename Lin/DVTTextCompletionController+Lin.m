@@ -10,6 +10,7 @@
 #import "MethodSwizzle.h"
 #import "Xcode.h"
 #import "Lin.h"
+#import "LINLocalization.h"
 #import "LINTextCompletionItem.h"
 
 @implementation DVTTextCompletionController (Lin)
@@ -23,8 +24,6 @@
 
 - (BOOL)lin_acceptCurrentCompletion
 {
-    NSLog(@"*** lin_acceptCurrentCompletion");
-    
     DVTTextCompletionSession *session = self.currentSession;
     id selectedCompletion = session.allCompletions[session.selectedCompletionIndex];
     BOOL completedLocalization = [selectedCompletion isKindOfClass:[LINTextCompletionItem class]];
@@ -34,32 +33,31 @@
     
     DVTSourceTextView *textView = (DVTSourceTextView *)self.textView;
     DVTTextStorage *textStorage = (DVTTextStorage *)textView.textStorage;
-    NSString *string = textStorage.string;
-    NSUInteger location = textView.selectedRange.location;
+    DVTSourceCodeLanguage *language = textStorage.language;
     
     if (completedLocalization) {
-        NSLog(@"location: %lu", location);
-        NSLog(@"%@", [string substringWithRange:NSMakeRange(location, 10)]);
+        NSRange tableNameRange = [[Lin sharedInstance] replacableTableNameRangeInTextView:textView];
         
-        // Find the table name placeholder
-        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"<#tbl#>" options:0 error:nil];
-        NSTextCheckingResult *match = [regularExpression firstMatchInString:string options:0 range:NSMakeRange(location, string.length - location)];
-        
-        if (match) {
-            [textView insertText:@"hoge" replacementRange:match.range];
+        if (tableNameRange.location != NSNotFound) {
+            // Replace table name
+            LINLocalization *localization = [[(LINTextCompletionItem *)selectedCompletion localizations] lastObject];
+            
+            NSString *text;
+            if ([language lin_isObjectiveC]) {
+                text = [NSString stringWithFormat:@"@\"%@\"", localization.tableName];
+            } else {
+                text = [NSString stringWithFormat:@"\"%@\"", localization.tableName];
+            }
+            
+            [textView insertText:text replacementRange:tableNameRange];
         }
     } else {
-        BOOL shouldAutoComplete = [[Lin sharedInstance] shouldAutoCompleteInTextView:textView];
+        NSRange keyRange = NSMakeRange(NSNotFound, 0);
+        BOOL shouldAutoComplete = [[Lin sharedInstance] shouldAutoCompleteInTextView:textView keyRange:&keyRange];
         
-        if (shouldAutoComplete) {
-            // Find the first completion placeholder
-            NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"<#.*?#>" options:0 error:nil];
-            NSTextCheckingResult *match = [regularExpression firstMatchInString:string options:0 range:NSMakeRange(location, string.length - location)];
-            
-            if (match) {
-                [textView insertText:@"" replacementRange:match.range];
-                [self _showCompletionsAtCursorLocationExplicitly:YES];
-            }
+        if (shouldAutoComplete && keyRange.location != NSNotFound) {
+            [textView insertText:@"" replacementRange:keyRange];
+            [self _showCompletionsAtCursorLocationExplicitly:YES];
         }
     }
     

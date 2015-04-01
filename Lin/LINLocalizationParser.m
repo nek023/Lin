@@ -17,6 +17,9 @@ static NSString * const kRegularExpressionPattern = @"(\"(\\S+.*\\S+)\"|(\\S+.*\
 
 - (NSArray *)localizationsFromContentsOfFile:(NSString *)filePath
 {
+    NSString *tableName = [[filePath lastPathComponent] stringByDeletingPathExtension];
+    if (tableName == nil) return nil;
+    
     // Load contents
     NSString *string = [NSString stringWithContentsOfFile:filePath usedEncoding:nil error:nil];
     if (string == nil) return nil;
@@ -59,7 +62,8 @@ static NSString * const kRegularExpressionPattern = @"(\"(\\S+.*\\S+)\"|(\\S+.*\
         if (key && value) {
             LINLocalization *localization = [[LINLocalization alloc] initWithKey:key
                                                                            value:value
-                                                             languageDesignation:languageDesignation];
+                                                             languageDesignation:languageDesignation
+                                                                       tableName:tableName];
             [localizations addObject:localization];
         }
         

@@ -12,22 +12,22 @@
 
 @property (nonatomic, copy, readwrite) NSString *key;
 @property (nonatomic, copy, readwrite) NSString *value;
-
 @property (nonatomic, copy, readwrite) NSString *languageDesignation;
+@property (nonatomic, copy, readwrite) NSString *tableName;
 
 @end
 
 @implementation LINLocalization
 
-- (instancetype)initWithKey:(NSString *)key value:(NSString *)value languageDesignation:(NSString *)languageDesignation
+- (instancetype)initWithKey:(NSString *)key value:(NSString *)value languageDesignation:(NSString *)languageDesignation tableName:(NSString *)tableName
 {
     self = [super init];
     
     if (self) {
         self.key = key;
         self.value = value;
-        
         self.languageDesignation = languageDesignation;
+        self.tableName = tableName;
     }
     
     return self;
@@ -39,10 +39,11 @@
         return YES;
     if (!object || ![[object class] isEqual:[self class]])
         return NO;
-    if (![[self key] isEqualToString:[object key]])
-        return NO;
     
-    return YES;
+    return ([[self key] isEqualToString:[object key]]
+            && [[self value] isEqualToString:[object value]]
+            && [[self languageDesignation] isEqualToString:[object languageDesignation]]
+            && [[self tableName] isEqualToString:[object tableName]]);
 }
 
 - (NSUInteger)hash
@@ -53,12 +54,13 @@
 - (NSString *)description
 {
     return [NSString stringWithFormat:
-            @"<%@: %p; key = %@; value = %@; languageDesignation = %@>",
+            @"<%@: %p; key = %@; value = %@; languageDesignation = %@; tableName = %@>",
             NSStringFromClass([self class]),
             self,
             self.key,
             self.value,
-            self.languageDesignation
+            self.languageDesignation,
+            self.tableName
             ];
 }
 

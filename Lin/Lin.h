@@ -19,8 +19,9 @@
 
 - (void)indexNeedsUpdate:(IDEIndex *)index;
 
-- (BOOL)isAutoCompletableFunction:(NSString *)name;
-- (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView;
 - (NSArray *)completionItemsForWorkspace:(IDEWorkspace *)workspace;
+- (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView;
+- (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView keyRange:(NSRange *)keyRangePtr;
+- (NSRange)replacableTableNameRangeInTextView:(DVTCompletingTextView *)textView;
 
 @end
