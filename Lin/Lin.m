@@ -171,7 +171,7 @@ static id _sharedInstance = nil;
         for (NSDictionary *patterns in configuration[@"LINKeyCompletionPatterns"]) {
             NSString *pattern = patterns[language.languageName];
             
-            if (pattern) {
+            if (pattern && pattern.length > 0) {
                 NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
                 NSArray *matches = [regularExpression matchesInString:string options:0 range:NSMakeRange(0, string.length)];
                 
@@ -203,15 +203,17 @@ static id _sharedInstance = nil;
         for (NSDictionary *patterns in configuration[@"LINTableNameCompletionPatterns"]) {
             NSString *pattern = patterns[language.languageName];
             
-            if (pattern) {
+            if (pattern && pattern.length > 0) {
                 NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
                 NSArray *matches = [regularExpression matchesInString:string options:0 range:NSMakeRange(0, string.length)];
                 
                 for (NSTextCheckingResult *match in matches) {
-                    if (match.numberOfRanges == 0 || !NSLocationInRange(selectedRange.location, match.range)) continue;
+                    if (match.numberOfRanges == 0) continue;
                     NSRange tableNameRange = [match rangeAtIndex:match.numberOfRanges - 1];
                     
-                    return tableNameRange;
+                    if (NSLocationInRange(selectedRange.location, match.range)) {
+                        return tableNameRange;
+                    }
                 }
             }
         }

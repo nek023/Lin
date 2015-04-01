@@ -27,7 +27,6 @@
     // Get selected completion
     DVTTextCompletionSession *session = self.currentSession;
     id selectedCompletion = session.filteredCompletionsAlpha[session.selectedCompletionIndex];
-    BOOL completedLocalization = [selectedCompletion isKindOfClass:[LINTextCompletionItem class]];
     
     // Original method must be called after referencing selected completion
     BOOL acceptCurrentCompletion = [self lin_acceptCurrentCompletion];
@@ -36,11 +35,11 @@
     DVTTextStorage *textStorage = (DVTTextStorage *)textView.textStorage;
     DVTSourceCodeLanguage *language = textStorage.language;
     
-    if (completedLocalization) {
+    if ([selectedCompletion isKindOfClass:[LINTextCompletionItem class]]) {
+        // Replace table name
         NSRange tableNameRange = [[Lin sharedInstance] replacableTableNameRangeInTextView:textView];
         
         if (tableNameRange.location != NSNotFound) {
-            // Replace table name
             LINLocalization *localization = [[(LINTextCompletionItem *)selectedCompletion localizations] lastObject];
             
             NSString *text;
@@ -53,6 +52,7 @@
             [textView insertText:text replacementRange:tableNameRange];
         }
     } else {
+        // Replace key
         NSRange keyRange = [[Lin sharedInstance] replacableKeyRangeInTextView:textView];
         
         if (keyRange.location != NSNotFound) {
