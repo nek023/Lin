@@ -5,19 +5,30 @@
 	<dict>
 		<key>LINFunctionName</key>
 		<string>NSLocalizedString</string>
+		<key>LINTableNameCompletionPatterns</key>
+		<array>
+			<dict>
+				<key>Swift</key>
+				<string>NSLocalizedString\s*\(\s*&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*tableName\s*:\s*(&quot;(?:[^\\&quot;]|\\.)*&quot;)</string>
+			</dict>
+			<dict>
+				<key>Swift</key>
+				<string>NSLocalizedString\s*\(\s*&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*tableName\s*:\s*(&lt;#String\?#&gt;)</string>
+			</dict>
+		</array>
 		<key>LINKeyCompletionPatterns</key>
 		<array>
 			<dict>
 				<key>Objective-C</key>
 				<string>NSLocalizedString\s*\(\s*(\w*)</string>
 				<key>Swift</key>
-				<string>NSLocalizedString\s*\(\s*\w*</string>
+				<string>NSLocalizedString\s*\(\s*(\w*)</string>
 			</dict>
 			<dict>
 				<key>Objective-C</key>
 				<string>NSLocalizedString\s*\(\s*(&lt;#key#&gt;)</string>
 				<key>Swift</key>
-				<string>NSLocalizedString\s*\(\s*\w*</string>
+				<string>NSLocalizedString\s*\(\s*(&lt;#key: String#&gt;)</string>
 			</dict>
 		</array>
 	</dict>
