@@ -15,15 +15,11 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>3.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2015年 Katsuma Tanaka. All rights reserved.</string>
-	<key>NSPrincipalClass</key>
-	<string>Lin</string>
 	<key>DVTPlugInCompatibilityUUIDs</key>
 	<array>
 		<string>C4A681B0-4A26-480E-93EC-1218098B9AA0</string>
@@ -31,13 +27,17 @@
 		<string>992275C1-432A-4CF7-B659-D84ED6D42D3F</string>
 		<string>A16FF353-8441-459E-A50C-B071F53F51B7</string>
 	</array>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2015年 Katsuma Tanaka. All rights reserved.</string>
+	<key>NSPrincipalClass</key>
+	<string>Lin</string>
+	<key>XC4Compatible</key>
+	<true/>
+	<key>XC5Compatible</key>
+	<true/>
 	<key>XCGCReady</key>
 	<true/>
 	<key>XCPluginHasUI</key>
 	<false/>
-	<key>XC5Compatible</key>
-	<true/>
-	<key>XC4Compatible</key>
-	<true/>
 </dict>
 </plist>
