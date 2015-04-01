@@ -10,11 +10,7 @@
 
 @interface DVTTextCompletionSession : NSObject
 
-@property(retain) NSArray *highlyLikelyCompletions;
-@property(readonly, nonatomic) NSDictionary *currentCompletionContext;
-@property(nonatomic) long long selectedCompletionIndex;
-@property(copy) NSString *usefulPrefix;
-@property(retain) NSArray *filteredCompletionsAlpha;
-@property(retain) NSArray *allCompletions;
+@property (retain) NSArray *filteredCompletionsAlpha;
+@property (nonatomic) long long selectedCompletionIndex;
 
 @end

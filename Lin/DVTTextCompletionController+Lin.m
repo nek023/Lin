@@ -24,8 +24,9 @@
 
 - (BOOL)lin_acceptCurrentCompletion
 {
+    // Get selected completion
     DVTTextCompletionSession *session = self.currentSession;
-    id selectedCompletion = session.allCompletions[session.selectedCompletionIndex];
+    id selectedCompletion = session.filteredCompletionsAlpha[session.selectedCompletionIndex];
     BOOL completedLocalization = [selectedCompletion isKindOfClass:[LINTextCompletionItem class]];
     
     // Original method must be called after referencing selected completion
