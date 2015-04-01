@@ -20,7 +20,7 @@
 - (void)indexNeedsUpdate:(IDEIndex *)index;
 
 - (BOOL)isAutoCompletableFunction:(NSString *)name;
-- (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView location:(NSUInteger)location;
+- (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView;
 - (NSArray *)completionItemsForWorkspace:(IDEWorkspace *)workspace;
 
 @end

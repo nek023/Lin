@@ -5,11 +5,26 @@
 	<dict>
 		<key>LINFunctionName</key>
 		<string>NSLocalizedString</string>
-		<key>LINCompletionPatterns</key>
+		<key>LINTableNameCompletionPatterns</key>
 		<array>
 			<dict>
 				<key>Objective-C</key>
+				<string></string>
+				<key>Swift</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>LINKeyCompletionPatterns</key>
+		<array>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedString\s*\(\s*(\w*)\s*,</string>
+				<key>Swift</key>
 				<string>NSLocalizedString\s*\(\s*\w*</string>
+			</dict>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedString\s*\(\s*(&lt;#key#&gt;)\s*,</string>
 				<key>Swift</key>
 				<string>NSLocalizedString\s*\(\s*\w*</string>
 			</dict>
@@ -18,7 +33,22 @@
 	<dict>
 		<key>LINFunctionName</key>
 		<string>NSLocalizedStringFromTable</string>
-		<key>LINCompletionPatterns</key>
+		<key>LINTableNameCompletionPatterns</key>
+		<array>
+			<dict>
+				<key>Objective-C</key>
+				<string>\s*,\s*@&quot;([^\\&quot;]|\\.)*&quot;</string>
+				<key>Swift</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>Objective-C</key>
+				<string>\s*,\s*@&quot;([^\\&quot;]|\\.)*&quot;</string>
+				<key>Swift</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>LINKeyCompletionPatterns</key>
 		<array>
 			<dict>
 				<key>Objective-C</key>
@@ -31,7 +61,16 @@
 	<dict>
 		<key>LINFunctionName</key>
 		<string>NSLocalizedStringFromTableInBundle</string>
-		<key>LINCompletionPatterns</key>
+		<key>LINTableNameCompletionPatterns</key>
+		<array>
+			<dict>
+				<key>Objective-C</key>
+				<string></string>
+				<key>Swift</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>LINKeyCompletionPatterns</key>
 		<array>
 			<dict>
 				<key>Objective-C</key>
@@ -44,7 +83,16 @@
 	<dict>
 		<key>LINFunctionName</key>
 		<string>NSLocalizedStringWithDefaultValue</string>
-		<key>LINCompletionPatterns</key>
+		<key>LINTableNameCompletionPatterns</key>
+		<array>
+			<dict>
+				<key>Objective-C</key>
+				<string></string>
+				<key>Swift</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>LINKeyCompletionPatterns</key>
 		<array>
 			<dict>
 				<key>Objective-C</key>

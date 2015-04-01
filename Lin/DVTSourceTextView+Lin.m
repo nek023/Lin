@@ -24,7 +24,7 @@
     BOOL shouldAutoComplete = [self lin_shouldAutoCompleteAtLocation:arg1];
     
     if (!shouldAutoComplete) {
-        shouldAutoComplete = [[Lin sharedInstance] shouldAutoCompleteInTextView:self location:arg1];
+        shouldAutoComplete = [[Lin sharedInstance] shouldAutoCompleteInTextView:self];
     }
     
     return shouldAutoComplete;

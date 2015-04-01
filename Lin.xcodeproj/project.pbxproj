@@ -32,6 +32,7 @@
 /* Begin PBXFileReference section */
 		AA023C121A82A2E700D4AE5F /* LinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA023C151A82A2E700D4AE5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA12BEBC1AC52947001A97ED /* DVTTextCompletionSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTTextCompletionSession.h; sourceTree = "<group>"; };
 		AA1313A11A82884B0080D488 /* MethodSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodSwizzle.h; sourceTree = "<group>"; };
 		AA1313A21A82884B0080D488 /* MethodSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodSwizzle.m; sourceTree = "<group>"; };
 		AA1313A51A82890D0080D488 /* DVTCompletingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTCompletingTextView.h; sourceTree = "<group>"; };
@@ -224,6 +225,7 @@
 				AAB604A11A83A72600C0E59B /* DVTSourceTextView.h */,
 				AA1DB1111A828C9800856B10 /* DVTTextCompletionController.h */,
 				AA89B4F71A872D0200E8CCD6 /* DVTTextCompletionDataSource.h */,
+				AA12BEBC1AC52947001A97ED /* DVTTextCompletionSession.h */,
 				AAB604AC1A83D3B900C0E59B /* DVTTextStorage.h */,
 			);
 			name = DVTKit;

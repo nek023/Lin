@@ -149,24 +149,29 @@ static id _sharedInstance = nil;
     return [[self.configurations valueForKey:@"LINFunctionName"] containsObject:name];
 }
 
-- (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView location:(NSUInteger)location
+- (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView
 {
     if (textView == nil) return NO;
     
     DVTTextStorage *textStorage = (DVTTextStorage *)textView.textStorage;
     DVTSourceCodeLanguage *language = textStorage.language;
-    NSString *string = [textStorage.string substringToIndex:location];
+    NSString *string = textStorage.string;
+    NSRange selectedRange = textView.selectedRange;
     
     for (NSDictionary *configuration in self.configurations) {
-        for (NSDictionary *patterns in configuration[@"LINCompletionPatterns"]) {
+        for (NSDictionary *patterns in configuration[@"LINKeyCompletionPatterns"]) {
             NSString *pattern = patterns[language.languageName];
             
             if (pattern) {
                 NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
-                NSTextCheckingResult *match = [[regularExpression matchesInString:string options:0 range:NSMakeRange(0, string.length)] lastObject];
+                NSArray *matches = [regularExpression matchesInString:string options:0 range:NSMakeRange(0, string.length)];
                 
-                if (match && NSMaxRange(match.range) == location) {
-                    return YES;
+                for (NSTextCheckingResult *match in matches) {
+                    NSRange lastRange = [match rangeAtIndex:match.numberOfRanges - 1];
+                    
+                    if (NSMaxRange(lastRange) == NSMaxRange(selectedRange)) {
+                        return YES;
+                    }
                 }
             }
         }

@@ -27,7 +27,7 @@
     DVTTextStorage *textStorage = (DVTTextStorage *)textView.textStorage;
     DVTSourceCodeLanguage *language = textStorage.language;
     
-    BOOL shouldAutoComplete = [[Lin sharedInstance] shouldAutoCompleteInTextView:textView location:textView.selectedRange.location];
+    BOOL shouldAutoComplete = [[Lin sharedInstance] shouldAutoCompleteInTextView:textView];
     
     if (shouldAutoComplete) {
         IDEWorkspace *workspace = [arg2 objectForKey:@"IDETextCompletionContextWorkspaceKey"];
