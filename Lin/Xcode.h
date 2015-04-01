@@ -16,6 +16,7 @@
 #import "DVTSourceTextView.h"
 #import "DVTTextCompletionController.h"
 #import "DVTTextCompletionDataSource.h"
+#import "DVTTextCompletionSession.h"
 #import "DVTTextStorage.h"
 
 // IDEFoundation

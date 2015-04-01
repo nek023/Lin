@@ -12,9 +12,9 @@
 
 @property (nonatomic, copy, readonly) NSString *key;
 @property (nonatomic, copy, readonly) NSString *value;
-
 @property (nonatomic, copy, readonly) NSString *languageDesignation;
+@property (nonatomic, copy, readonly) NSString *tableName;
 
-- (instancetype)initWithKey:(NSString *)key value:(NSString *)value languageDesignation:(NSString *)languageDesignation;
+- (instancetype)initWithKey:(NSString *)key value:(NSString *)value languageDesignation:(NSString *)languageDesignation tableName:(NSString *)tableName;
 
 @end

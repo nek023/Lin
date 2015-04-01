@@ -13,14 +13,14 @@
 @interface IDEIndexCompletionItem : NSObject
 
 @property double priority;
-@property(readonly) NSString *name;
-@property(readonly) BOOL notRecommended;
-@property(readonly) DVTSourceCodeSymbolKind *symbolKind;
-@property(readonly) NSAttributedString *descriptionText;
-@property(readonly, copy) NSString *parentText;
-@property(readonly) NSString *completionText;
-@property(readonly) NSString *displayType;
-@property(readonly) NSString *displayText;
+@property (readonly) NSString *name;
+@property (readonly) BOOL notRecommended;
+@property (readonly) DVTSourceCodeSymbolKind *symbolKind;
+@property (readonly) NSAttributedString *descriptionText;
+@property (readonly, copy) NSString *parentText;
+@property (readonly) NSString *completionText;
+@property (readonly) NSString *displayType;
+@property (readonly) NSString *displayText;
 
 - (id)initWithCompletionResult:(void *)arg1;
 - (void)_fillInTheRest;

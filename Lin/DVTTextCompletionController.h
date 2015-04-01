@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @class DVTCompletingTextView;
+@class DVTTextCompletionSession;
 
 @interface DVTTextCompletionController : NSObject
 
 @property (readonly) DVTCompletingTextView *textView;
+@property (retain) DVTTextCompletionSession *currentSession;
 
 - (BOOL)acceptCurrentCompletion;
 - (BOOL)_showCompletionsAtCursorLocationExplicitly:(BOOL)arg1;

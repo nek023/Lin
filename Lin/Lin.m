@@ -144,43 +144,82 @@ static id _sharedInstance = nil;
 
 #pragma mark - Auto Completion
 
-- (BOOL)isAutoCompletableFunction:(NSString *)name
-{
-    return [[self.configurations valueForKey:@"LINFunctionName"] containsObject:name];
-}
-
-- (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView location:(NSUInteger)location
-{
-    if (textView == nil) return NO;
-    
-    DVTTextStorage *textStorage = (DVTTextStorage *)textView.textStorage;
-    DVTSourceCodeLanguage *language = textStorage.language;
-    NSString *string = [textStorage.string substringToIndex:location];
-    
-    for (NSDictionary *configuration in self.configurations) {
-        for (NSDictionary *patterns in configuration[@"LINCompletionPatterns"]) {
-            NSString *pattern = patterns[language.languageName];
-            
-            if (pattern) {
-                NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
-                NSTextCheckingResult *match = [[regularExpression matchesInString:string options:0 range:NSMakeRange(0, string.length)] lastObject];
-                
-                if (match && NSMaxRange(match.range) == location) {
-                    return YES;
-                }
-            }
-        }
-    }
-    
-    return NO;
-}
-
 - (NSArray *)completionItemsForWorkspace:(IDEWorkspace *)workspace
 {
     NSString *workspaceFilePath = workspace.representingFilePath.pathString;
     if (workspaceFilePath == nil) return nil;
     
     return self.completionItems[workspaceFilePath];
+}
+
+- (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView
+{
+    NSRange keyRange = [self replacableKeyRangeInTextView:textView];
+    return (keyRange.location != NSNotFound);
+}
+
+- (NSRange)replacableKeyRangeInTextView:(DVTCompletingTextView *)textView
+{
+    if (textView == nil) return NSMakeRange(NSNotFound, 0);
+    
+    DVTTextStorage *textStorage = (DVTTextStorage *)textView.textStorage;
+    DVTSourceCodeLanguage *language = textStorage.language;
+    NSString *string = textStorage.string;
+    NSRange selectedRange = textView.selectedRange;
+    
+    for (NSDictionary *configuration in self.configurations) {
+        for (NSDictionary *patterns in configuration[@"LINKeyCompletionPatterns"]) {
+            NSString *pattern = patterns[language.languageName];
+            
+            if (pattern && pattern.length > 0) {
+                NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
+                NSArray *matches = [regularExpression matchesInString:string options:0 range:NSMakeRange(0, string.length)];
+                
+                for (NSTextCheckingResult *match in matches) {
+                    if (match.numberOfRanges == 0) continue;
+                    NSRange keyRange = [match rangeAtIndex:match.numberOfRanges - 1];
+                    
+                    if (NSMaxRange(keyRange) == NSMaxRange(selectedRange)) {
+                        return keyRange;
+                    }
+                }
+            }
+        }
+    }
+    
+    return NSMakeRange(NSNotFound, 0);
+}
+
+- (NSRange)replacableTableNameRangeInTextView:(DVTCompletingTextView *)textView
+{
+    if (textView == nil) return NSMakeRange(NSNotFound, 0);
+    
+    DVTTextStorage *textStorage = (DVTTextStorage *)textView.textStorage;
+    DVTSourceCodeLanguage *language = textStorage.language;
+    NSString *string = textStorage.string;
+    NSRange selectedRange = textView.selectedRange;
+    
+    for (NSDictionary *configuration in self.configurations) {
+        for (NSDictionary *patterns in configuration[@"LINTableNameCompletionPatterns"]) {
+            NSString *pattern = patterns[language.languageName];
+            
+            if (pattern && pattern.length > 0) {
+                NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
+                NSArray *matches = [regularExpression matchesInString:string options:0 range:NSMakeRange(0, string.length)];
+                
+                for (NSTextCheckingResult *match in matches) {
+                    if (match.numberOfRanges == 0) continue;
+                    NSRange tableNameRange = [match rangeAtIndex:match.numberOfRanges - 1];
+                    
+                    if (NSLocationInRange(selectedRange.location, match.range)) {
+                        return tableNameRange;
+                    }
+                }
+            }
+        }
+    }
+    
+    return NSMakeRange(NSNotFound, 0);
 }
 
 @end

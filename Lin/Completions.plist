@@ -5,52 +5,132 @@
 	<dict>
 		<key>LINFunctionName</key>
 		<string>NSLocalizedString</string>
-		<key>LINCompletionPatterns</key>
+		<key>LINTableNameCompletionPatterns</key>
+		<array>
+			<dict>
+				<key>Swift</key>
+				<string>NSLocalizedString\s*\(\s*&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*tableName\s*:\s*(&quot;(?:[^\\&quot;]|\\.)*&quot;)</string>
+			</dict>
+			<dict>
+				<key>Swift</key>
+				<string>NSLocalizedString\s*\(\s*&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*tableName\s*:\s*(&lt;#String\?#&gt;)</string>
+			</dict>
+		</array>
+		<key>LINKeyCompletionPatterns</key>
 		<array>
 			<dict>
 				<key>Objective-C</key>
-				<string>NSLocalizedString\s*\(\s*\w*</string>
+				<string>NSLocalizedString\s*\(\s*(\w*)</string>
 				<key>Swift</key>
-				<string>NSLocalizedString\s*\(\s*\w*</string>
+				<string>NSLocalizedString\s*\(\s*(\w*)</string>
+			</dict>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedString\s*\(\s*(&lt;#key#&gt;)</string>
+				<key>Swift</key>
+				<string>NSLocalizedString\s*\(\s*(&lt;#key: String#&gt;)</string>
 			</dict>
 		</array>
 	</dict>
 	<dict>
 		<key>LINFunctionName</key>
 		<string>NSLocalizedStringFromTable</string>
-		<key>LINCompletionPatterns</key>
+		<key>LINTableNameCompletionPatterns</key>
 		<array>
 			<dict>
 				<key>Objective-C</key>
-				<string>NSLocalizedStringFromTable\s*\(\s*\w*</string>
+				<string>NSLocalizedStringFromTable\s*\(\s*@&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*(@&quot;(?:[^\\&quot;]|\\.)*&quot;)</string>
 				<key>Swift</key>
-				<string>NSLocalizedStringFromTable\s*\(\s*\w*</string>
+				<string>NSLocalizedStringFromTable\s*\(\s*&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*(&quot;(?:[^\\&quot;]|\\.)*&quot;)</string>
+			</dict>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedStringFromTable\s*\(\s*@&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*(&lt;#tbl#&gt;)</string>
+				<key>Swift</key>
+				<string>NSLocalizedStringFromTable\s*\(\s*&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*(&lt;#tbl#&gt;)</string>
+			</dict>
+		</array>
+		<key>LINKeyCompletionPatterns</key>
+		<array>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedStringFromTable\s*\(\s*(\w*)</string>
+				<key>Swift</key>
+				<string>NSLocalizedStringFromTable\s*\(\s*(\w*)</string>
+			</dict>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedStringFromTable\s*\(\s*(&lt;#key#&gt;)</string>
+				<key>Swift</key>
+				<string>NSLocalizedStringFromTable\s*\(\s*(&lt;#key#&gt;)</string>
 			</dict>
 		</array>
 	</dict>
 	<dict>
 		<key>LINFunctionName</key>
 		<string>NSLocalizedStringFromTableInBundle</string>
-		<key>LINCompletionPatterns</key>
+		<key>LINTableNameCompletionPatterns</key>
 		<array>
 			<dict>
 				<key>Objective-C</key>
-				<string>NSLocalizedStringFromTableInBundle\s*\(\s*\w*</string>
+				<string>NSLocalizedStringFromTableInBundle\s*\(\s*@&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*(@&quot;(?:[^\\&quot;]|\\.)*&quot;)</string>
 				<key>Swift</key>
-				<string>NSLocalizedStringFromTableInBundle\s*\(\s*\w*</string>
+				<string>NSLocalizedStringFromTableInBundle\s*\(\s*&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*(&quot;(?:[^\\&quot;]|\\.)*&quot;)</string>
+			</dict>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedStringFromTableInBundle\s*\(\s*@&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*(&lt;#tbl#&gt;)</string>
+				<key>Swift</key>
+				<string>NSLocalizedStringFromTableInBundle\s*\(\s*&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*(&lt;#tbl#&gt;)</string>
+			</dict>
+		</array>
+		<key>LINKeyCompletionPatterns</key>
+		<array>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedStringFromTableInBundle\s*\(\s*(\w*)</string>
+				<key>Swift</key>
+				<string>NSLocalizedStringFromTableInBundle\s*\(\s*(\w*)</string>
+			</dict>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedStringFromTableInBundle\s*\(\s*(&lt;#key#&gt;)</string>
+				<key>Swift</key>
+				<string>NSLocalizedStringFromTableInBundle\s*\(\s*(&lt;#key#&gt;)</string>
 			</dict>
 		</array>
 	</dict>
 	<dict>
 		<key>LINFunctionName</key>
 		<string>NSLocalizedStringWithDefaultValue</string>
-		<key>LINCompletionPatterns</key>
+		<key>LINTableNameCompletionPatterns</key>
 		<array>
 			<dict>
 				<key>Objective-C</key>
-				<string>NSLocalizedStringWithDefaultValue\s*\(\s*\w*</string>
+				<string>NSLocalizedStringWithDefaultValue\s*\(\s*@&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*(@&quot;(?:[^\\&quot;]|\\.)*&quot;)</string>
 				<key>Swift</key>
-				<string>NSLocalizedStringWithDefaultValue\s*\(\s*\w*</string>
+				<string>NSLocalizedStringWithDefaultValue\s*\(\s*&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*(&quot;(?:[^\\&quot;]|\\.)*&quot;)</string>
+			</dict>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedStringWithDefaultValue\s*\(\s*@&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*(&lt;#tbl#&gt;)</string>
+				<key>Swift</key>
+				<string>NSLocalizedStringWithDefaultValue\s*\(\s*&quot;(?:[^\\&quot;]|\\.)*&quot;\s*,\s*(&lt;#tbl#&gt;)</string>
+			</dict>
+		</array>
+		<key>LINKeyCompletionPatterns</key>
+		<array>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedStringWithDefaultValue\s*\(\s*(\w*)</string>
+				<key>Swift</key>
+				<string>NSLocalizedStringWithDefaultValue\s*\(\s*(\w*)</string>
+			</dict>
+			<dict>
+				<key>Objective-C</key>
+				<string>NSLocalizedStringWithDefaultValue\s*\(\s*(&lt;#key#&gt;)</string>
+				<key>Swift</key>
+				<string>NSLocalizedStringWithDefaultValue\s*\(\s*(&lt;#key#&gt;)</string>
 			</dict>
 		</array>
 	</dict>
