@@ -53,10 +53,9 @@
             [textView insertText:text replacementRange:tableNameRange];
         }
     } else {
-        NSRange keyRange = NSMakeRange(NSNotFound, 0);
-        BOOL shouldAutoComplete = [[Lin sharedInstance] shouldAutoCompleteInTextView:textView keyRange:&keyRange];
+        NSRange keyRange = [[Lin sharedInstance] replacableKeyRangeInTextView:textView];
         
-        if (shouldAutoComplete && keyRange.location != NSNotFound) {
+        if (keyRange.location != NSNotFound) {
             [textView insertText:@"" replacementRange:keyRange];
             [self _showCompletionsAtCursorLocationExplicitly:YES];
         }

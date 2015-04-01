@@ -154,12 +154,13 @@ static id _sharedInstance = nil;
 
 - (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView
 {
-    return [self shouldAutoCompleteInTextView:textView keyRange:nil];
+    NSRange keyRange = [self replacableKeyRangeInTextView:textView];
+    return (keyRange.location != NSNotFound);
 }
 
-- (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView keyRange:(NSRange *)keyRangePtr
+- (NSRange)replacableKeyRangeInTextView:(DVTCompletingTextView *)textView
 {
-    if (textView == nil) return NO;
+    if (textView == nil) return NSMakeRange(NSNotFound, 0);
     
     DVTTextStorage *textStorage = (DVTTextStorage *)textView.textStorage;
     DVTSourceCodeLanguage *language = textStorage.language;
@@ -179,18 +180,14 @@ static id _sharedInstance = nil;
                     NSRange keyRange = [match rangeAtIndex:match.numberOfRanges - 1];
                     
                     if (NSMaxRange(keyRange) == NSMaxRange(selectedRange)) {
-                        if (keyRangePtr) {
-                            *keyRangePtr = keyRange;
-                        }
-                        
-                        return YES;
+                        return keyRange;
                     }
                 }
             }
         }
     }
     
-    return NO;
+    return NSMakeRange(NSNotFound, 0);
 }
 
 - (NSRange)replacableTableNameRangeInTextView:(DVTCompletingTextView *)textView

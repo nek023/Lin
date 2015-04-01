@@ -21,7 +21,7 @@
 
 - (NSArray *)completionItemsForWorkspace:(IDEWorkspace *)workspace;
 - (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView;
-- (BOOL)shouldAutoCompleteInTextView:(DVTCompletingTextView *)textView keyRange:(NSRange *)keyRangePtr;
+- (NSRange)replacableKeyRangeInTextView:(DVTCompletingTextView *)textView;
 - (NSRange)replacableTableNameRangeInTextView:(DVTCompletingTextView *)textView;
 
 @end
