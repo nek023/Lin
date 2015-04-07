@@ -24,10 +24,15 @@
 
 - (BOOL)lin_acceptCurrentCompletion
 {
+  
     // Get selected completion
     DVTTextCompletionSession *session = self.currentSession;
-    id selectedCompletion = session.filteredCompletionsAlpha[session.selectedCompletionIndex];
-    
+    id selectedCompletion = nil;
+  
+    if (session.selectedCompletionIndex < session.filteredCompletionsAlpha.count) {
+      selectedCompletion = session.filteredCompletionsAlpha[session.selectedCompletionIndex];
+    }
+  
     // Original method must be called after referencing selected completion
     BOOL acceptCurrentCompletion = [self lin_acceptCurrentCompletion];
     
