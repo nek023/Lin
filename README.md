@@ -18,9 +18,7 @@ If you want to uninstall Lin, remove Lin.xcplugin in the `Plug-ins` directory.
 
 ## Notes
 
-* Supported Xcode versions
-  * Xcode 6.1
-  * Xcode 6.2 beta
+* Xcode 6 or later is supported
 * Supported functions
   * NSLocalizedString
   * NSLocalizedStringFromTable
