@@ -20,4 +20,6 @@ typedef NS_ENUM(NSUInteger, LINSourceCodeLanguage) {
 
 - (instancetype)initWithLocalizations:(NSArray *)localizations;
 
+- (NSString *)key;
+
 @end
