@@ -168,9 +168,9 @@ static id _sharedInstance = nil;
     NSRange selectedRange = textView.selectedRange;
     
     for (NSDictionary *configuration in self.configurations) {
-        for (NSDictionary *patterns in configuration[@"LINKeyCompletionPatterns"]) {
-            NSString *pattern = patterns[language.languageName];
-            
+        NSDictionary *patterns = configuration[@"LINKeyCompletionPatterns"][language.languageName];
+        
+        for (NSString *pattern in patterns) {
             if (pattern && pattern.length > 0) {
                 NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
                 NSArray *matches = [regularExpression matchesInString:string options:0 range:NSMakeRange(0, string.length)];
@@ -200,9 +200,9 @@ static id _sharedInstance = nil;
     NSRange selectedRange = textView.selectedRange;
     
     for (NSDictionary *configuration in self.configurations) {
-        for (NSDictionary *patterns in configuration[@"LINTableNameCompletionPatterns"]) {
-            NSString *pattern = patterns[language.languageName];
-            
+        NSDictionary *patterns = configuration[@"LINTableNameCompletionPatterns"][language.languageName];
+        
+        for (NSString *pattern in patterns) {
             if (pattern && pattern.length > 0) {
                 NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
                 NSArray *matches = [regularExpression matchesInString:string options:0 range:NSMakeRange(0, string.length)];
