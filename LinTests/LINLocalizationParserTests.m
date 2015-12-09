@@ -20,7 +20,7 @@
 - (void)testParsingLocalizations
 {
     // Create test set
-    struct LNLocalizationTestSet {
+    struct LINLocalizationTestSet {
         __unsafe_unretained NSString *key;
         __unsafe_unretained NSString *value;
     } testSets[] = {
@@ -55,7 +55,7 @@
     NSArray *localizations = [parser localizationsFromContentsOfFile:filePath];
     
     // Test results
-    NSUInteger numberOfTestSets = sizeof(testSets) / sizeof(struct LNLocalizationTestSet);
+    NSUInteger numberOfTestSets = sizeof(testSets) / sizeof(struct LINLocalizationTestSet);
     XCTAssertEqual(localizations.count, numberOfTestSets);
     
     [localizations enumerateObjectsUsingBlock:^(LINLocalization *localization, NSUInteger index, BOOL *stop) {
