@@ -12,4 +12,3 @@ test:
 		-scheme ${SCHEME} \
 		-configuration Debug \
 		test
-
